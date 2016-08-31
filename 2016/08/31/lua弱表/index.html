@@ -4,17 +4,18 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>阿黄的博客</title>
+  <title>Lua中的weak表——weak table | 阿黄的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我就是我，是颜色不一样的烟火">
-<meta property="og:type" content="website">
-<meta property="og:title" content="阿黄的博客">
-<meta property="og:url" content="https://ahuang007.github.io/MyBlog/index.html">
+  <meta name="description" content="弱表(weak table)是一个很有意思的东西，像C++/Java等语言是没有的。弱表的定义是：A weak table is a table whose elements are weak references，元素为弱引用的表就叫弱表。有弱引用那么也就有强引用，有引用那么也就有非引用。我们先要厘这些基本概念：变量、值、类型、对象。　　（1）变量与值：Lua是一个dynamically typ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lua中的weak表——weak table">
+<meta property="og:url" content="https://ahuang007.github.io/MyBlog/2016/08/31/lua弱表/index.html">
 <meta property="og:site_name" content="阿黄的博客">
-<meta property="og:description" content="我就是我，是颜色不一样的烟火">
+<meta property="og:description" content="弱表(weak table)是一个很有意思的东西，像C++/Java等语言是没有的。弱表的定义是：A weak table is a table whose elements are weak references，元素为弱引用的表就叫弱表。有弱引用那么也就有强引用，有引用那么也就有非引用。我们先要厘这些基本概念：变量、值、类型、对象。　　（1）变量与值：Lua是一个dynamically typ">
+<meta property="og:updated_time" content="2016-08-31T11:31:55.574Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="阿黄的博客">
-<meta name="twitter:description" content="我就是我，是颜色不一样的烟火">
+<meta name="twitter:title" content="Lua中的weak表——weak table">
+<meta name="twitter:description" content="弱表(weak table)是一个很有意思的东西，像C++/Java等语言是没有的。弱表的定义是：A weak table is a table whose elements are weak references，元素为弱引用的表就叫弱表。有弱引用那么也就有强引用，有引用那么也就有非引用。我们先要厘这些基本概念：变量、值、类型、对象。　　（1）变量与值：Lua是一个dynamically typ">
   
     <link rel="alternative" href="/atom.xml" title="阿黄的博客" type="application/atom+xml">
   
@@ -206,9 +207,7 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
-  
-    <article id="post-lua弱表" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-lua弱表" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/MyBlog/2016/08/31/lua弱表/" class="article-date">
@@ -224,12 +223,27 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/MyBlog/2016/08/31/lua弱表/">Lua中的weak表——weak table</a>
+    <h1 class="article-title" itemprop="name">
+      Lua中的weak表——weak table
     </h1>
   
 
       </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/lua/">lua</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/技术/">技术</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/MyBlog/categories/IT/">IT</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
       
     
     <div class="article-entry" itemprop="articleBody">
@@ -247,37 +261,58 @@
       
     </div>
     
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/lua/">lua</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/技术/">技术</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/MyBlog/categories/IT/">IT</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
   </div>
+  
+    
   
 </article>
 
 
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
 
 
 
 
 
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="lua弱表" data-title="Lua中的weak表——weak table" data-url="https://ahuang007.github.io/MyBlog/MyBlog/2016/08/31/lua弱表/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ahuang007"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
-  
-  
+
+
+
 </div>
       <footer id="footer">
   <div class="outer">
@@ -301,8 +336,8 @@
 		fancybox: true,
 		mathjax: true,
 		animate: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
