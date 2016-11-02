@@ -120,7 +120,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/MyBlog/tags/article/" style="font-size: 10px;">article</a> <a href="/MyBlog/tags/linux/" style="font-size: 10px;">linux</a> <a href="/MyBlog/tags/lua/" style="font-size: 15px;">lua</a> <a href="/MyBlog/tags/技术/" style="font-size: 20px;">技术</a>
+						<a href="/MyBlog/tags/article/" style="font-size: 10px;">article</a> <a href="/MyBlog/tags/linux/" style="font-size: 15px;">linux</a> <a href="/MyBlog/tags/lua/" style="font-size: 15px;">lua</a> <a href="/MyBlog/tags/技术/" style="font-size: 20px;">技术</a>
 					</div>
 				</section>
 				
@@ -203,6 +203,73 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-锁" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/MyBlog/2016/11/02/锁/" class="article-date">
+  	<time datetime="2016-11-02T12:35:05.000Z" itemprop="datePublished">2016-11-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/MyBlog/2016/11/02/锁/">自旋锁 互斥锁 读写锁 递归锁</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>互斥锁(mutexlock)：<br>最常使用于线程同步的锁；标记用来保证在任一时刻，只能有一个线程访问该对象，同一线程多次加锁操作会造成死锁；临界区和互斥量都可用来实现此锁，通常情况下锁操作失败会将该线程睡眠等待锁释放时被唤醒</p>
+<p>自旋锁(spinlock)：</p>
+<p>同样用来标记只能有一个线程访问该对象，在同一线程多次加锁操作会造成死锁；使用硬件提供的swap指令或test_and_set指令实现；同互斥锁不同的是在锁操作需要等待的时候并不是睡眠等待唤醒，而是循环检测保持者已经释放了锁，这样做的好处是节省了线程从睡眠状态到唤醒之间内核会产生的消耗，在加锁时间短暂的环境下这点会提高很大效率</p>
+<p>读写锁(rwlock)：</p>
+<p>高级别锁，区分读和写，符合条件时允许多个线程访问对象。处于读锁操作时可以允许其他线程和本线程的读锁， 但不允许写锁， 处于写锁时则任何锁操作都会睡眠等待；常见的操作系统会在写锁等待时屏蔽后续的读锁操作以防写锁被无限孤立而等待，在操作系统不支持情况下可以用引用计数加写优先等待来用互斥锁实现。 读写锁适用于大量读少量写的环境，但由于其特殊的逻辑使得其效率相对普通的互斥锁和自旋锁要慢一个数量级；值得注意的一点是按POSIX标准 在线程申请读锁并未释放前本线程申请写锁是成功的，但运行后的逻辑结果是无法预测</p>
+<p>递归锁(recursivelock)：</p>
+<p>严格上讲递归锁只是互斥锁的一个特例，同样只能有一个线程访问该对象，但允许同一个线程在未释放其拥有的锁时反复对该锁进行加锁操作； windows下的临界区默认是支持递归锁的，而linux下的互斥量则需要设置参数PTHREAD_MUTEX_RECURSIVE_NP，默认则是不支持</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/技术/">技术</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/MyBlog/categories/it/">it</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-daemon" class="article article-type-post" itemscope itemprop="blogPost">
   

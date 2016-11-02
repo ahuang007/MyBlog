@@ -4,21 +4,24 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>多挂一个铃铛 | 阿黄的博客</title>
+  <title>自旋锁 互斥锁 读写锁 递归锁 | 阿黄的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="有一家客栈，虽然环境温馨，服务不错，收费也很公道，但不知为何，还是一直入不敷出。无奈之下，店老板只好找专家求助。
-专家说：“你必须改改店名，叫它‘五个铃铛’，然后在门口多挂一个铃铛，也就是挂上六个铃铛。”店老板虽然觉得这个建议很荒谬，但还是决定尝试一下，就照做了。结果，不少路过客栈的游客，会走进店里，指出这个错误或询问原因。一旦他们走进客栈，往往就会被店里的环境所吸引，店里的生意也就逐渐红火起来。">
+  <meta name="description" content="互斥锁(mutexlock)：最常使用于线程同步的锁；标记用来保证在任一时刻，只能有一个线程访问该对象，同一线程多次加锁操作会造成死锁；临界区和互斥量都可用来实现此锁，通常情况下锁操作失败会将该线程睡眠等待锁释放时被唤醒
+自旋锁(spinlock)：
+同样用来标记只能有一个线程访问该对象，在同一线程多次加锁操作会造成死锁；使用硬件提供的swap指令或test_and_set指令实现；同互斥锁不同的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="多挂一个铃铛">
-<meta property="og:url" content="https://ahuang007.github.io/MyBlog/2016/09/06/多挂一个铃铛/index.html">
+<meta property="og:title" content="自旋锁 互斥锁 读写锁 递归锁">
+<meta property="og:url" content="https://ahuang007.github.io/MyBlog/2016/11/02/锁/index.html">
 <meta property="og:site_name" content="阿黄的博客">
-<meta property="og:description" content="有一家客栈，虽然环境温馨，服务不错，收费也很公道，但不知为何，还是一直入不敷出。无奈之下，店老板只好找专家求助。
-专家说：“你必须改改店名，叫它‘五个铃铛’，然后在门口多挂一个铃铛，也就是挂上六个铃铛。”店老板虽然觉得这个建议很荒谬，但还是决定尝试一下，就照做了。结果，不少路过客栈的游客，会走进店里，指出这个错误或询问原因。一旦他们走进客栈，往往就会被店里的环境所吸引，店里的生意也就逐渐红火起来。">
-<meta property="og:updated_time" content="2016-09-06T13:32:39.145Z">
+<meta property="og:description" content="互斥锁(mutexlock)：最常使用于线程同步的锁；标记用来保证在任一时刻，只能有一个线程访问该对象，同一线程多次加锁操作会造成死锁；临界区和互斥量都可用来实现此锁，通常情况下锁操作失败会将该线程睡眠等待锁释放时被唤醒
+自旋锁(spinlock)：
+同样用来标记只能有一个线程访问该对象，在同一线程多次加锁操作会造成死锁；使用硬件提供的swap指令或test_and_set指令实现；同互斥锁不同的">
+<meta property="og:updated_time" content="2016-11-02T12:37:05.075Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="多挂一个铃铛">
-<meta name="twitter:description" content="有一家客栈，虽然环境温馨，服务不错，收费也很公道，但不知为何，还是一直入不敷出。无奈之下，店老板只好找专家求助。
-专家说：“你必须改改店名，叫它‘五个铃铛’，然后在门口多挂一个铃铛，也就是挂上六个铃铛。”店老板虽然觉得这个建议很荒谬，但还是决定尝试一下，就照做了。结果，不少路过客栈的游客，会走进店里，指出这个错误或询问原因。一旦他们走进客栈，往往就会被店里的环境所吸引，店里的生意也就逐渐红火起来。">
+<meta name="twitter:title" content="自旋锁 互斥锁 读写锁 递归锁">
+<meta name="twitter:description" content="互斥锁(mutexlock)：最常使用于线程同步的锁；标记用来保证在任一时刻，只能有一个线程访问该对象，同一线程多次加锁操作会造成死锁；临界区和互斥量都可用来实现此锁，通常情况下锁操作失败会将该线程睡眠等待锁释放时被唤醒
+自旋锁(spinlock)：
+同样用来标记只能有一个线程访问该对象，在同一线程多次加锁操作会造成死锁；使用硬件提供的swap指令或test_and_set指令实现；同互斥锁不同的">
   
     <link rel="alternative" href="/atom.xml" title="阿黄的博客" type="application/atom+xml">
   
@@ -206,11 +209,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-多挂一个铃铛" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-锁" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/MyBlog/2016/09/06/多挂一个铃铛/" class="article-date">
-  	<time datetime="2016-09-06T13:30:23.000Z" itemprop="datePublished">2016-09-06</time>
+      <a href="/MyBlog/2016/11/02/锁/" class="article-date">
+  	<time datetime="2016-11-02T12:35:05.000Z" itemprop="datePublished">2016-11-02</time>
 </a>
     </div>
   
@@ -223,7 +226,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      多挂一个铃铛
+      自旋锁 互斥锁 读写锁 递归锁
     </h1>
   
 
@@ -232,10 +235,14 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/article/">article</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/技术/">技术</a></li></ul>
 	</div>
 
         
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/MyBlog/categories/it/">it</a>
+	</div>
+
 
         <div class="clearfix"></div>
       </div>
@@ -243,9 +250,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><em>有一家客栈，虽然环境温馨，服务不错，收费也很公道，但不知为何，还是一直入不敷出。无奈之下，店老板只好找专家求助。
-</em>专家说：“你必须改改店名，叫它‘五个铃铛’，然后在门口多挂一个铃铛，也就是挂上六个铃铛。”店老板虽然觉得这个建议很荒谬，但还是决定尝试一下，就照做了。<br><em>结果，不少路过客栈的游客，会走进店里，指出这个错误或询问原因。一旦他们走进客栈，往往就会被店里的环境所吸引，店里的生意也就逐渐红火起来。
-</em>也许，没有几件事，会比纠正别人的错误，更让人乐意去做。</p>
+        <p>互斥锁(mutexlock)：<br>最常使用于线程同步的锁；标记用来保证在任一时刻，只能有一个线程访问该对象，同一线程多次加锁操作会造成死锁；临界区和互斥量都可用来实现此锁，通常情况下锁操作失败会将该线程睡眠等待锁释放时被唤醒</p>
+<p>自旋锁(spinlock)：</p>
+<p>同样用来标记只能有一个线程访问该对象，在同一线程多次加锁操作会造成死锁；使用硬件提供的swap指令或test_and_set指令实现；同互斥锁不同的是在锁操作需要等待的时候并不是睡眠等待唤醒，而是循环检测保持者已经释放了锁，这样做的好处是节省了线程从睡眠状态到唤醒之间内核会产生的消耗，在加锁时间短暂的环境下这点会提高很大效率</p>
+<p>读写锁(rwlock)：</p>
+<p>高级别锁，区分读和写，符合条件时允许多个线程访问对象。处于读锁操作时可以允许其他线程和本线程的读锁， 但不允许写锁， 处于写锁时则任何锁操作都会睡眠等待；常见的操作系统会在写锁等待时屏蔽后续的读锁操作以防写锁被无限孤立而等待，在操作系统不支持情况下可以用引用计数加写优先等待来用互斥锁实现。 读写锁适用于大量读少量写的环境，但由于其特殊的逻辑使得其效率相对普通的互斥锁和自旋锁要慢一个数量级；值得注意的一点是按POSIX标准 在线程申请读锁并未释放前本线程申请写锁是成功的，但运行后的逻辑结果是无法预测</p>
+<p>递归锁(recursivelock)：</p>
+<p>严格上讲递归锁只是互斥锁的一个特例，同样只能有一个线程访问该对象，但允许同一个线程在未释放其拥有的锁时反复对该锁进行加锁操作； windows下的临界区默认是支持递归锁的，而linux下的互斥量则需要设置参数PTHREAD_MUTEX_RECURSIVE_NP，默认则是不支持</p>
 
       
     </div>
@@ -255,18 +266,9 @@
     
 <nav id="article-nav">
   
-    <a href="/MyBlog/2016/09/22/Lua中的基本函数库/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          Lua基本函数库
-        
-      </div>
-    </a>
   
-  
-    <a href="/MyBlog/2016/08/31/lua弱表/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Lua中的weak表——weak table</div>
+    <a href="/MyBlog/2016/10/19/daemon/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">daemon</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -301,7 +303,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="多挂一个铃铛" data-title="多挂一个铃铛" data-url="https://ahuang007.github.io/MyBlog/MyBlog/2016/09/06/多挂一个铃铛/"></div>
+	<div class="ds-thread" data-thread-key="锁" data-title="自旋锁 互斥锁 读写锁 递归锁" data-url="https://ahuang007.github.io/MyBlog/MyBlog/2016/11/02/锁/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
