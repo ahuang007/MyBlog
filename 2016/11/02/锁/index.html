@@ -11,7 +11,7 @@
 同样用来标记只能有一个线程访问该对象，在同一线程多次加锁操作会造成死锁；使用硬件提供的swap指令或test_and_set指令实现；同互斥锁不同的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自旋锁 互斥锁 读写锁 递归锁">
-<meta property="og:url" content="https://ahuang007.github.io/MyBlog/2016/11/02/锁/index.html">
+<meta property="og:url" content="https://ahuang007.github.io/2016/11/02/锁/index.html">
 <meta property="og:site_name" content="阿黄的博客">
 <meta property="og:description" content="互斥锁(mutexlock)：最常使用于线程同步的锁；标记用来保证在任一时刻，只能有一个线程访问该对象，同一线程多次加锁操作会造成死锁；临界区和互斥量都可用来实现此锁，通常情况下锁操作失败会将该线程睡眠等待锁释放时被唤醒
 自旋锁(spinlock)：
@@ -26,9 +26,9 @@
     <link rel="alternative" href="/atom.xml" title="阿黄的博客" type="application/atom+xml">
   
   
-    <link rel="icon" href="/MyBlog/favicon.jpg">
+    <link rel="icon" href="/favicon.jpg">
   
-  <link rel="stylesheet" href="/MyBlog/css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
@@ -39,7 +39,7 @@
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-			<img lazy-src="/MyBlog/img/avatar.jpg" class="js-avatar">
+			<img lazy-src="//img/avatar.jpg" class="js-avatar">
 			
 		</a>
 
@@ -99,13 +99,13 @@
 					<nav class="header-menu">
 						<ul>
 						
-							<li><a href="/MyBlog/">主页</a></li>
+							<li><a href="/">主页</a></li>
 				        
-							<li><a href="/MyBlog/archives">所有文章</a></li>
+							<li><a href="/archives">所有文章</a></li>
 				        
-							<li><a href="/MyBlog/photo">相册</a></li>
+							<li><a href="/photo">相册</a></li>
 				        
-							<li><a href="/MyBlog/about">关于</a></li>
+							<li><a href="/about">关于</a></li>
 				        
 						</ul>
 					</nav>
@@ -120,6 +120,8 @@
 					        
 								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/huang-li-jun-7" title="zhihu">zhihu</a>
 					        
+								<a class="mail" target="_blank" href="/419637330@qq.com" title="mail">mail</a>
+					        
 						</div>
 					</nav>
 				</section>
@@ -127,7 +129,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/MyBlog/tags/article/" style="font-size: 10px;">article</a> <a href="/MyBlog/tags/linux/" style="font-size: 15px;">linux</a> <a href="/MyBlog/tags/lua/" style="font-size: 15px;">lua</a> <a href="/MyBlog/tags/技术/" style="font-size: 20px;">技术</a>
+						<a href="/tags/article/" style="font-size: 10px;">article</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/lua/" style="font-size: 15px;">lua</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a>
 					</div>
 				</section>
 				
@@ -136,7 +138,7 @@
 				<section class="switch-part switch-part3">
 					<div id="js-friends">
 					
-			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://terrygo.win/">晓晓的博客</a>
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://luucio.com/">晓晓的博客</a>
 			        
 			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.hawkk.cn/">科长的的博客</a>
 			        
@@ -169,7 +171,7 @@
 		<header id="header" class="inner">
 			<div class="profilepic">
 				
-					<img lazy-src="/MyBlog/img/avatar.jpg" class="js-avatar">
+					<img lazy-src="//img/avatar.jpg" class="js-avatar">
 				
 			</div>
 			<hgroup>
@@ -181,13 +183,13 @@
 			<nav class="header-menu">
 				<ul>
 				
-					<li><a href="/MyBlog/">主页</a></li>
+					<li><a href="/">主页</a></li>
 		        
-					<li><a href="/MyBlog/archives">所有文章</a></li>
+					<li><a href="/archives">所有文章</a></li>
 		        
-					<li><a href="/MyBlog/photo">相册</a></li>
+					<li><a href="/photo">相册</a></li>
 		        
-					<li><a href="/MyBlog/about">关于</a></li>
+					<li><a href="/about">关于</a></li>
 		        
 		        <div class="clearfix"></div>
 				</ul>
@@ -203,6 +205,8 @@
 			        
 						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/huang-li-jun-7" title="zhihu">zhihu</a>
 			        
+						<a class="mail" target="_blank" href="/419637330@qq.com" title="mail">mail</a>
+			        
 				</div>
 			</nav>
 		</header>				
@@ -212,7 +216,7 @@
       <div class="body-wrap"><article id="post-锁" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/MyBlog/2016/11/02/锁/" class="article-date">
+      <a href="/2016/11/02/锁/" class="article-date">
   	<time datetime="2016-11-02T12:35:05.000Z" itemprop="datePublished">2016-11-02</time>
 </a>
     </div>
@@ -235,12 +239,12 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/MyBlog/tags/技术/">技术</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
 	</div>
 
         
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/MyBlog/categories/it/">it</a>
+	<a class="article-category-link" href="/categories/it/">it</a>
 	</div>
 
 
@@ -267,7 +271,7 @@
 <nav id="article-nav">
   
   
-    <a href="/MyBlog/2016/10/19/daemon/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/10/19/daemon/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">daemon</div>
       <strong class="article-nav-caption">></strong>
     </a>
@@ -303,7 +307,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="锁" data-title="自旋锁 互斥锁 读写锁 递归锁" data-url="https://ahuang007.github.io/MyBlog/MyBlog/2016/11/02/锁/"></div>
+	<div class="ds-thread" data-thread-key="锁" data-title="自旋锁 互斥锁 读写锁 递归锁" data-url="https://ahuang007.github.io/2016/11/02/锁/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -328,7 +332,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2016 ahuang
+    		&copy; 2017 ahuang
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -338,7 +342,7 @@
 </footer>
     </div>
     
-  <link rel="stylesheet" href="/MyBlog/fancybox/jquery.fancybox.css">
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
 
 
 <script>
@@ -352,11 +356,11 @@
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
-		root: /MyBlog/
+		root: /
 	}
 </script>
 <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
-<script src="/MyBlog/js/main.js"></script>
+<script src="/js/main.js"></script>
 
 
 
