@@ -120,7 +120,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/article/" style="font-size: 10px;">article</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/lua/" style="font-size: 15px;">lua</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a>
+						<a href="/tags/article/" style="font-size: 10px;">article</a> <a href="/tags/it/" style="font-size: 10px;">it</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/lua/" style="font-size: 15px;">lua</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a>
 					</div>
 				</section>
 				
@@ -205,6 +205,164 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-一个棋牌游戏的开发日记" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/20/一个棋牌游戏的开发日记/" class="article-date">
+  	<time datetime="2017-07-20T10:27:00.000Z" itemprop="datePublished">2017-07-20</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/20/一个棋牌游戏的开发日记/">一个棋牌游戏的开发日记</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="项目：-酒城小五张"><a href="#项目：-酒城小五张" class="headerlink" title="项目： 酒城小五张"></a>项目： 酒城小五张</h3><h4 id="2017-7-11"><a href="#2017-7-11" class="headerlink" title="2017.7.11"></a>2017.7.11</h4><ol>
+<li><del>熟悉游戏规则</del></li>
+<li><del>初步整理代码和proto</del></li>
+</ol>
+<h4 id="2017-7-12"><a href="#2017-7-12" class="headerlink" title="2017.7.12"></a>2017.7.12</h4><ol>
+<li><del>基础逻辑实现</del><ul>
+<li><del>洗牌</del></li>
+<li><del>发牌</del></li>
+<li><del>摸牌</del></li>
+<li><del>打牌</del></li>
+</ul>
+</li>
+<li><del>网络情况出相同的牌 不再报错 只打log</del></li>
+</ol>
+<h4 id="20170713"><a href="#20170713" class="headerlink" title="20170713"></a>20170713</h4><ol>
+<li><del>操作实现</del><ul>
+<li><del>碰</del></li>
+<li><del>招</del></li>
+<li><del>垅</del></li>
+</ul>
+</li>
+<li><del>胡牌判断初步实现</del></li>
+</ol>
+<h3 id="20170714"><a href="#20170714" class="headerlink" title="20170714"></a>20170714</h3><ol>
+<li><del>血战模式实现</del><ul>
+<li>玩家增加胡牌状态 </li>
+<li><del>下一家的判断修改</del></li>
+<li><del>计分的修改 （自摸只扣剩余未胡玩家的钱）</del></li>
+</ul>
+</li>
+</ol>
+<p>####20170715</p>
+<ol>
+<li><del>玩家中途进入房间准备</del><ul>
+<li><del>积分只记本局参与的玩家</del></li>
+<li><del>进入同步牌消息 发牌要通知这些旁观的玩家</del></li>
+</ul>
+</li>
+<li><p><del>解散房间相关逻辑</del></p>
+<ul>
+<li><p><del>投票解散 只给本局参与的玩家</del></p>
+</li>
+<li><p><del>本局已经胡的需要结算且要有回放</del></p>
+</li>
+</ul>
+</li>
+</ol>
+<p>####20170717</p>
+<ol>
+<li><del>胡牌计分判断</del><ul>
+<li><del>胡牌牌组</del></li>
+<li><del>计算单个牌组胡息数</del></li>
+<li><del>计算总胡息数（手牌牌组+cardGroups）</del></li>
+<li><del>判断胡牌条件</del></li>
+<li><del>胡牌结算</del></li>
+</ul>
+</li>
+</ol>
+<h4 id="20170718"><a href="#20170718" class="headerlink" title="20170718"></a>20170718</h4><ol>
+<li><del>胡牌结算联调</del></li>
+<li><del>胡牌计分验证</del><ul>
+<li><del>碰胡 坎牌 计分错误</del></li>
+</ul>
+</li>
+</ol>
+<h4 id="20170719"><a href="#20170719" class="headerlink" title="20170719"></a>20170719</h4><ol>
+<li><del>庄家规则</del><ul>
+<li>第一个胡牌的人 </li>
+<li><del>一炮多响 则放炮玩家做庄</del><ul>
+<li><del>一炮多响规则实现</del></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>选项</p>
+<ul>
+<li><del>一胡起胡</del></li>
+<li><del>三胡起胡</del></li>
+<li><del>自摸翻倍</del></li>
+<li><del>查叫</del><ul>
+<li><del>特殊情况的胡牌查叫(招胡)</del><ul>
+<li><del>aaa + bb + a(招)</del></li>
+<li><del>aaaa + b + b(垅)</del></li>
+<li><del>aaaa 招 + b + b（招）</del></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="20170720"><a href="#20170720" class="headerlink" title="20170720"></a>20170720</h4><ol>
+<li><del>checkCardGroups 代码优化</del></li>
+<li><del>过张</del></li>
+<li><del>重连玩家状态同步（准备）</del></li>
+<li><del>所有原来用playersById或者playersByChair都要检查一下是否正确</del></li>
+<li><del>reason 修改 有单局结算和没有单局结算</del></li>
+</ol>
+<h4 id="20170721"><a href="#20170721" class="headerlink" title="20170721"></a>20170721</h4><ol>
+<li>测试以及bug修复</li>
+<li>代码整理与优化</li>
+</ol>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/it/">it</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-锁" class="article article-type-post" itemscope itemprop="blogPost">
   
