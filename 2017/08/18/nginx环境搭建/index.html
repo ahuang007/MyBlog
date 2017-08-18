@@ -4,24 +4,39 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>about | 阿黄的博客</title>
+  <title>nginx环境搭建 | 阿黄的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="github:http://github.com/ahuang007
-zhihu:https://www.zhihu.com/people/huang-li-jun-7
-weibo:http://weibo.com/ahuang007">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://ahuang007.github.io/about/index.html">
+  <meta name="description" content="nginx centos安装教程
+下载lnmp 安装nginx
+
+
+wget http://mirrors.linuxeye.com/lnmp-full.tar.gz # 包含源码，国内外均可下载
+tar xzf lnmp-full.tar.gz
+cd lnmp # 如果需要修改目录(安装、数据存储、Nginx日志)，请修改options.conf文件
+./install.sh # 请勿sh in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx环境搭建">
+<meta property="og:url" content="https://ahuang007.github.io/2017/08/18/nginx环境搭建/index.html">
 <meta property="og:site_name" content="阿黄的博客">
-<meta property="og:description" content="github:http://github.com/ahuang007
-zhihu:https://www.zhihu.com/people/huang-li-jun-7
-weibo:http://weibo.com/ahuang007">
-<meta property="og:updated_time" content="2016-08-30T09:35:33.226Z">
+<meta property="og:description" content="nginx centos安装教程
+下载lnmp 安装nginx
+
+
+wget http://mirrors.linuxeye.com/lnmp-full.tar.gz # 包含源码，国内外均可下载
+tar xzf lnmp-full.tar.gz
+cd lnmp # 如果需要修改目录(安装、数据存储、Nginx日志)，请修改options.conf文件
+./install.sh # 请勿sh in">
+<meta property="og:updated_time" content="2017-08-18T13:07:00.504Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
-<meta name="twitter:description" content="github:http://github.com/ahuang007
-zhihu:https://www.zhihu.com/people/huang-li-jun-7
-weibo:http://weibo.com/ahuang007">
+<meta name="twitter:title" content="nginx环境搭建">
+<meta name="twitter:description" content="nginx centos安装教程
+下载lnmp 安装nginx
+
+
+wget http://mirrors.linuxeye.com/lnmp-full.tar.gz # 包含源码，国内外均可下载
+tar xzf lnmp-full.tar.gz
+cd lnmp # 如果需要修改目录(安装、数据存储、Nginx日志)，请修改options.conf文件
+./install.sh # 请勿sh in">
   
     <link rel="alternative" href="/atom.xml" title="阿黄的博客" type="application/atom+xml">
   
@@ -211,11 +226,11 @@ weibo:http://weibo.com/ahuang007">
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-nginx环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/about/index.html" class="article-date">
-  	<time datetime="2016-08-30T09:28:59.000Z" itemprop="datePublished">2016-08-30</time>
+      <a href="/2017/08/18/nginx环境搭建/" class="article-date">
+  	<time datetime="2017-08-18T12:42:07.000Z" itemprop="datePublished">2017-08-18</time>
 </a>
     </div>
   
@@ -228,7 +243,7 @@ weibo:http://weibo.com/ahuang007">
         
   
     <h1 class="article-title" itemprop="name">
-      about
+      nginx环境搭建
     </h1>
   
 
@@ -236,6 +251,10 @@ weibo:http://weibo.com/ahuang007">
       
       <div class="article-info article-info-post">
         
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/it/">it</a></li></ul>
+	</div>
+
         
 
         <div class="clearfix"></div>
@@ -244,9 +263,31 @@ weibo:http://weibo.com/ahuang007">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>github:<br><a href="http://github.com/ahuang007" target="_blank" rel="external">http://github.com/ahuang007</a></p>
-<p>zhihu:<br><a href="https://www.zhihu.com/people/huang-li-jun-7" target="_blank" rel="external">https://www.zhihu.com/people/huang-li-jun-7</a></p>
-<p>weibo:<br><a href="http://weibo.com/ahuang007" target="_blank" rel="external">http://weibo.com/ahuang007</a></p>
+        <h4 id="nginx-centos安装教程"><a href="#nginx-centos安装教程" class="headerlink" title="nginx centos安装教程"></a>nginx centos安装教程</h4><ol>
+<li>下载lnmp 安装nginx</li>
+</ol>
+<ul>
+<li>wget <a href="http://mirrors.linuxeye.com/lnmp-full.tar.gz" target="_blank" rel="external">http://mirrors.linuxeye.com/lnmp-full.tar.gz</a> # 包含源码，国内外均可下载</li>
+<li>tar xzf lnmp-full.tar.gz</li>
+<li>cd lnmp # 如果需要修改目录(安装、数据存储、Nginx日志)，请修改options.conf文件</li>
+<li>./install.sh # 请勿sh install.sh或者bash install.sh这样执行</li>
+</ul>
+<ol>
+<li>选择安装nginx 其他看需求安装</li>
+<li>nginx 源码安装  </li>
+</ol>
+<ul>
+<li>在lnmp解压后的目录下有个src目录有个nginx的源码包nginx-1.12.1.tar.gz</li>
+<li>tar xzf nginx-1.12.1.tar.gz </li>
+<li>cd nginx-1.12.1</li>
+<li>configure</li>
+<li>./configure –prefix=/usr/local/nginx –user=www –group=www –with-http_stub_status_module –with-stream –with-http_v2_module –with-http_ssl_module –with-http_gzip_static_module –with-http_realip_module –with-http_flv_module –with-http_mp4_module –with-openssl=../openssl-1.0.2l –with-pcre=../pcre-8.41 –with-pcre-jit –with-ld-opt=-ljemalloc</li>
+<li>make &amp;&amp; make install</li>
+</ul>
+<ol>
+<li>nginx配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">  worker_processes auto;</div><div class="line"></div><div class="line">  error_log /var/log/nginx/error.log info;</div><div class="line"></div><div class="line">  events &#123;</div><div class="line">    use epoll;</div><div class="line">    worker_connections  65535;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  http&#123;</div><div class="line">    server_tokens off;</div><div class="line">    include       mime.types;</div><div class="line">    default_type  application/octet-stream;</div><div class="line">    charset       utf-8;</div><div class="line">    gzip              on;</div><div class="line">    gzip_min_length   1k;</div><div class="line">    gzip_buffers      4 16k;</div><div class="line">    gzip_comp_level   8;</div><div class="line">    gzip_http_version 1.0;</div><div class="line">    gzip_types        application/json text/javascript  text/plain 		     application/x-javascript text/css application/xml text/xml;</div><div class="line">    </div><div class="line">    client_max_body_size       50M;</div><div class="line">    client_body_buffer_size    256k;</div><div class="line">    proxy_connect_timeout      60;</div><div class="line">    proxy_send_timeout         60;</div><div class="line">    proxy_read_timeout         60;</div><div class="line">    proxy_buffers              4 256k;</div><div class="line">    proxy_buffer_size          256k;</div><div class="line">    proxy_busy_buffers_size    256k;</div><div class="line">    proxy_temp_file_write_size 256k;</div><div class="line">    proxy_intercept_errors on;</div><div class="line"></div><div class="line">	stream &#123;</div><div class="line">		upstream backend &#123; # 如果只有一个就去掉一个</div><div class="line">	    hash $remote_addr consistent;</div><div class="line">	    server 192.168.0.10:8002       max_fails=3 fail_timeout=30s;</div><div class="line">		server 192.168.0.20:8003       max_fails=3 fail_timeout=30s;       </div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	server &#123;</div><div class="line">	    listen 8001;</div><div class="line">	    proxy_connect_timeout 1s;</div><div class="line">	    proxy_timeout 3s;</div><div class="line">	    proxy_pass backend;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
 
       
     </div>
@@ -254,6 +295,16 @@ weibo:http://weibo.com/ahuang007">
   </div>
   
     
+<nav id="article-nav">
+  
+  
+    <a href="/2017/07/20/一个棋牌游戏的开发日记/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">一个棋牌游戏的开发日记</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
   
 </article>
 
@@ -283,7 +334,7 @@ weibo:http://weibo.com/ahuang007">
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="undefined" data-title="about" data-url="https://ahuang007.github.io/about/index.html"></div>
+	<div class="ds-thread" data-thread-key="nginx环境搭建" data-title="nginx环境搭建" data-url="https://ahuang007.github.io/2017/08/18/nginx环境搭建/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -327,7 +378,7 @@ weibo:http://weibo.com/ahuang007">
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
