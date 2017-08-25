@@ -50,7 +50,7 @@ ssh无法连接
 ping不通  
 mtr 外网无法访问 但是内网可以
 可以从阿里云下载攻击时抓取的网络包 分析得知攻击者采用的ntp ssdp放大反射攻击 ip多">
-<meta property="og:updated_time" content="2017-08-25T09:06:16.023Z">
+<meta property="og:updated_time" content="2017-08-25T14:28:42.751Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ddos攻击记录">
 <meta name="twitter:description" content="防ddos攻击
@@ -326,7 +326,7 @@ mtr 外网无法访问 但是内网可以
 <ol>
 <li>自己做网关 用skynet实现消息转发（初步完成 没有上线实验）</li>
 <li>和前同事yuanfengyun讨论后用他的go语言写的通用tcp网关（试验过发现数据必须是2个字节长度 修改后的版本 <a href="https://github.com/ahuang007/tcp_reverse_proxy）" target="_blank" rel="external">https://github.com/ahuang007/tcp_reverse_proxy）</a></li>
-<li><p>用nginx反向代理（登录服和http服同时采用反向代理 nginx支持http tcp反向代理）</p>
+<li><p>用nginx反向代理（登录服和游戏服同时采用反向代理 nginx支持http tcp反向代理）</p>
 <ul>
 <li><p>tcp配置（游戏服反向代理）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">stream &#123;</div><div class="line">	upstream gateway1 &#123;</div><div class="line">		server 192.168.1.129:7215;</div><div class="line">	&#125;</div><div class="line">	server &#123;    </div><div class="line">		listen 3000;</div><div class="line">		proxy_pass gateway1;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
