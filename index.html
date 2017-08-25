@@ -120,7 +120,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/article/" style="font-size: 10px;">article</a> <a href="/tags/it/" style="font-size: 15px;">it</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/lua/" style="font-size: 15px;">lua</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a>
+						<a href="/tags/article/" style="font-size: 10px;">article</a> <a href="/tags/it/" style="font-size: 16.67px;">it</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/lua/" style="font-size: 13.33px;">lua</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a>
 					</div>
 				</section>
 				
@@ -205,6 +205,161 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-ddos攻击记录" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/25/ddos攻击记录/" class="article-date">
+  	<time datetime="2017-08-25T09:03:36.000Z" itemprop="datePublished">2017-08-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/25/ddos攻击记录/">ddos攻击记录</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="防ddos攻击"><a href="#防ddos攻击" class="headerlink" title="防ddos攻击"></a>防ddos攻击</h4><ol>
+<li>棋牌是被攻击的重灾区 </li>
+</ol>
+<ul>
+<li>竞争激烈 <ul>
+<li>既得利益者不愿意自己的利益受到威胁 对发展中的棋牌会进行攻击</li>
+<li>新来的要打进新的市场 必须把既得利益者拉下马</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>事情概述</li>
+</ol>
+<ul>
+<li><p>首次攻击2017-07-28 【无防备 失败】</p>
+<ul>
+<li>ssh无法连接 </li>
+<li>ping不通  </li>
+<li>mtr 外网无法访问 但是内网可以</li>
+<li>可以从阿里云下载攻击时抓取的网络包 分析得知攻击者采用的ntp ssdp放大反射攻击 ip多来自美国加拿大等</li>
+<li>阿里云会将超过阈值(5m带宽的阈值是2.2g)的服务器拉黑 然后半小时后才恢复正常（随着攻击的次数增加 最多可到达1天）</li>
+</ul>
+</li>
+<li><p>以后每周都有一次 于此同时我们也在想对策</p>
+<ol>
+<li>自己做网关 用skynet实现消息转发（初步完成 没有上线实验）</li>
+<li>和前同事yuanfengyun讨论后用他的go语言写的通用tcp网关（试验过发现数据必须是2个字节长度 修改后的版本 <a href="https://github.com/ahuang007/tcp_reverse_proxy）" target="_blank" rel="external">https://github.com/ahuang007/tcp_reverse_proxy）</a></li>
+<li><p>用nginx反向代理（登录服和http服同时采用反向代理 nginx支持http tcp反向代理）</p>
+<ul>
+<li><p>tcp配置（游戏服反向代理）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">stream &#123;</div><div class="line">	upstream gateway1 &#123;</div><div class="line">		server 192.168.1.129:7215;</div><div class="line">	&#125;</div><div class="line">	server &#123;    </div><div class="line">		listen 3000;</div><div class="line">		proxy_pass gateway1;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>http配置（登录服反向代理）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">upstream loginsvr1 &#123;</div><div class="line">	server 192.168.1.129:7100;</div><div class="line">&#125;</div><div class="line">server &#123;</div><div class="line">	listen 7100;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>实验过后 发现可以 但是玩家的ip被改成 网关服的ip了。后来得知 nginx http反向代理可以通过header中x-real-ip字段获取到玩家真实的ip</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>首次加入代理系统的情况【有防备 失败】</p>
+<ul>
+<li>之前的登录服，游戏服的ip是暴露的 由于考虑不周 我以为攻击应该是由攻击登录服到攻击代理服 结果攻击方依然是攻击的原来暴露的ip</li>
+<li>由于有代理服的保护 入口是没有受到影响 但是攻击后那个原服务器被隔离了 玩家登录时 登录服要去微信拉取玩家信息 导致玩家无法登录</li>
+<li>被攻击后 我连夜停服 备份redis数据库 迁移了原服务器的地址 </li>
+<li>中间出了个小插曲 我先没有停游戏服 因为有玩家在游戏服玩 我想只迁移登录服 然后发现redis原来的配置是绑定本地的 我将配置修改为绑定内网地址后 重启了redis 后来发现游戏服中有部分数据丢失</li>
+</ul>
+</li>
+<li><p>迁移后的第一次攻击【有防备 成功】</p>
+<ul>
+<li>由于增加了代理服 且原服务器没有被暴露 这次攻击对手依然攻击的是前一次攻击的目标 这次攻击无效 终于小胜了1把</li>
+</ul>
+</li>
+<li><p>攻击无效后调整的第一次攻击【有防备 失败】</p>
+<ul>
+<li>当时我们准备了4台服务器（轻敌了）结果1-2-3 代理服相继被攻陷 被攻陷的同时我们买了第五台 然后配置nginx</li>
+<li>当时没有用镜像 一个人配置很慢 然后第五台被打死的时候 出现了接近半个小时的真空期 攻击随后也停止了</li>
+</ul>
+</li>
+<li><p>攻击无效调整后的第二次攻击【有防备 成功】</p>
+<ul>
+<li>这次准备得比较充分 有配置好的镜像（只要按相同配置购买 使用相同镜像创建成功后 就可以立即生效 nginx自动启动）</li>
+<li>当天一共被打死阿里云服务器32 还有2台高防服务器 一个300g的 一个600g的 先后相继被打死 攻击流量峰值超过了600g!</li>
+<li>由于频繁切换网关服 导致玩家体验非常差 </li>
+<li>1台机器的成本144（1核2g2M带宽）同时购买这么多 成本也是很贵的 后面没被攻击都退了</li>
+<li>高防也是测试一下 然后没防住 也退了  </li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>阶段性结果    </li>
+</ol>
+<ul>
+<li>自从上次没有被打死后 后面一段时间都没有再被攻击了 <ul>
+<li>分析可能是攻击成本太高 导致攻击方放弃了</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>上述方法的不足：</li>
+</ol>
+<ul>
+<li><p>无差异的网关 现在对玩家没做区分 每个人拿到的都是一样的网关 攻击者很容易得到有效的网关</p>
+<ul>
+<li><p>zhangping同学和yuanfengyun同事都推荐同样的方法“将用户分组 不同的用户拿到的是不同的网关” </p>
+<ul>
+<li><p>与yuanfengyun的部分对话：<br>yuanfengyun<br>用隐蔽的手段来分配<br>我<br>隐蔽的手段？<br>yuanfengyun<br>要根据用户特征分组<br>yuanfengyun<br>让用户只能获取到部分反向代理<br>yuanfengyun<br>比如根据用户IP地址<br>我<br>ddos肉机的ip是分辨不了的<br>yuanfengyun<br>你自己的客户端是可以的<br>yuanfengyun<br>客户端根据自己的特征去判断自己该从哪去获取地址<br>我<br>攻击者肯定是要看到效果的 攻击者也是当地人 也会用客户端看是否自己的攻击有成效<br>yuanfengyun<br>攻击的人并不是当地的<br>yuanfengyun<br>当地的人联系的外地的黑客<br>yuanfengyun<br>黑客多数是集中在大城市<br>yuanfengyun<br>小县城是没有的<br>我<br>这个感觉不靠谱啊 被查到可用的ip还是很容易的<br>yuanfengyun<br>把用户分组是通行的控制异常的手段</p>
+</li>
+<li><p>与zhangping的部分对话：<br>:<br>对账号细分<br>:<br>不同账号给不同ip<br>我:<br>流量没到我们这里 到阿里云的前置防火墙<br>我:<br>不同账号不同ip 这个方案怎么弄啊<br>:<br>服务器提供客户端一个接口来获取ip不就可以了么？<br>:<br>然后这个ip缓存到客户端。<br>:<br>只有登录不上的情况下，才去更新。<br>我:<br>就是服务器下发是吧 现在下发的这个就被打死了<br>我:<br>是这样子啊<br>:<br>那也没关系啊。<br>:<br>缓存的ip也可以用。<br>我:<br>缓存的三个都被打死了<br>:<br>你都给的一样肯定打死啊。<br>我:<br>我们如果下发的不行 就用默认的 1-3<br>:<br>a,b,c不一样。<br>:<br>a要打死你，<br>:<br>顶多把A的ip都打死吧。<br>:<br>b,c的他都拿不到，怎么打？<br>我:<br>这个还是没懂 他们是当地人 找到我们服务器可用的ip不难吧<br>:<br>那不一定哦。<br>:<br>这个你们要对玩家区别对待。<br>:<br>把玩家做区分给ip。<br>我:<br>从昨天看 是按效果付费的 我们一直切 他一直打<br>:<br>分析攻击ip的特点<br>:<br>然后正对性防御。<br>:<br>废话。<br>我:<br>攻击ip我看了 都是加拿大 美国什么的<br>:<br>无差别切换ip。当然是这样的。<br>:<br>不是这个意思。<br>:<br>我打个比方。<br>:<br>ios给127.0.0.1，android 给ios给127.0.0.2<br>:<br>如果ios的一直被打死。<br>:<br>说明探测ip的账号是个ios账号。<br>我:<br>哦<br>:<br>账号有很多属性。<br>:<br>注册时间。<br>:<br>游戏局数。<br>:<br>等等。<br>我:<br>恩 这个懂了<br>:<br>把属性作为区分的参数数据。<br>:<br>这样可以把攻击者锁定在一个范围内。<br>:<br>给一些垃圾ip让他去攻击。<br>:<br>不断缩小受影响范围。<br>我:<br>哦<br>:<br>攻击就自然被弱化了。<br>:<br>当地 人不可能深入到每个群里头。<br>:<br>不可能天天玩你的游戏。<br>:<br>结合这些特点。<br>:<br>给不同ip。<br>:<br>比如版本号也可以是参考数据。<br>我:<br>版本号都会更新到最新啊<br>:<br>版本号，渠道号等等。<br>:<br>这个根据项目各自特点来看。<br>:<br>攻击者肯定需要下载你们的客户端。使用一个账号，来探测你的ip.<br>我:<br>是的<br>:<br>这个账号本身是有属性的。<br>:<br>这里可以想办法缩小范围。<br>我:<br>好 你们 有这样做么<br>:<br>我们现在暂时没有攻击。<br>我:<br>那用缓存的如果解包不就发现 了么<br>:<br>发现有怎样呢？<br>:<br>客户端源码都给你也无所谓。<br>:<br>A只能拿到A的ip.<br>我:<br>哦<br>:<br>B的A永远也不知道。<br>:<br>除非，A、B被划到同一个区间了。<br>:<br>开始你可以搞简单点。<br>:<br>折半区分。<br>:<br>一半一半地切。<br>:<br>就可以锁定攻击者的账号属性了。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>未完待续。。。</li>
+</ol>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/it/">it</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-nginx环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
   
