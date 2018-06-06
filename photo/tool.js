@@ -1,5 +1,5 @@
     const fs = require("fs");
-    const path = "../../photos";
+    const path = "../photos";
 
     fs.readdir(path, function (err, files) {
         if (err) {
