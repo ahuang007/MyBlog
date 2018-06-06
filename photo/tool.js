@@ -1,6 +1,3 @@
-
-
- "use strict";
     const fs = require("fs");
     const path = "../../photos";
 
@@ -8,7 +5,7 @@
         if (err) {
             return;
         }
-        let arr = [];
+        arr = [];
         (function iterator(index) {
             if (index == files.length) {
                 fs.writeFile("output.json", JSON.stringify(arr, null, "\t"));
