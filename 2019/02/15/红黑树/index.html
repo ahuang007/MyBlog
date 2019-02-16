@@ -19,8 +19,8 @@
 
 
 123注意特性（3）中的叶子节点，是职位空（NIL或者NULL）的节点特性（5）确保没有一条路径会比其他路径长出2倍。因而，红黑树是相对接近平衡的二叉树
-红黑树应用：
-C++的STL中 m">
+
+红黑树的时间复杂度为：o(lgn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="红黑树">
 <meta property="og:url" content="https://ahuang007.github.io/2019/02/15/红黑树/index.html">
@@ -38,9 +38,9 @@ C++的STL中 m">
 
 
 123注意特性（3）中的叶子节点，是职位空（NIL或者NULL）的节点特性（5）确保没有一条路径会比其他路径长出2倍。因而，红黑树是相对接近平衡的二叉树
-红黑树应用：
-C++的STL中 m">
-<meta property="og:updated_time" content="2019-02-15T09:42:44.671Z">
+
+红黑树的时间复杂度为：o(lgn">
+<meta property="og:updated_time" content="2019-02-16T08:21:28.715Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="红黑树">
 <meta name="twitter:description" content="红黑树特点：
@@ -56,8 +56,8 @@ C++的STL中 m">
 
 
 123注意特性（3）中的叶子节点，是职位空（NIL或者NULL）的节点特性（5）确保没有一条路径会比其他路径长出2倍。因而，红黑树是相对接近平衡的二叉树
-红黑树应用：
-C++的STL中 m">
+
+红黑树的时间复杂度为：o(lgn">
   
     <link rel="alternative" href="/atom.xml" title="阿黄的博客" type="application/atom+xml">
   
@@ -317,12 +317,36 @@ C++的STL中 m">
 </li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">注意</div><div class="line">特性（3）中的叶子节点，是职位空（NIL或者NULL）的节点</div><div class="line">特性（5）确保没有一条路径会比其他路径长出2倍。因而，红黑树是相对接近平衡的二叉树</div></pre></td></tr></table></figure>
-<h4 id="红黑树应用："><a href="#红黑树应用：" class="headerlink" title="红黑树应用："></a>红黑树应用：</h4><ul>
+<ul>
+<li><p>红黑树的时间复杂度为：o(lgn)</p>
+</li>
+<li><p>定理：一个含有n个节点的红黑树的高度至多为2log(n+1)</p>
+</li>
+</ul>
+<h4 id="红黑树的操作："><a href="#红黑树的操作：" class="headerlink" title="红黑树的操作："></a>红黑树的操作：</h4><ol>
+<li>左旋和右旋<ul>
+<li>旋转的目的是让树保持红黑树的特性。</li>
+</ul>
+</li>
+<li>添加<ul>
+<li>第一步：将红黑树当做一颗二叉查找树，将节点插入</li>
+<li>第二步：将插入的节点着色为“红色”</li>
+<li>第三步：通过一系列的旋转和着色等操作，使之重新成为一颗红黑树</li>
+</ul>
+</li>
+<li>删除<ul>
+<li>第一步：将红黑树当做一颗二叉查找树，将节点删除</li>
+<li>第二步：通过“旋转和重新着色”等一系列操作来修正该树，使之重新成为一颗红黑树</li>
+</ul>
+</li>
+</ol>
+<h4 id="红黑树应用："><a href="#红黑树应用：" class="headerlink" title="红黑树应用："></a>红黑树应用：</h4><p><code>主要用它来存储有序的数据 它查询时间复杂度为o(lgn)非常高效</code></p>
+<ul>
 <li>C++的STL中 map和set都是用红黑树实现的</li>
-<li>linux进程调度(Completely Fari Scheduler) 用红黑树管理进程控制块</li>
+<li>linux进程调度(Completely Fair Scheduler) 用红黑树管理进程控制块</li>
 <li>epoll在内核中的实现，用红黑树管理事件块</li>
 <li>nginx中，用红黑树管理timer等</li>
-<li>java的TreeMap实现</li>
+<li>java的TreeSet和TreeMap实现</li>
 </ul>
 
       

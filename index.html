@@ -261,12 +261,36 @@
 </li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">注意</div><div class="line">特性（3）中的叶子节点，是职位空（NIL或者NULL）的节点</div><div class="line">特性（5）确保没有一条路径会比其他路径长出2倍。因而，红黑树是相对接近平衡的二叉树</div></pre></td></tr></table></figure>
-<h4 id="红黑树应用："><a href="#红黑树应用：" class="headerlink" title="红黑树应用："></a>红黑树应用：</h4><ul>
+<ul>
+<li><p>红黑树的时间复杂度为：o(lgn)</p>
+</li>
+<li><p>定理：一个含有n个节点的红黑树的高度至多为2log(n+1)</p>
+</li>
+</ul>
+<h4 id="红黑树的操作："><a href="#红黑树的操作：" class="headerlink" title="红黑树的操作："></a>红黑树的操作：</h4><ol>
+<li>左旋和右旋<ul>
+<li>旋转的目的是让树保持红黑树的特性。</li>
+</ul>
+</li>
+<li>添加<ul>
+<li>第一步：将红黑树当做一颗二叉查找树，将节点插入</li>
+<li>第二步：将插入的节点着色为“红色”</li>
+<li>第三步：通过一系列的旋转和着色等操作，使之重新成为一颗红黑树</li>
+</ul>
+</li>
+<li>删除<ul>
+<li>第一步：将红黑树当做一颗二叉查找树，将节点删除</li>
+<li>第二步：通过“旋转和重新着色”等一系列操作来修正该树，使之重新成为一颗红黑树</li>
+</ul>
+</li>
+</ol>
+<h4 id="红黑树应用："><a href="#红黑树应用：" class="headerlink" title="红黑树应用："></a>红黑树应用：</h4><p><code>主要用它来存储有序的数据 它查询时间复杂度为o(lgn)非常高效</code></p>
+<ul>
 <li>C++的STL中 map和set都是用红黑树实现的</li>
-<li>linux进程调度(Completely Fari Scheduler) 用红黑树管理进程控制块</li>
+<li>linux进程调度(Completely Fair Scheduler) 用红黑树管理进程控制块</li>
 <li>epoll在内核中的实现，用红黑树管理事件块</li>
 <li>nginx中，用红黑树管理timer等</li>
-<li>java的TreeMap实现</li>
+<li>java的TreeSet和TreeMap实现</li>
 </ul>
 
       
@@ -329,10 +353,24 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h4 id="epoll相对其他模型-select-poll-做的改进："><a href="#epoll相对其他模型-select-poll-做的改进：" class="headerlink" title="epoll相对其他模型(select,poll)做的改进："></a>epoll相对其他模型(select,poll)做的改进：</h4><ul>
-<li>支持一个进程打开较大数目的文件描述符（fd）</li>
-<li>io效率不会随文件描述符（fd）的增加而线性下降</li>
+<li>支持一个进程打开较大数目的文件描述符（fd）<ul>
+<li>select模型对一个进程所打开的文件描述符是有一定限制的。其由FD_SIZE设置，默认为1024/2048。这对于那么需要支持上万连接数目的高并发服务器来说显然太少了，这个时候可以选择两种方案：<ul>
+<li>（1）可以修改FD_SETSIZE宏然后重新编译内核，不过这样做也不会带来网络效率的下降；</li>
+<li>（2）可以选择多进程的解决方案（传统的Apache方案），不过虽然Linux中创建线程的代价比较小，但仍然是不可忽视的，加上进程间数据同步远不及线程间同步的高效，所以也不是一种完美的方案。</li>
+</ul>
+</li>
+<li>但是，epoll则没有对描述符数目的限制，它所支持的文件描述符上限是整个系统最大可以打开的文件数目。例如，在1GB内存的机器上，这个限制大概为10万左右。</li>
+</ul>
+</li>
+<li>io效率不会随文件描述符（fd）的增加而线性下降<ul>
+<li>传统的select/poll的一个致命的弱点就是当你拥有一个很大的socket集合时，不过任一时间只有部分socket是活跃的，select/poll每次调用都会线性扫描整个socket集合，这导致IO处理效率呈现线性下降</li>
+<li>但是epoll不存在这个问题。它只会对活跃的socket进行操作，这是因为在内核实现中，epoll是根据每个fd上面的callback函数实现的。因此。只有活跃的socket才会主动条用callback函数，其他idle状态的socket则不会。在这一点上,epoll实现了一个伪AIO(异步IO),其内部推动力在内核。</li>
+<li>在一些实际情况中。如果所有的socket基本上都是活跃的，如高速LAN环境，epoll并不比select/poll效率高，相反，过多使用epoll_ctl,其效率反而还有稍微下降。但是，一旦使用idle connections模拟WAN环境,epoll的效率就远在select/poll之上了。</li>
+</ul>
+</li>
 <li>使用<strong>mmap</strong>加速内核与用户空间的消息传递<ul>
-<li>无论是select还是poll。它们都需要内核吧fd消息通知给用户空间。因此，如何避免不必要的内存拷贝就很重要了。对于该问题，epoll通过内核与用户空间mmap同一块内存来实现。</li>
+<li>无论是select还是poll，它们都需要内核把fd消息通知给用户空间。因此，如何避免不必要的内存拷贝就很重要了。</li>
+<li>对于该问题，epoll通过内核与用户空间mmap同一块内存来实现。</li>
 </ul>
 </li>
 </ul>
@@ -422,7 +460,7 @@
 </li>
 <li><p>内核使用<strong>slab机制</strong>，为epoll提供了快速的数据结构。在内核里，一切都是文件。因此，epoll向内核注册了一个文件系统，用于存储所有被监控的fd。当调用epoll_create时，就会在这个虚拟的epoll文件系统中创建file节点。epoll在被内核初始化时，同时会分配出epoll自己的内核高速cache区，用于存放每个我们希望监控的fd。这些fd会以<strong>红黑树</strong>的形式保存在内核cache里，以支持快速查找、插入和删除。这个内核高速cache,就是建立连续的物理内存页，然后在之上建立slab层，简单的说，就是物理上分配好想要的size的内存对象，每次使用都使用空闲的已分配好的对象</p>
 </li>
-<li><p>当调用epoll_ctl往epfd注册百万个fd时，epoll_wait仍然能够快速返回，并有效的讲发生的时间fd返回给用户。原因在于，当我们调用epoll_create时，内核除了帮我们在epoll文件系统新建file节点，同时在内核cache创建红黑树用于存储以后由epoll_ctl传入的fd外，还会再建立一个<strong>**list链表，用于存储准备就绪的事</strong>件。当调用epoll_wait时，仅仅观察这个list链表中有无数据即可。如果list链表中有数据，则返回这个链表中的所有元素；如果list链表中没有数据，则sleep然后等到timeout超时返回。所以，epoll_wait非常高效，而且，通常情况下，即使我们需要监控百万级的fd,但大多数情况下，一次也只返回少量准备就绪的fd而已。因此，每次调用epoll_wait,其仅需要从内核态复制少量的fd到用户空间而已。</p>
+<li><p>当调用epoll_ctl往epfd注册百万个fd时，epoll_wait仍然能够快速返回，并有效的讲发生的时间fd返回给用户。原因在于，当我们调用epoll_create时，内核除了帮我们在epoll文件系统新建file节点，同时在内核cache创建红黑树用于存储以后由epoll_ctl传入的fd外，还会再建立一个<strong>list链表</strong>，用于存储准备就绪的事**件。当调用epoll_wait时，仅仅观察这个list链表中有无数据即可。如果list链表中有数据，则返回这个链表中的所有元素；如果list链表中没有数据，则sleep然后等到timeout超时返回。所以，epoll_wait非常高效，而且，通常情况下，即使我们需要监控百万级的fd,但大多数情况下，一次也只返回少量准备就绪的fd而已。因此，每次调用epoll_wait,其仅需要从内核态复制少量的fd到用户空间而已。</p>
 <p>那么，这个准备继续的list链表是怎么维护的呢？过程如下：</p>
 <p>当我们支持epoll_ctl时，除了把fd放入到epoll文件系统里file对象对应的红黑树之外，还会<strong>给内核中断处理程序注册一个回调函数</strong>，其告诉内核，如果这个fd的中断到了，就把它放到准备就绪的list链表中。</p>
 <p>如此，一颗红黑树、一张准备就绪的fd链表以及少量的内存cache，就帮我们解决了高并发下fd的处理问题。</p>
