@@ -128,7 +128,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/article/" style="font-size: 10px;">article</a> <a href="/tags/it/" style="font-size: 20px;">it</a> <a href="/tags/life/" style="font-size: 13.33px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/lua/" style="font-size: 13.33px;">lua</a> <a href="/tags/技术/" style="font-size: 16.67px;">技术</a> <a href="/tags/技术，-数据结构/" style="font-size: 10px;">技术， 数据结构</a> <a href="/tags/技术，linux/" style="font-size: 10px;">技术，linux</a>
+						<a href="/tags/article/" style="font-size: 10px;">article</a> <a href="/tags/it/" style="font-size: 20px;">it</a> <a href="/tags/life/" style="font-size: 13.33px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/lua/" style="font-size: 13.33px;">lua</a> <a href="/tags/技术/" style="font-size: 16.67px;">技术</a> <a href="/tags/技术，-数据结构/" style="font-size: 13.33px;">技术， 数据结构</a> <a href="/tags/技术，linux/" style="font-size: 10px;">技术，linux</a>
 					</div>
 				</section>
 				
@@ -222,10 +222,10 @@
 
       <div class="body-wrap">
   
-    <article id="post-红黑树" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Epoll" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/02/15/红黑树/" class="article-date">
+      <a href="/2019/02/15/Epoll/" class="article-date">
   	<time datetime="2019-02-15T08:16:21.000Z" itemprop="datePublished">2019-02-15</time>
 </a>
     </div>
@@ -239,111 +239,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/15/红黑树/">红黑树</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="红黑树特点："><a href="#红黑树特点：" class="headerlink" title="红黑树特点："></a>红黑树特点：</h4><ol>
-<li><p>每个节点或者是黑色，或者是红色</p>
-</li>
-<li><p>跟节点是黑色</p>
-</li>
-<li><p>每个叶子节点（NIL）是黑色</p>
-</li>
-<li><p>如果一个节点是红色的，则它的子节点必须是黑色的</p>
-</li>
-<li><p>从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">注意</div><div class="line">特性（3）中的叶子节点，是职位空（NIL或者NULL）的节点</div><div class="line">特性（5）确保没有一条路径会比其他路径长出2倍。因而，红黑树是相对接近平衡的二叉树</div></pre></td></tr></table></figure>
-<ul>
-<li><p>红黑树的时间复杂度为：o(lgn)</p>
-</li>
-<li><p>定理：一个含有n个节点的红黑树的高度至多为2log(n+1)</p>
-</li>
-</ul>
-<h4 id="红黑树的操作："><a href="#红黑树的操作：" class="headerlink" title="红黑树的操作："></a>红黑树的操作：</h4><ol>
-<li>左旋和右旋<ul>
-<li>旋转的目的是让树保持红黑树的特性。</li>
-</ul>
-</li>
-<li>添加<ul>
-<li>第一步：将红黑树当做一颗二叉查找树，将节点插入</li>
-<li>第二步：将插入的节点着色为“红色”</li>
-<li>第三步：通过一系列的旋转和着色等操作，使之重新成为一颗红黑树</li>
-</ul>
-</li>
-<li>删除<ul>
-<li>第一步：将红黑树当做一颗二叉查找树，将节点删除</li>
-<li>第二步：通过“旋转和重新着色”等一系列操作来修正该树，使之重新成为一颗红黑树</li>
-</ul>
-</li>
-</ol>
-<h4 id="红黑树应用："><a href="#红黑树应用：" class="headerlink" title="红黑树应用："></a>红黑树应用：</h4><p><code>主要用它来存储有序的数据 它查询时间复杂度为o(lgn)非常高效</code></p>
-<ul>
-<li>C++的STL中 map和set都是用红黑树实现的</li>
-<li>linux进程调度(Completely Fair Scheduler) 用红黑树管理进程控制块</li>
-<li>epoll在内核中的实现，用红黑树管理事件块</li>
-<li>nginx中，用红黑树管理timer等</li>
-<li>java的TreeSet和TreeMap实现</li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-数据结构/">技术， 数据结构</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/it/">it</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-epoll" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2019/02/15/epoll/" class="article-date">
-  	<time datetime="2019-02-15T08:16:21.000Z" itemprop="datePublished">2019-02-15</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/15/epoll/">epoll</a>
+      <a class="article-title" href="/2019/02/15/Epoll/">epoll</a>
     </h1>
   
 
@@ -489,6 +385,218 @@
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，linux/">技术，linux</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/it/">it</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-HashMap" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/02/15/HashMap/" class="article-date">
+  	<time datetime="2019-02-15T08:16:21.000Z" itemprop="datePublished">2019-02-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/15/HashMap/">HashMap</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="HashMap操作："><a href="#HashMap操作：" class="headerlink" title="HashMap操作："></a>HashMap操作：</h4><ul>
+<li>put()</li>
+<li>get()</li>
+<li>数组扩容</li>
+</ul>
+<h5 id="put"><a href="#put" class="headerlink" title="put()"></a>put()</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>&#123;  </div><div class="line">        <span class="keyword">if</span> (key == null)  </div><div class="line">            <span class="keyword">return</span> putForNullKey(value);  </div><div class="line">        <span class="keyword">int</span> hash = hash(key.hashCode());  </div><div class="line">        <span class="keyword">int</span> i = indexFor(hash, table.length);  </div><div class="line">        <span class="keyword">for</span> (Entry&lt;K,V&gt; e = table[i]; e != null; e = e.next) &#123;  </div><div class="line">            Object k;  </div><div class="line">            <span class="comment">//判断当前确定的索引位置是否存在相同hashcode和相同key的元素，如果存在相同的hashcode和相同的key的元素，那么新值覆盖原来的旧值，并返回旧值。  </span></div><div class="line">            <span class="comment">//如果存在相同的hashcode，那么他们确定的索引位置就相同，这时判断他们的key是否相同，如果不相同，这时就是产生了hash冲突。  </span></div><div class="line">            <span class="comment">//Hash冲突后，那么HashMap的单个bucket里存储的不是一个 Entry，而是一个 Entry 链。  </span></div><div class="line">            <span class="comment">//系统只能必须按顺序遍历每个 Entry，直到找到想搜索的 Entry 为止——如果恰好要搜索的 Entry 位于该 Entry 链的最末端（该 Entry 是最早放入该 bucket 中），  </span></div><div class="line">            <span class="comment">//那系统必须循环到最后才能找到该元素。  </span></div><div class="line">            <span class="keyword">if</span> (e.hash == hash &amp;&amp; ((k = e.key) == key || key.equals(k))) &#123;  </div><div class="line">                V oldValue = e.value;  </div><div class="line">                e.value = value;  </div><div class="line">                <span class="keyword">return</span> oldValue;  </div><div class="line">            &#125;  </div><div class="line">        &#125;  </div><div class="line">        modCount++;  </div><div class="line">        addEntry(hash, key, value, i);  </div><div class="line">        <span class="keyword">return</span> null;  </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h4 id="hash值冲突"><a href="#hash值冲突" class="headerlink" title="hash值冲突"></a>hash值冲突</h4><ul>
+<li><p>冲突发生在put()时</p>
+</li>
+<li><p>从源码可以看出，hash值是通过<strong>hash(key.hashCode())</strong>来获取的</p>
+</li>
+<li><p>当put的元素越来越多时，难免会出现不同的key产生相同的hash值问题，也即是hash冲突，</p>
+</li>
+<li><p>当拿到一个hash值，通过indexFor(hash, table.length)获取数组下标，</p>
+</li>
+<li><p>先查询是否存在该hash值，</p>
+<ul>
+<li><p>若不存在，则直接Entry<v,v>的方式存放在数组中，</v,v></p>
+</li>
+<li><p>若存在，则再对比key是否相同</p>
+<ul>
+<li>若hash值和key都相同 则替换value</li>
+<li>若hash值相同，key不相同，则形成一个单链表，将hash值相同，key不同的元素以Entry<v,v>的方式存在链表中。</v,v></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>这样就解决了hash冲突，这种方法叫做<strong>分离链表法</strong></p>
+</li>
+</ul>
+<h4 id="get"><a href="#get" class="headerlink" title="get()"></a>get()</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(Object key)</span> </span>&#123;   </div><div class="line">       <span class="keyword">if</span> (key == null)   </div><div class="line">           <span class="keyword">return</span> getForNullKey();   </div><div class="line">       <span class="keyword">int</span> hash = hash(key.hashCode());   </div><div class="line">       <span class="keyword">for</span> (Entry&lt;K,V&gt; e = table[indexFor(hash, table.length)];   </div><div class="line">           e != null;   </div><div class="line">           e = e.next) &#123;   </div><div class="line">           Object k;   </div><div class="line">           <span class="keyword">if</span> (e.hash == hash &amp;&amp; ((k = e.key) == key || key.equals(k)))   </div><div class="line">                <span class="keyword">return</span> e.value;   </div><div class="line">        &#125;   </div><div class="line">        <span class="keyword">return</span> null;   </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>从HashMap中get元素时，首先计算 key的hashCode,找到数组中对应位置的某一 元素，然后通过key的equals方法在对应位置的链表中找到需要的元素。</li>
+<li>当hashMap没有出现hash冲突时，没有形成单向链表，get()方法能够直接定位到元素</li>
+<li>当出现冲突后，形成了单向链表，bucket里存放的不在是一个Entry对象，而是一个Entry对象链表，系统只能顺序的遍历每个Entry直到找到想要搜索的Entry为止。</li>
+<li>如果恰好搜索的Entry位于该Entry链表的最末端，那循环换必须要进行到最后一步才能找到元素，</li>
+<li>此时涉及到一个<strong>负载因子</strong>的概念，hashMap默认的负载因子为0.75，这是考虑到存储空间和查询时间上成本 的一个 折中值：<ul>
+<li>增大负载因子，可以减少hash表（就是那个Entry数组）所占的内空间，但会增加查询数据的时间开销，而查询是最频繁的操作（put()和get()都会用到）</li>
+<li>减少负载因子，会提高查询时间，但会增加hash表所 占的内空间，</li>
+<li>结合以上，阈值（threshold)就是在此负载因子（loadFactor）和容量（capacity)对应下允许的最大元素数目。超过这个数目就重新resize，以降低实际的负载因子。</li>
+<li>当容量超出此最大容量时，resize后的HashMap容量是之前的两倍。</li>
+</ul>
+</li>
+</ul>
+<h4 id="hashMap数组扩容"><a href="#hashMap数组扩容" class="headerlink" title="hashMap数组扩容"></a>hashMap数组扩容</h4><ul>
+<li>当hashMap中元素越来越多时，hash冲突的几率也就越来越高，因为数组的长度是固定的。所以为了提高查询效率，就要对hashMap的数组进行扩容。而在HashMap数组扩容后，最消耗性能的点就出现了：原数组中的数据必须重新计算其在新数组中的位置，并放进去，这 就是<strong>resize</strong>。</li>
+<li>那么HashMap什么时候进行扩容呢？当HashMap中的元素个数超过数组大小<em>loadFactor时，就会进行 数组扩容，loadFactor的默认值为0.75，比如数组大小 为16，那么当hashMap中有16X0.75=12的时候就把数组的大小扩展为2</em>X16=32 即扩大 一倍，然后重新计算每个元素在数组中的位置，扩容是需要进行数组复制的，复制数组是非常消耗性能的操作，所以如果我们已经阈值HashMap中的元素个数，那么预设元素的个数能有效的提高HashMap的性能。</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-数据结构/">技术， 数据结构</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/it/">it</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-红黑树" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/02/15/红黑树/" class="article-date">
+  	<time datetime="2019-02-15T08:16:21.000Z" itemprop="datePublished">2019-02-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/15/红黑树/">红黑树</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="红黑树特点："><a href="#红黑树特点：" class="headerlink" title="红黑树特点："></a>红黑树特点：</h4><ol>
+<li><p>每个节点或者是黑色，或者是红色</p>
+</li>
+<li><p>跟节点是黑色</p>
+</li>
+<li><p>每个叶子节点（NIL）是黑色</p>
+</li>
+<li><p>如果一个节点是红色的，则它的子节点必须是黑色的</p>
+</li>
+<li><p>从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">注意</div><div class="line">特性（3）中的叶子节点，是职位空（NIL或者NULL）的节点</div><div class="line">特性（5）确保没有一条路径会比其他路径长出2倍。因而，红黑树是相对接近平衡的二叉树</div></pre></td></tr></table></figure>
+<ul>
+<li><p>红黑树的时间复杂度为：o(lgn)</p>
+</li>
+<li><p>定理：一个含有n个节点的红黑树的高度至多为2log(n+1)</p>
+</li>
+</ul>
+<h4 id="红黑树的操作："><a href="#红黑树的操作：" class="headerlink" title="红黑树的操作："></a>红黑树的操作：</h4><ol>
+<li>左旋和右旋<ul>
+<li>旋转的目的是让树保持红黑树的特性。</li>
+</ul>
+</li>
+<li>添加<ul>
+<li>第一步：将红黑树当做一颗二叉查找树，将节点插入</li>
+<li>第二步：将插入的节点着色为“红色”</li>
+<li>第三步：通过一系列的旋转和着色等操作，使之重新成为一颗红黑树</li>
+</ul>
+</li>
+<li>删除<ul>
+<li>第一步：将红黑树当做一颗二叉查找树，将节点删除</li>
+<li>第二步：通过“旋转和重新着色”等一系列操作来修正该树，使之重新成为一颗红黑树</li>
+</ul>
+</li>
+</ol>
+<h4 id="红黑树应用："><a href="#红黑树应用：" class="headerlink" title="红黑树应用："></a>红黑树应用：</h4><p><code>主要用它来存储有序的数据 它查询时间复杂度为o(lgn)非常高效</code></p>
+<ul>
+<li>C++的STL中 map和set都是用红黑树实现的</li>
+<li>linux进程调度(Completely Fair Scheduler) 用红黑树管理进程控制块</li>
+<li>epoll在内核中的实现，用红黑树管理事件块</li>
+<li>nginx中，用红黑树管理timer等</li>
+<li>java的TreeSet和TreeMap实现</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-数据结构/">技术， 数据结构</a></li></ul>
 	</div>
 
       
@@ -1119,122 +1227,6 @@
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/it/">it</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Lua中的基本函数库" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/22/Lua中的基本函数库/" class="article-date">
-  	<time datetime="2016-09-22T02:04:30.000Z" itemprop="datePublished">2016-09-22</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/22/Lua中的基本函数库/">Lua基本函数库</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>基本函数库为Lua内置的函数库，不需要额外装载</p>
-<p>assert (v [, message])<br>功能：相当于C的断言，<br>参数：<br>v：当表达式v为nil或false将触发错误,<br>message：发生错误时返回的信息，默认为”assertion failed!”</p>
-<hr>
-<p>collectgarbage (opt [, arg])<br>功能：是垃圾收集器的通用接口，用于操作垃圾收集器<br>参数：<br>opt：操作方法标志<br>“Stop”: 停止垃圾收集器<br>“Restart”: 重启垃圾收集器<br>“Collect”: 执行一次全垃圾收集循环<br>“Count”: 返回当前Lua中使用的内存量(以KB为单位)<br>“Step”: 单步执行一个垃圾收集. 步长 “Size” 由参数arg指定　(大型的值需要多步才能完成)，如果要准确指定步长，需要多次实验以达最优效果。如果步长完成一次收集循环，将返回True<br>“Setpause”: 设置 arg/100 的值作为暂定收集的时长<br>“Setstepmul”: 设置 arg/100 的值，作为步长的增幅(即新步长＝旧步长*arg/100)</p>
-<hr>
-<p>dofile (filename)<br>功能：打开并且执行一个lua块,当忽略参数filename时，将执行标准输入设备(stdin)的内容。返回所有块的返回值。当发生错误时，dofile将错误反射给调用者<br>注：dofile不能在保护模式下运行</p>
-<hr>
-<p>error (message [, level])<br>功能：终止正在执行的函数，并返回message的内容作为错误信息(error函数永远都不会返回)<br>通常情况下，error会附加一些错误位置的信息到message头部.<br>Level参数指示获得错误的位置,<br>Level=1[默认]：为调用error位置(文件+行号)<br>Level=2：指出哪个调用error的函数的函数<br>Level=0:不添加错误位置信息</p>
-<hr>
-<p>_G全局环境表(全局变量)<br>功能：记录全局环境的变量值的表 _G._G = _G</p>
-<hr>
-<p>getfenv(f)<br>功能：返回函数f的当前环境表<br>参数：f可以为函数或调用栈的级别，级别1[默认]为当前的函数,级别0或其它值将返回全局环境_G</p>
-<hr>
-<p>getmetatable(object)<br>功能：返回指定对象的元表(若object的元表.<strong>metatable项有值，则返回object的元表.</strong>metatable的值)，当object没有元表时将返回nil</p>
-<hr>
-<p>ipairs (t)<br>功能：返回三个值 迭代函数、表、0<br>多用于穷举表的键名和键值对<br>如：for i,v in ipairs(t) do </p>
-<p>end<br>每次循环将索引赋级i，键值赋给v<br>注：本函数只能用于以数字索引访问的表 如：t={“1”,”cash”}</p>
-<hr>
-<p>load (func [, chunkname])<br>功能：装载一个块中的函数，每次调用func将返回一个连接前一结的字串，在块结尾处将返回nil<br>当没有发生错误时，将返回一个编译完成的块作为函数,否则返回nil加上错误信息，此函数的环境为全局环境<br>chunkname用于错误和调试信息</p>
-<hr>
-<p>loadfile ([filename])<br>功能：与load类似，但装载的是文件或当没有指定filename时装载标准输入(stdin)的内容</p>
-<hr>
-<p>loadstring (string [, chunkname])<br>功能：与load类似，但装载的内容是一个字串<br>如：assert(loadstring(s))()</p>
-<hr>
-<p>next (table [, index])<br>功能：允许程序遍历表中的每一个字段，返回下一索引和该索引的值。<br>参数：table：要遍历的表<br>　　　index：要返回的索引的前一索中的号，当index为nil[]时，将返回第一个索引的值，当索引号为最后一个索引或表为空时将返回nil<br>注：可以用next(t)来检测表是否为空(此函数只能用于以数字索引的表与ipairs相类似)</p>
-<hr>
-<p>ipairs (t)<br>功能：返回三个值 next函数、表、0<br>多用于穷举表的键名和键值对<br>如：for n,v in pairs(t) do </p>
-<p>end<br>每次循环将索引赋级i，键值赋给v<br>注：本函数只能用于以键名索引访问的表 如：t={id=”1”,name=”cash”}</p>
-<hr>
-<p>pcall (f, arg1, ···)<br>功能：在保护模式下调用函数(即发生的错误将不会反射给调用者)<br>当调用函数成功能返回true,失败时将返回false加错误信息</p>
-<hr>
-<p>print (···)<br>功能：简单的以tostring方式格式化输出参数的内容</p>
-<hr>
-<p>rawequal (v1, v2)<br>功能：检测v1是否等于v2，此函数不会调用任何元表的方法</p>
-<hr>
-<p>rawget (table, index)<br>功能：获取表中指定索引的值，此函数不会调用任何元表的方法，成功返回相应的值，当索引不存在时返回nil<br>注：本函数只能用于以数字索引访问的表 如：t={“1”,”cash”}</p>
-<hr>
-<p>rawset (table, index, value)<br>功能：设置表中指定索引的值，此函数不会调用任何元表的方法，此函数将返回table</p>
-<hr>
-<p>select (index, ···)<br>功能：当index为数字将返回所有index大于index的参数:如：select(2,”a”,”b”) 返回 “b”<br>当index为”#”，则返回参数的总个数(不包括index)</p>
-<hr>
-<p>setfenv (f, table)<br>功能：设置函数f的环境表为table<br>参数：f可以为函数或调用栈的级别，级别1[默认]为当前的函数,级别0将设置当前线程的环境表</p>
-<hr>
-<p>setmetatable (table, metatable)<br>功能：为指定的table设置元表metatable，如果metatable为nil则取消table的元表，当metatable有__metatable字段时，将触发错误<br>注：只能为LUA_TTABLE 表类型指定元表</p>
-<hr>
-<p>tonumber (e [, base])<br>功能：尝试将参数e转换为数字，当不能转换时返回nil<br>base(2~36)指出参数e当前使用的进制，默认为10进制，如tonumber(11,2)=3</p>
-<hr>
-<p>tostirng(e)<br>功能：将参数e转换为字符串，此函数将会触发元表的__tostring事件</p>
-<hr>
-<p>type(v)<br>功能：返回参数的类型名(“nil”，”number”, “string”, “boolean”, “table”, “function”, “thread”, “userdata”)</p>
-<hr>
-<p>unpack (list [, i [, j]])<br>功能：返回指定表的索引的值,i为起始索引，j为结束索引<br>注：本函数只能用于以数字索引访问的表,否则只会返回nil 如：t={“1”,”cash”}</p>
-<hr>
-<p>_VERSION<br>功能：返回当前Lua的版本号”Lua 5.1”. </p>
-<hr>
-<p>xpcall (f, err)<br>功能：与pcall类似，在保护模式下调用函数(即发生的错误将不会反射给调用者)<br>但可指定一个新的错误处理函数句柄<br>当调用函数成功能返回true,失败时将返回false加err返回的结果</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lua/">lua</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
 	</div>
 
       
