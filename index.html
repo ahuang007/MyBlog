@@ -128,7 +128,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/article/" style="font-size: 10px;">article</a> <a href="/tags/it/" style="font-size: 20px;">it</a> <a href="/tags/life/" style="font-size: 13.33px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/lua/" style="font-size: 13.33px;">lua</a> <a href="/tags/技术/" style="font-size: 16.67px;">技术</a> <a href="/tags/技术，-数据结构/" style="font-size: 13.33px;">技术， 数据结构</a> <a href="/tags/技术，linux/" style="font-size: 10px;">技术，linux</a>
+						<a href="/tags/article/" style="font-size: 10px;">article</a> <a href="/tags/it/" style="font-size: 20px;">it</a> <a href="/tags/life/" style="font-size: 13.33px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/lua/" style="font-size: 13.33px;">lua</a> <a href="/tags/技术/" style="font-size: 16.67px;">技术</a> <a href="/tags/技术，-c/" style="font-size: 10px;">技术， c++</a> <a href="/tags/技术，-数据结构/" style="font-size: 13.33px;">技术， 数据结构</a> <a href="/tags/技术，linux/" style="font-size: 10px;">技术，linux</a>
 					</div>
 				</section>
 				
@@ -221,6 +221,114 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-HashMap" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/02/17/HashMap/" class="article-date">
+  	<time datetime="2019-02-17T13:16:21.000Z" itemprop="datePublished">2019-02-17</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/17/HashMap/">HashMap</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="HashMap操作："><a href="#HashMap操作：" class="headerlink" title="HashMap操作："></a>HashMap操作：</h4><ul>
+<li>put()</li>
+<li>get()</li>
+<li>数组扩容</li>
+</ul>
+<h5 id="put"><a href="#put" class="headerlink" title="put()"></a>put()</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>&#123;  </div><div class="line">        <span class="keyword">if</span> (key == null)  </div><div class="line">            <span class="keyword">return</span> putForNullKey(value);  </div><div class="line">        <span class="keyword">int</span> hash = hash(key.hashCode());  </div><div class="line">        <span class="keyword">int</span> i = indexFor(hash, table.length);  </div><div class="line">        <span class="keyword">for</span> (Entry&lt;K,V&gt; e = table[i]; e != null; e = e.next) &#123;  </div><div class="line">            Object k;  </div><div class="line">            <span class="comment">//判断当前确定的索引位置是否存在相同hashcode和相同key的元素，如果存在相同的hashcode和相同的key的元素，那么新值覆盖原来的旧值，并返回旧值。  </span></div><div class="line">            <span class="comment">//如果存在相同的hashcode，那么他们确定的索引位置就相同，这时判断他们的key是否相同，如果不相同，这时就是产生了hash冲突。  </span></div><div class="line">            <span class="comment">//Hash冲突后，那么HashMap的单个bucket里存储的不是一个 Entry，而是一个 Entry 链。  </span></div><div class="line">            <span class="comment">//系统只能必须按顺序遍历每个 Entry，直到找到想搜索的 Entry 为止——如果恰好要搜索的 Entry 位于该 Entry 链的最末端（该 Entry 是最早放入该 bucket 中），  </span></div><div class="line">            <span class="comment">//那系统必须循环到最后才能找到该元素。  </span></div><div class="line">            <span class="keyword">if</span> (e.hash == hash &amp;&amp; ((k = e.key) == key || key.equals(k))) &#123;  </div><div class="line">                V oldValue = e.value;  </div><div class="line">                e.value = value;  </div><div class="line">                <span class="keyword">return</span> oldValue;  </div><div class="line">            &#125;  </div><div class="line">        &#125;  </div><div class="line">        modCount++;  </div><div class="line">        addEntry(hash, key, value, i);  </div><div class="line">        <span class="keyword">return</span> null;  </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h4 id="hash值冲突"><a href="#hash值冲突" class="headerlink" title="hash值冲突"></a>hash值冲突</h4><ul>
+<li><p>冲突发生在put()时</p>
+</li>
+<li><p>从源码可以看出，hash值是通过<strong>hash(key.hashCode())</strong>来获取的</p>
+</li>
+<li><p>当put的元素越来越多时，难免会出现不同的key产生相同的hash值问题，也即是hash冲突，</p>
+</li>
+<li><p>当拿到一个hash值，通过indexFor(hash, table.length)获取数组下标，</p>
+</li>
+<li><p>先查询是否存在该hash值，</p>
+<ul>
+<li><p>若不存在，则直接Entry<v,v>的方式存放在数组中，</v,v></p>
+</li>
+<li><p>若存在，则再对比key是否相同</p>
+<ul>
+<li>若hash值和key都相同 则替换value</li>
+<li>若hash值相同，key不相同，则形成一个单链表，将hash值相同，key不同的元素以Entry<v,v>的方式存在链表中。</v,v></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>这样就解决了hash冲突，这种方法叫做<strong>分离链表法</strong></p>
+</li>
+</ul>
+<h4 id="get"><a href="#get" class="headerlink" title="get()"></a>get()</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(Object key)</span> </span>&#123;   </div><div class="line">       <span class="keyword">if</span> (key == null)   </div><div class="line">           <span class="keyword">return</span> getForNullKey();   </div><div class="line">       <span class="keyword">int</span> hash = hash(key.hashCode());   </div><div class="line">       <span class="keyword">for</span> (Entry&lt;K,V&gt; e = table[indexFor(hash, table.length)];   </div><div class="line">           e != null;   </div><div class="line">           e = e.next) &#123;   </div><div class="line">           Object k;   </div><div class="line">           <span class="keyword">if</span> (e.hash == hash &amp;&amp; ((k = e.key) == key || key.equals(k)))   </div><div class="line">                <span class="keyword">return</span> e.value;   </div><div class="line">        &#125;   </div><div class="line">        <span class="keyword">return</span> null;   </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>从HashMap中get元素时，首先计算 key的hashCode,找到数组中对应位置的某一 元素，然后通过key的equals方法在对应位置的链表中找到需要的元素。</li>
+<li>当hashMap没有出现hash冲突时，没有形成单向链表，get()方法能够直接定位到元素</li>
+<li>当出现冲突后，形成了单向链表，bucket里存放的不在是一个Entry对象，而是一个Entry对象链表，系统只能顺序的遍历每个Entry直到找到想要搜索的Entry为止。</li>
+<li>如果恰好搜索的Entry位于该Entry链表的最末端，那循环换必须要进行到最后一步才能找到元素，</li>
+<li>此时涉及到一个<strong>负载因子</strong>的概念，hashMap默认的负载因子为0.75，这是考虑到存储空间和查询时间上成本 的一个 折中值：<ul>
+<li>增大负载因子，可以减少hash表（就是那个Entry数组）所占的内空间，但会增加查询数据的时间开销，而查询是最频繁的操作（put()和get()都会用到）</li>
+<li>减少负载因子，会提高查询时间，但会增加hash表所 占的内空间，</li>
+<li>结合以上，阈值（threshold)就是在此负载因子（loadFactor）和容量（capacity)对应下允许的最大元素数目。超过这个数目就重新resize，以降低实际的负载因子。</li>
+<li>当容量超出此最大容量时，resize后的HashMap容量是之前的两倍。</li>
+</ul>
+</li>
+</ul>
+<h4 id="hashMap数组扩容"><a href="#hashMap数组扩容" class="headerlink" title="hashMap数组扩容"></a>hashMap数组扩容</h4><ul>
+<li>当hashMap中元素越来越多时，hash冲突的几率也就越来越高，因为数组的长度是固定的。所以为了提高查询效率，就要对hashMap的数组进行扩容。而在HashMap数组扩容后，最消耗性能的点就出现了：原数组中的数据必须重新计算其在新数组中的位置，并放进去，这 就是<strong>resize</strong>。</li>
+<li>那么HashMap什么时候进行扩容呢？当HashMap中的元素个数超过数组大小<em>loadFactor时，就会进行 数组扩容，loadFactor的默认值为0.75，比如数组大小 为16，那么当hashMap中有16X0.75=12的时候就把数组的大小扩展为2</em>X16=32 即扩大 一倍，然后重新计算每个元素在数组中的位置，扩容是需要进行数组复制的，复制数组是非常消耗性能的操作，所以如果我们已经阈值HashMap中的元素个数，那么预设元素的个数能有效的提高HashMap的性能。</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-数据结构/">技术， 数据结构</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/it/">it</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Epoll" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -410,114 +518,6 @@
 
 
   
-    <article id="post-HashMap" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2019/02/15/HashMap/" class="article-date">
-  	<time datetime="2019-02-15T08:16:21.000Z" itemprop="datePublished">2019-02-15</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/15/HashMap/">HashMap</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="HashMap操作："><a href="#HashMap操作：" class="headerlink" title="HashMap操作："></a>HashMap操作：</h4><ul>
-<li>put()</li>
-<li>get()</li>
-<li>数组扩容</li>
-</ul>
-<h5 id="put"><a href="#put" class="headerlink" title="put()"></a>put()</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>&#123;  </div><div class="line">        <span class="keyword">if</span> (key == null)  </div><div class="line">            <span class="keyword">return</span> putForNullKey(value);  </div><div class="line">        <span class="keyword">int</span> hash = hash(key.hashCode());  </div><div class="line">        <span class="keyword">int</span> i = indexFor(hash, table.length);  </div><div class="line">        <span class="keyword">for</span> (Entry&lt;K,V&gt; e = table[i]; e != null; e = e.next) &#123;  </div><div class="line">            Object k;  </div><div class="line">            <span class="comment">//判断当前确定的索引位置是否存在相同hashcode和相同key的元素，如果存在相同的hashcode和相同的key的元素，那么新值覆盖原来的旧值，并返回旧值。  </span></div><div class="line">            <span class="comment">//如果存在相同的hashcode，那么他们确定的索引位置就相同，这时判断他们的key是否相同，如果不相同，这时就是产生了hash冲突。  </span></div><div class="line">            <span class="comment">//Hash冲突后，那么HashMap的单个bucket里存储的不是一个 Entry，而是一个 Entry 链。  </span></div><div class="line">            <span class="comment">//系统只能必须按顺序遍历每个 Entry，直到找到想搜索的 Entry 为止——如果恰好要搜索的 Entry 位于该 Entry 链的最末端（该 Entry 是最早放入该 bucket 中），  </span></div><div class="line">            <span class="comment">//那系统必须循环到最后才能找到该元素。  </span></div><div class="line">            <span class="keyword">if</span> (e.hash == hash &amp;&amp; ((k = e.key) == key || key.equals(k))) &#123;  </div><div class="line">                V oldValue = e.value;  </div><div class="line">                e.value = value;  </div><div class="line">                <span class="keyword">return</span> oldValue;  </div><div class="line">            &#125;  </div><div class="line">        &#125;  </div><div class="line">        modCount++;  </div><div class="line">        addEntry(hash, key, value, i);  </div><div class="line">        <span class="keyword">return</span> null;  </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<h4 id="hash值冲突"><a href="#hash值冲突" class="headerlink" title="hash值冲突"></a>hash值冲突</h4><ul>
-<li><p>冲突发生在put()时</p>
-</li>
-<li><p>从源码可以看出，hash值是通过<strong>hash(key.hashCode())</strong>来获取的</p>
-</li>
-<li><p>当put的元素越来越多时，难免会出现不同的key产生相同的hash值问题，也即是hash冲突，</p>
-</li>
-<li><p>当拿到一个hash值，通过indexFor(hash, table.length)获取数组下标，</p>
-</li>
-<li><p>先查询是否存在该hash值，</p>
-<ul>
-<li><p>若不存在，则直接Entry<v,v>的方式存放在数组中，</v,v></p>
-</li>
-<li><p>若存在，则再对比key是否相同</p>
-<ul>
-<li>若hash值和key都相同 则替换value</li>
-<li>若hash值相同，key不相同，则形成一个单链表，将hash值相同，key不同的元素以Entry<v,v>的方式存在链表中。</v,v></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>这样就解决了hash冲突，这种方法叫做<strong>分离链表法</strong></p>
-</li>
-</ul>
-<h4 id="get"><a href="#get" class="headerlink" title="get()"></a>get()</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(Object key)</span> </span>&#123;   </div><div class="line">       <span class="keyword">if</span> (key == null)   </div><div class="line">           <span class="keyword">return</span> getForNullKey();   </div><div class="line">       <span class="keyword">int</span> hash = hash(key.hashCode());   </div><div class="line">       <span class="keyword">for</span> (Entry&lt;K,V&gt; e = table[indexFor(hash, table.length)];   </div><div class="line">           e != null;   </div><div class="line">           e = e.next) &#123;   </div><div class="line">           Object k;   </div><div class="line">           <span class="keyword">if</span> (e.hash == hash &amp;&amp; ((k = e.key) == key || key.equals(k)))   </div><div class="line">                <span class="keyword">return</span> e.value;   </div><div class="line">        &#125;   </div><div class="line">        <span class="keyword">return</span> null;   </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>从HashMap中get元素时，首先计算 key的hashCode,找到数组中对应位置的某一 元素，然后通过key的equals方法在对应位置的链表中找到需要的元素。</li>
-<li>当hashMap没有出现hash冲突时，没有形成单向链表，get()方法能够直接定位到元素</li>
-<li>当出现冲突后，形成了单向链表，bucket里存放的不在是一个Entry对象，而是一个Entry对象链表，系统只能顺序的遍历每个Entry直到找到想要搜索的Entry为止。</li>
-<li>如果恰好搜索的Entry位于该Entry链表的最末端，那循环换必须要进行到最后一步才能找到元素，</li>
-<li>此时涉及到一个<strong>负载因子</strong>的概念，hashMap默认的负载因子为0.75，这是考虑到存储空间和查询时间上成本 的一个 折中值：<ul>
-<li>增大负载因子，可以减少hash表（就是那个Entry数组）所占的内空间，但会增加查询数据的时间开销，而查询是最频繁的操作（put()和get()都会用到）</li>
-<li>减少负载因子，会提高查询时间，但会增加hash表所 占的内空间，</li>
-<li>结合以上，阈值（threshold)就是在此负载因子（loadFactor）和容量（capacity)对应下允许的最大元素数目。超过这个数目就重新resize，以降低实际的负载因子。</li>
-<li>当容量超出此最大容量时，resize后的HashMap容量是之前的两倍。</li>
-</ul>
-</li>
-</ul>
-<h4 id="hashMap数组扩容"><a href="#hashMap数组扩容" class="headerlink" title="hashMap数组扩容"></a>hashMap数组扩容</h4><ul>
-<li>当hashMap中元素越来越多时，hash冲突的几率也就越来越高，因为数组的长度是固定的。所以为了提高查询效率，就要对hashMap的数组进行扩容。而在HashMap数组扩容后，最消耗性能的点就出现了：原数组中的数据必须重新计算其在新数组中的位置，并放进去，这 就是<strong>resize</strong>。</li>
-<li>那么HashMap什么时候进行扩容呢？当HashMap中的元素个数超过数组大小<em>loadFactor时，就会进行 数组扩容，loadFactor的默认值为0.75，比如数组大小 为16，那么当hashMap中有16X0.75=12的时候就把数组的大小扩展为2</em>X16=32 即扩大 一倍，然后重新计算每个元素在数组中的位置，扩容是需要进行数组复制的，复制数组是非常消耗性能的操作，所以如果我们已经阈值HashMap中的元素个数，那么预设元素的个数能有效的提高HashMap的性能。</li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-数据结构/">技术， 数据结构</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/it/">it</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-红黑树" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -597,6 +597,94 @@
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-数据结构/">技术， 数据结构</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/it/">it</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-构造函数和析构函数能否为虚函数" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/02/15/构造函数和析构函数能否为虚函数/" class="article-date">
+  	<time datetime="2019-02-15T08:16:21.000Z" itemprop="datePublished">2019-02-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/15/构造函数和析构函数能否为虚函数/">构造函数和析构函数能否为虚函数</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="C-构造函数和析构函数能否为虚函数？"><a href="#C-构造函数和析构函数能否为虚函数？" class="headerlink" title="C++:构造函数和析构函数能否为虚函数？"></a>C++:构造函数和析构函数能否为虚函数？</h4><ul>
+<li>简单结论： <strong>构造函数不能为虚函数，而析构函数可以且有时必须声明为虚函数</strong></li>
+</ul>
+<ol>
+<li><p>构造函数不能为虚函数</p>
+<p>C++之父 Bjarne Stroustrup 在《The C++ Programming Language》里是怎么说的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">To construct an object, a constructor needs the exact type of the object it is to create. Consequently, a constructor cannot be virtual. Furthermore, a constructor is not quite an ordinary function, In particular, it interacts with memory management in ways ordinary member functions don&apos;t. Consequently, you cannot have a pointer to a constructor.</div><div class="line"></div><div class="line">--- From 《The C++ Progamming Language》15.6.2</div></pre></td></tr></table></figure>
+<p>翻译如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">要构造一个对象，构造函数需要它要创建的对象的确切类型。因此，构造函数不能是虚的。此外，构造函数并不完全是一个普通函数，特别是，它与内存管理的交互方式与普通成员函数不同。因此，您不能有指向构造函数的指针。</div></pre></td></tr></table></figure>
+<ul>
+<li>如果构造函数为虚函数，那么就需要通过vtable来调用，但vtable是在构造函数中才初始化的，而不是在之前。因此，构造函数不能为虚函数。</li>
+</ul>
+</li>
+<li><p>析构函数可以是虚函数 且有时必须是虚函数</p>
+<ul>
+<li>这就好理解了。因为此时vtable已经初始化了；而且我们通常通过基类的指针来销毁对象，如果析构函数不为虚函数的话，就不能正确识别对象类型，从而不能正确销毁对象。</li>
+<li><strong>在用基类指针指向派生类时</strong><ul>
+<li>基类指析构函数为virtual的时候,delete基类指针，会有限调用派生类的析构函数，再调用基类的析构函数。</li>
+<li>基类指析构函数为不为virtual的时候，delete基类指针，只会调用基类的析构函数，而不会调用派生类的析构函数，这样会造成销毁对象的不安全。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>应该为多态基类声明虚析构函数。一旦一个雷包含虚函数，他就应该包含虚析构函数，因为多态性，必定会有基类调用派生类</li>
+<li>如果一个类不做基类或者不需要具有多态性，便不应该为它声明虚析构函数。</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-c/">技术， c++</a></li></ul>
 	</div>
 
       
@@ -802,10 +890,10 @@
 
 
   
-    <article id="post-ddos攻击记录" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-DDos攻击记录" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/08/25/ddos攻击记录/" class="article-date">
+      <a href="/2017/08/25/DDos攻击记录/" class="article-date">
   	<time datetime="2017-08-25T09:03:36.000Z" itemprop="datePublished">2017-08-25</time>
 </a>
     </div>
@@ -819,7 +907,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/25/ddos攻击记录/">ddos攻击记录</a>
+      <a class="article-title" href="/2017/08/25/DDos攻击记录/">DDos攻击记录</a>
     </h1>
   
 
@@ -957,10 +1045,10 @@
 
 
   
-    <article id="post-nginx环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Nginx环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/08/18/nginx环境搭建/" class="article-date">
+      <a href="/2017/08/18/Nginx环境搭建/" class="article-date">
   	<time datetime="2017-08-18T12:42:07.000Z" itemprop="datePublished">2017-08-18</time>
 </a>
     </div>
@@ -974,7 +1062,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/18/nginx环境搭建/">nginx环境搭建</a>
+      <a class="article-title" href="/2017/08/18/Nginx环境搭建/">nginx环境搭建</a>
     </h1>
   
 
@@ -1032,10 +1120,10 @@
 
 
   
-    <article id="post-一个棋牌游戏的开发日记" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-棋牌开发日记(酒城小五张)" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/07/20/一个棋牌游戏的开发日记/" class="article-date">
+      <a href="/2017/07/20/棋牌开发日记(酒城小五张)/" class="article-date">
   	<time datetime="2017-07-20T10:27:00.000Z" itemprop="datePublished">2017-07-20</time>
 </a>
     </div>
@@ -1049,7 +1137,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/20/一个棋牌游戏的开发日记/">一个棋牌游戏的开发日记</a>
+      <a class="article-title" href="/2017/07/20/棋牌开发日记(酒城小五张)/">一个棋牌游戏的开发日记</a>
     </h1>
   
 
@@ -1172,68 +1260,6 @@
 	</div>
 
       
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-daemon守卫进程" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/10/19/daemon守卫进程/" class="article-date">
-  	<time datetime="2016-10-19T08:16:21.000Z" itemprop="datePublished">2016-10-19</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/19/daemon守卫进程/">daemon</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Daemon<br>　　Daemon程序是一直运行的服务端程序，又称为守护进程。通常在系统后台运行，没有控制终端不与前台交互，Daemon程序一般作为系统服务使用。Daemon是长时间运行的进程，通常在系统启动后就运行，在系统关闭时才结束。一般说Daemon程序在后台运行，是因为它没有控制终端，无法和前台的用户交互。Daemon程序一般都作为服务程序使用，等待客户端程序与它通信。我们也把运行的Daemon程序称作守护进程。<br>Daemon程序实现方法<br>　　编写Daemon程序有一些基本的规则，以避免不必要的麻烦。<br>　　1、首先是程序运行后调用fork，并让父进程退出。子进程获得一个新的进程ID，但继承了父进程的进程组ID。<br>　　2、调用setsid创建一个新的session，使自己成为新session和新进程组的leader，并使进程没有控制终端(tty)。<br>　　3、改变当前工作目录至根目录，以免影响可加载文件系统。或者也可以改变到某些特定的目录。<br>　　4、设置文件创建mask为0，避免创建文件时权限的影响。<br>　　5、关闭不需要的打开文件描述符。因为Daemon程序在后台执行，不需要于终端交互，通常就关闭STDIN、STDOUT和STDERR。其它根据实际情况处理。<br>　　另一个问题是Daemon程序不能和终端交互，也就无法使用printf方法输出信息了。我们可以使用syslog机制来实现信息的输出，方便程序的调试。在使用syslog前需要首先启动syslogd程序，关于syslogd程序的使用请参考它的man page，或相关文档，我们就不在这里讨论了。<br>Daemon程序实现例子<br>　　一个Daemon程序的例子 编译运行环境为Redhat Linux 8.0。<br>　　我们新建一个daemontest.c程序，文件内容如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">　　<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line">　　<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line">　　<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></div><div class="line">　　<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line">　　<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line">　　<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;syslog.h&gt;</span></span></div><div class="line">　　<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></div><div class="line">　　<span class="function"><span class="keyword">int</span> <span class="title">daemon_init</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">　　&#123; <span class="keyword">pid_t</span> pid;</div><div class="line">　　<span class="keyword">if</span>((pid = fork()) &lt; <span class="number">0</span>) <span class="keyword">return</span>(<span class="number">-1</span>);</div><div class="line">　　<span class="keyword">else</span> <span class="keyword">if</span>(pid != <span class="number">0</span>) <span class="built_in">exit</span>(<span class="number">0</span>); <span class="comment">/* parent exit */</span></div><div class="line">　　<span class="comment">/* child continues */</span></div><div class="line">　　setsid(); <span class="comment">/* become session leader */</span></div><div class="line">　　chdir(<span class="string">"/"</span>); <span class="comment">/* change working directory */</span></div><div class="line">　　umask(<span class="number">0</span>); <span class="comment">/* clear file mode creation mask */</span></div><div class="line">　　close(<span class="number">0</span>); <span class="comment">/* close stdin */</span></div><div class="line">　　close(<span class="number">1</span>); <span class="comment">/* close stdout */</span></div><div class="line">　　close(<span class="number">2</span>); <span class="comment">/* close stderr */</span></div><div class="line">　　<span class="keyword">return</span>(<span class="number">0</span>); &#125;</div><div class="line">　　<span class="function"><span class="keyword">void</span> <span class="title">sig_term</span><span class="params">(<span class="keyword">int</span> signo)</span></span></div><div class="line">　　&#123; <span class="keyword">if</span>(signo == SIGTERM)</div><div class="line">　　<span class="comment">/* catched signal sent by kill(1) command */</span></div><div class="line">　　&#123; syslog(LOG_INFO, <span class="string">"program terminated."</span>);</div><div class="line">　　closelog(); <span class="built_in">exit</span>(<span class="number">0</span>); &#125;</div><div class="line">　　&#125;</div><div class="line">　　<span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">　　&#123; <span class="keyword">if</span>(daemon_init() == <span class="number">-1</span>)</div><div class="line">　　&#123; <span class="built_in">printf</span>(<span class="string">"can't fork self\n"</span>); <span class="built_in">exit</span>(<span class="number">0</span>); &#125;</div><div class="line">　　openlog(<span class="string">"daemontest"</span>, LOG_PID, LOG_USER);</div><div class="line">　　syslog(LOG_INFO, <span class="string">"program started."</span>);</div><div class="line">　　signal(SIGTERM, sig_term); <span class="comment">/* arrange to catch the signal */</span></div><div class="line">　　<span class="keyword">while</span>(<span class="number">1</span>) &#123; sleep(<span class="number">1</span>); <span class="comment">/* put your main program here */</span> &#125;</div><div class="line">　　<span class="keyword">return</span>(<span class="number">0</span>); &#125;</div></pre></td></tr></table></figure></p>
-<p>　　使用如下命令编译该程序： gcc -Wall -o daemontest daemontest.c编译完成后生成名为daemontest的程序，执行./daemontest来测试程序的运行。<br>　　使用ps axj命令可以显示系统中已运行的daemon程序的信息，包括进程ID、session ID、控制终端等内容。<br>　　部分显示内容：<br>　　PPID PID PGID SID TTY TPGID STAT UID TIME COMMAND<br>　　1098 1101 1101 1074 pts/1 1101 S 0 0:00 -bash 1 1581 777 777 ? -1 S 500 0:13 gedit 1 1650 1650 1650 ? -1 S 500 0:00 ./daemontest 794 1654 1654 794 pts/0 1654 R 500 0:00<br>　　ps axj 从中可以看到daemontest程序运行的进程号为1650。<br>　　我们再来看看/var/log/messages文件中的信息： Apr 7 22:00:32 localhost<br>　　daemontest[1650]: program started.<br>　　我们再使用kill 1650命令来杀死这个进程，/var/log/messages文件中就会有如下的信息：<br>　　Apr 7 22:11:10 localhost daemontest[1650]: program terminated.<br>　　使用ps axj命令检查，发现系统中daemontest进程已经没有了。</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/it/">it</a>
-	</div>
-
 
       
       <div class="clearfix"></div>

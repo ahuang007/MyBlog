@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Lua中的weak表——weak table | 阿黄的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="弱表(weak table)是一个很有意思的东西，像C++/Java等语言是没有的。弱表的定义是：A weak table is a table whose elements are weak references，元素为弱引用的表就叫弱表。有弱引用那么也就有强引用，有引用那么也就有非引用。我们先要厘这些基本概念：变量、值、类型、对象。　　（1）变量与值：Lua是一个dynamically typ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lua中的weak表——weak table">
+<meta property="og:url" content="https://ahuang007.github.io/2016/08/31/Lua弱表/index.html">
+<meta property="og:site_name" content="阿黄的博客">
+<meta property="og:description" content="弱表(weak table)是一个很有意思的东西，像C++/Java等语言是没有的。弱表的定义是：A weak table is a table whose elements are weak references，元素为弱引用的表就叫弱表。有弱引用那么也就有强引用，有引用那么也就有非引用。我们先要厘这些基本概念：变量、值、类型、对象。　　（1）变量与值：Lua是一个dynamically typ">
+<meta property="og:updated_time" content="2016-09-22T02:13:08.631Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lua中的weak表——weak table">
+<meta name="twitter:description" content="弱表(weak table)是一个很有意思的东西，像C++/Java等语言是没有的。弱表的定义是：A weak table is a table whose elements are weak references，元素为弱引用的表就叫弱表。有弱引用那么也就有强引用，有引用那么也就有非引用。我们先要厘这些基本概念：变量、值、类型、对象。　　（1）变量与值：Lua是一个dynamically typ">
+  
+    <link rel="alternative" href="/atom.xml" title="阿黄的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/me.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">ahuang</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">岁月无声</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/photo">相册</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="http://github.com/ahuang007" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/ahuang007" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="http://blog.sina.com.cn/u/2137822390" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/huang-li-jun-7" title="zhihu">zhihu</a>
+					        
+								<a class="mail" target="_blank" href="https://mail.qq.com/" title="mail">mail</a>
+					        
+								<a class="facebook" target="_blank" href="/419637330@qq.com" title="facebook">facebook</a>
+					        
+								<a class="google" target="_blank" href="/419637330@qq.com" title="google">google</a>
+					        
+								<a class="twitter" target="_blank" href="/ahuang27374018" title="twitter">twitter</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/article/" style="font-size: 10px;">article</a> <a href="/tags/it/" style="font-size: 20px;">it</a> <a href="/tags/life/" style="font-size: 13.33px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/lua/" style="font-size: 13.33px;">lua</a> <a href="/tags/技术/" style="font-size: 16.67px;">技术</a> <a href="/tags/技术，-c/" style="font-size: 10px;">技术， c++</a> <a href="/tags/技术，-数据结构/" style="font-size: 13.33px;">技术， 数据结构</a> <a href="/tags/技术，linux/" style="font-size: 10px;">技术，linux</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://luucio.com/">晓晓的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.hawkk.cn/">科长的的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.codingnow.com/">云风的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://tofindme.github.io">易斌的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我就是我，是颜色不一样的烟火…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">ahuang</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img lazy-src="/img/me.jpg" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">ahuang</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">岁月无声</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/photo">相册</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="http://github.com/ahuang007" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/ahuang007" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="http://blog.sina.com.cn/u/2137822390" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/huang-li-jun-7" title="zhihu">zhihu</a>
+			        
+						<a class="mail" target="_blank" href="https://mail.qq.com/" title="mail">mail</a>
+			        
+						<a class="facebook" target="_blank" href="/419637330@qq.com" title="facebook">facebook</a>
+			        
+						<a class="google" target="_blank" href="/419637330@qq.com" title="google">google</a>
+			        
+						<a class="twitter" target="_blank" href="/ahuang27374018" title="twitter">twitter</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Lua弱表" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/31/Lua弱表/" class="article-date">
+  	<time datetime="2016-08-31T11:24:16.000Z" itemprop="datePublished">2016-08-31</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Lua中的weak表——weak table
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lua/">lua</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/it/">it</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>弱表(weak table)是一个很有意思的东西，像C++/Java等语言是没有的。弱表的定义是：A weak table is a table whose elements are weak references，元素为弱引用的表就叫弱表。有弱引用那么也就有强引用，有引用那么也就有非引用。我们先要厘这些基本概念：变量、值、类型、对象。<br>　　（1）变量与值：Lua是一个dynamically typed language，也就是说在Lua中，变量没有类型，它可以是任何东西，而值有类型，所以Lua中没有变量类型定义这种东西。另外，Lua中所有的值都是第一类值(first-class values)。<br>　　（2）Lua有8种基本类型：nil、boolean、number、string、function、userdata、thread、table。其中Nil就是nil变量的类型，nil的主要用途就是一个所有类型之外的类型，用于区别其他7中基本类型。<br>　　（3）对象objects:Tables、functins、threads、userdata。对于这几种值类型，其变量皆为引用类型（变量本身不存储类型数据，而是指向它们）。赋值、参数传递、函数返回等都操作的是这些值的引用，并不产生任何copy行为。<br> 　　<br>　　Lua的垃圾回收机制：gc是很多语言的常见机制，让程序员拜托复杂易出错的内存管理。<br>　　定义：Lua manages memory automatically by running a garbage collector to collect all dead objects (that is, objects that are no longer accessible from Lua).<br>　　三点理解：（1）gc自动运行，也可以手动调用；（2）自动收集的目标是引用计数为0的对象；（3）dead objects：不能访问到的对象，没有引用指向它了，当然就是访问不到的了，也就等同于垃圾内存了。</p>
+<p>　　weak table的定义：<br>　　（1）weak表是一个表，它拥有metatable，并且metatable定义了<strong>mode字段；<br>　　（2）weak表中的引用是弱引用(weak reference)，弱引用不会导致对象的引用计数变化。换言之，如果一个对象只有弱引用指向它，那么gc会自动回收该对象的内存。<br>　　（3）</strong>mode字段可以取以下三个值：k、v、kv。k表示table.key是weak的，也就是table的keys能够被自动gc；v表示table.value是weak的，也就是table的values能被自动gc；kv就是二者的组合。任何情况下，只要key和value中的一个被gc，那么这个key-value pair就被从表中移除了( In any case, if either the key or the value is collected, the whole pair is removed from the table)。<br>　　对于普通的强引用表，当你把对象放进表中的时候，就产生了一个引用，那么即使其他地方没有对表中元素的任何引用，gc也不会被回收这些对象。那么你的选择只有两种：手动释放表元素或者让它们常驻内存。</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">strongTable = &#123;&#125;</div><div class="line">strongTable[<span class="number">1</span>] = <span class="function"><span class="keyword">function</span><span class="params">()</span></span> <span class="built_in">print</span>(<span class="string">"i am the first element"</span>) <span class="keyword">end</span></div><div class="line">strongTable[<span class="number">2</span>] = <span class="function"><span class="keyword">function</span><span class="params">()</span></span> <span class="built_in">print</span>(<span class="string">"i am the second element"</span>) <span class="keyword">end</span></div><div class="line">strongTable[<span class="number">3</span>] = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>&#125;</div><div class="line"></div><div class="line"><span class="built_in">print</span>(<span class="built_in">table</span>.getn(strongTable))            <span class="comment">-- 3</span></div><div class="line"><span class="built_in">collectgarbage</span>()                        </div><div class="line"><span class="built_in">print</span>(<span class="built_in">table</span>.getn(strongTable))            <span class="comment">-- 3</span></div></pre></td></tr></table></figure>
+<p>　　但是，在编程环境中，有时你并不确定手动给一个键值赋nil的时机，而是需要等所有使用者用完以后进行释放，在释放以前，是可以访问这个键值对的。这种时候，weak表就派上用场了。关于weak table的理解，看下面这个小例子：</p>
+<p>　　当然在实际的代码过程中，我们不一定需要手动collectgarbage，因为该函数是在后台自动运行的，它有自己的运行周期和规律，对编程者来说是透明的。<br>　　注意：只有拥有显示构造的对象类型会被自动从weak表中移除，值类型boolean、number是不会自动从weak中移除的。而string类型虽然也由gc来负责清理，但是string没有显示的构造过程，因此也不会自动从weak表中移除，对于string的内存管理有单独的策略。<br>　　基于weak表的简单应用：<br>　　（1）记忆函数：一个相当普遍的编程技术是用空间来换取时间。你可以通过记忆函数结果来进行优化，当你用同样的参数再次调用函数时，它可以自动返回记忆的结果。将函数的输入和输出分别作为key和value放在一个weak table里面，调用函数之前先查看有无现成的结果，有就返回，没有就调用函数，然后将结果存入表中。由于是weak table，此表会定期自动清理掉不再有引用的键值对。<br>　　（2）关联对象属性：Lua本身使用这种技术来保存数组的大小。table库提供了一个函数来设定数组的大小，另一个函数来读取数组的大小。当你设定了一个数组的大小，Lua 将这个尺寸保存在一个私有的weak table，索引就是数组本身，而value就是它的尺寸。<br>　　同样的，当我们需要给任一对象添加一个属性的时候，可以在外部单独做一弱key表，然后以对象为key值，属性值为value。这样即可以方便的访问这个属性，也不影响该对象的释放。而且对象本身没任何修改，能很好的保持对象本身的独立性。<br> 　　（3）带有默认值的表：<br>　　有两种实现方法，第一种方法，使用关联对象属性的方法，将表作为key，默认值作为value，存到一个弱key的weak表中：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">local</span> defaults = &#123;&#125;</div><div class="line"><span class="built_in">setmetatable</span>(defaults, &#123;_mode = <span class="string">"k"</span>&#125;)</div><div class="line"></div><div class="line"><span class="keyword">local</span> mt = &#123;__index = <span class="function"><span class="keyword">function</span><span class="params">(t)</span></span> <span class="keyword">return</span> defaults[t] <span class="keyword">end</span>&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">setDefault</span><span class="params">(t, d)</span></span></div><div class="line">    defaults[t] = d</div><div class="line">    <span class="built_in">setmetatable</span>(t, mt)</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<p>　　第二种方法，针对不同的metatable来进行优化，对于每一个具体的默认值，生成一个与之对应的metatable，然后以默认值为key，metatable为value，存到一个弱value的weak表中：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">metas = &#123;&#125;</div><div class="line"><span class="built_in">setmetatable</span>(metas, &#123;__mode = <span class="string">"v"</span>&#125;)</div><div class="line"></div><div class="line">setdefault = <span class="function"><span class="keyword">function</span> <span class="params">(t, d)</span></span></div><div class="line">    <span class="keyword">local</span> mt = metas[d]</div><div class="line">    <span class="keyword">if</span> mt == <span class="keyword">nil</span> <span class="keyword">then</span></div><div class="line">        mt = &#123;__index = <span class="function"><span class="keyword">function</span><span class="params">()</span></span> <span class="keyword">return</span> d <span class="keyword">end</span>&#125;</div><div class="line">        metas[d] = mt</div><div class="line">    <span class="keyword">end</span></div><div class="line">    <span class="built_in">setmetatable</span>(t, mt)</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<p>　　两种方式各有利弊，第一种方法对于每一个table都需要添加一个键值对，但是公用一个metatable。第二种方法需要许多个不同的metatable，但拥有相同默认值的table共用一个metatable，并且weak表要比第一种方法小。如果你的代码环境中有很多个table，但常用默认值只有那么几种，建议选择第二种方法，否则就选择第一种方法。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/09/06/多挂一个铃铛/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          多挂一个铃铛
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Lua弱表" data-title="Lua中的weak表——weak table" data-url="https://ahuang007.github.io/2016/08/31/Lua弱表/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ahuang007"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 ahuang
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: /
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

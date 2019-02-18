@@ -4,21 +4,33 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>多挂一个铃铛 | 阿黄的博客</title>
+  <title>nginx环境搭建 | 阿黄的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="有一家客栈，虽然环境温馨，服务不错，收费也很公道，但不知为何，还是一直入不敷出。无奈之下，店老板只好找专家求助。
-专家说：“你必须改改店名，叫它‘五个铃铛’，然后在门口多挂一个铃铛，也就是挂上六个铃铛。”店老板虽然觉得这个建议很荒谬，但还是决定尝试一下，就照做了。结果，不少路过客栈的游客，会走进店里，指出这个错误或询问原因。一旦他们走进客栈，往往就会被店里的环境所吸引，店里的生意也就逐渐红火起来。">
+  <meta name="description" content="nginx centos安装教程1.下载lnmp 安装nginx
+
+wget http://mirrors.linuxeye.com/lnmp-full.tar.gz # 包含源码，国内外均可下载
+tar xzf lnmp-full.tar.gz
+cd lnmp # 如果需要修改目录(安装、数据存储、Nginx日志)，请修改options.conf文件
+./install.sh # 请勿sh in">
 <meta property="og:type" content="article">
-<meta property="og:title" content="多挂一个铃铛">
-<meta property="og:url" content="https://ahuang007.github.io/2016/09/06/多挂一个铃铛/index.html">
+<meta property="og:title" content="nginx环境搭建">
+<meta property="og:url" content="https://ahuang007.github.io/2017/08/18/Nginx环境搭建/index.html">
 <meta property="og:site_name" content="阿黄的博客">
-<meta property="og:description" content="有一家客栈，虽然环境温馨，服务不错，收费也很公道，但不知为何，还是一直入不敷出。无奈之下，店老板只好找专家求助。
-专家说：“你必须改改店名，叫它‘五个铃铛’，然后在门口多挂一个铃铛，也就是挂上六个铃铛。”店老板虽然觉得这个建议很荒谬，但还是决定尝试一下，就照做了。结果，不少路过客栈的游客，会走进店里，指出这个错误或询问原因。一旦他们走进客栈，往往就会被店里的环境所吸引，店里的生意也就逐渐红火起来。">
-<meta property="og:updated_time" content="2018-06-06T06:54:04.221Z">
+<meta property="og:description" content="nginx centos安装教程1.下载lnmp 安装nginx
+
+wget http://mirrors.linuxeye.com/lnmp-full.tar.gz # 包含源码，国内外均可下载
+tar xzf lnmp-full.tar.gz
+cd lnmp # 如果需要修改目录(安装、数据存储、Nginx日志)，请修改options.conf文件
+./install.sh # 请勿sh in">
+<meta property="og:updated_time" content="2017-08-18T13:14:53.387Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="多挂一个铃铛">
-<meta name="twitter:description" content="有一家客栈，虽然环境温馨，服务不错，收费也很公道，但不知为何，还是一直入不敷出。无奈之下，店老板只好找专家求助。
-专家说：“你必须改改店名，叫它‘五个铃铛’，然后在门口多挂一个铃铛，也就是挂上六个铃铛。”店老板虽然觉得这个建议很荒谬，但还是决定尝试一下，就照做了。结果，不少路过客栈的游客，会走进店里，指出这个错误或询问原因。一旦他们走进客栈，往往就会被店里的环境所吸引，店里的生意也就逐渐红火起来。">
+<meta name="twitter:title" content="nginx环境搭建">
+<meta name="twitter:description" content="nginx centos安装教程1.下载lnmp 安装nginx
+
+wget http://mirrors.linuxeye.com/lnmp-full.tar.gz # 包含源码，国内外均可下载
+tar xzf lnmp-full.tar.gz
+cd lnmp # 如果需要修改目录(安装、数据存储、Nginx日志)，请修改options.conf文件
+./install.sh # 请勿sh in">
   
     <link rel="alternative" href="/atom.xml" title="阿黄的博客" type="application/atom+xml">
   
@@ -224,11 +236,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-多挂一个铃铛" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Nginx环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/09/06/多挂一个铃铛/" class="article-date">
-  	<time datetime="2016-09-06T13:30:23.000Z" itemprop="datePublished">2016-09-06</time>
+      <a href="/2017/08/18/Nginx环境搭建/" class="article-date">
+  	<time datetime="2017-08-18T12:42:07.000Z" itemprop="datePublished">2017-08-18</time>
 </a>
     </div>
   
@@ -241,7 +253,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      多挂一个铃铛
+      nginx环境搭建
     </h1>
   
 
@@ -250,7 +262,7 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/article/">article</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/it/">it</a></li></ul>
 	</div>
 
         
@@ -261,9 +273,25 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><em>有一家客栈，虽然环境温馨，服务不错，收费也很公道，但不知为何，还是一直入不敷出。无奈之下，店老板只好找专家求助。
-</em>专家说：“你必须改改店名，叫它‘五个铃铛’，然后在门口多挂一个铃铛，也就是挂上六个铃铛。”店老板虽然觉得这个建议很荒谬，但还是决定尝试一下，就照做了。<br><em>结果，不少路过客栈的游客，会走进店里，指出这个错误或询问原因。一旦他们走进客栈，往往就会被店里的环境所吸引，店里的生意也就逐渐红火起来。
-</em>也许，没有几件事，会比纠正别人的错误，更让人乐意去做。</p>
+        <h4 id="nginx-centos安装教程"><a href="#nginx-centos安装教程" class="headerlink" title="nginx centos安装教程"></a>nginx centos安装教程</h4><p>1.下载lnmp 安装nginx</p>
+<ul>
+<li>wget <a href="http://mirrors.linuxeye.com/lnmp-full.tar.gz" target="_blank" rel="external">http://mirrors.linuxeye.com/lnmp-full.tar.gz</a> # 包含源码，国内外均可下载</li>
+<li>tar xzf lnmp-full.tar.gz</li>
+<li>cd lnmp # 如果需要修改目录(安装、数据存储、Nginx日志)，请修改options.conf文件</li>
+<li>./install.sh # 请勿sh install.sh或者bash install.sh这样执行</li>
+</ul>
+<p>2.选择安装nginx 其他看需求安装</p>
+<p>3.nginx 源码安装  </p>
+<ul>
+<li>在lnmp解压后的目录下有个src目录有个nginx的源码包nginx-1.12.1.tar.gz</li>
+<li>tar xzf nginx-1.12.1.tar.gz </li>
+<li>cd nginx-1.12.1</li>
+<li>configure</li>
+<li>./configure –prefix=/usr/local/nginx –user=www –group=www –with-http_stub_status_module –with-stream –with-http_v2_module –with-http_ssl_module –with-http_gzip_static_module –with-http_realip_module –with-http_flv_module –with-http_mp4_module –with-openssl=../openssl-1.0.2l –with-pcre=../pcre-8.41 –with-pcre-jit –with-ld-opt=-ljemalloc</li>
+<li>make &amp;&amp; make install</li>
+</ul>
+<p>4.nginx配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">  worker_processes auto;</div><div class="line"></div><div class="line">  error_log /var/log/nginx/error.log info;</div><div class="line"></div><div class="line">  events &#123;</div><div class="line">    use epoll;</div><div class="line">    worker_connections  65535;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  http&#123;</div><div class="line">    server_tokens off;</div><div class="line">    include       mime.types;</div><div class="line">    default_type  application/octet-stream;</div><div class="line">    charset       utf-8;</div><div class="line">    gzip              on;</div><div class="line">    gzip_min_length   1k;</div><div class="line">    gzip_buffers      4 16k;</div><div class="line">    gzip_comp_level   8;</div><div class="line">    gzip_http_version 1.0;</div><div class="line">    gzip_types        application/json text/javascript  text/plain 		     application/x-javascript text/css application/xml text/xml;</div><div class="line">    </div><div class="line">    client_max_body_size       50M;</div><div class="line">    client_body_buffer_size    256k;</div><div class="line">    proxy_connect_timeout      60;</div><div class="line">    proxy_send_timeout         60;</div><div class="line">    proxy_read_timeout         60;</div><div class="line">    proxy_buffers              4 256k;</div><div class="line">    proxy_buffer_size          256k;</div><div class="line">    proxy_busy_buffers_size    256k;</div><div class="line">    proxy_temp_file_write_size 256k;</div><div class="line">    proxy_intercept_errors on;</div><div class="line"></div><div class="line">	stream &#123;</div><div class="line">		upstream backend &#123; # 如果只有一个就去掉一个</div><div class="line">	    hash $remote_addr consistent;</div><div class="line">	    server 192.168.0.10:8002       max_fails=3 fail_timeout=30s;</div><div class="line">		server 192.168.0.20:8003       max_fails=3 fail_timeout=30s;       </div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	server &#123;</div><div class="line">	    listen 8001;</div><div class="line">	    proxy_connect_timeout 1s;</div><div class="line">	    proxy_timeout 3s;</div><div class="line">	    proxy_pass backend;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -273,18 +301,18 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/09/22/Lua中的基本函数库/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/08/25/DDos攻击记录/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          Lua基本函数库
+          DDos攻击记录
         
       </div>
     </a>
   
   
-    <a href="/2016/08/31/Lua弱表/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Lua中的weak表——weak table</div>
+    <a href="/2017/07/20/棋牌开发日记(酒城小五张)/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">一个棋牌游戏的开发日记</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -319,7 +347,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="多挂一个铃铛" data-title="多挂一个铃铛" data-url="https://ahuang007.github.io/2016/09/06/多挂一个铃铛/"></div>
+	<div class="ds-thread" data-thread-key="Nginx环境搭建" data-title="nginx环境搭建" data-url="https://ahuang007.github.io/2017/08/18/Nginx环境搭建/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

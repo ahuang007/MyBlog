@@ -4,17 +4,36 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Tag: 技术，linux | 阿黄的博客</title>
+  <title>构造函数和析构函数能否为虚函数 | 阿黄的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="EveryDay is the day">
-<meta property="og:type" content="website">
-<meta property="og:title" content="阿黄的博客">
-<meta property="og:url" content="https://ahuang007.github.io/tags/技术，linux/index.html">
+  <meta name="description" content="C++:构造函数和析构函数能否为虚函数？
+简单结论： 构造函数不能为虚函数，而析构函数可以且有时必须声明为虚函数
+
+
+构造函数不能为虚函数
+C++之父 Bjarne Stroustrup 在《The C++ Programming Language》里是怎么说的：
+123To construct an object, a constructor needs the exact type of th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="构造函数和析构函数能否为虚函数">
+<meta property="og:url" content="https://ahuang007.github.io/2019/02/15/构造函数和析构函数能否为虚函数/index.html">
 <meta property="og:site_name" content="阿黄的博客">
-<meta property="og:description" content="EveryDay is the day">
+<meta property="og:description" content="C++:构造函数和析构函数能否为虚函数？
+简单结论： 构造函数不能为虚函数，而析构函数可以且有时必须声明为虚函数
+
+
+构造函数不能为虚函数
+C++之父 Bjarne Stroustrup 在《The C++ Programming Language》里是怎么说的：
+123To construct an object, a constructor needs the exact type of th">
+<meta property="og:updated_time" content="2019-02-18T04:03:19.532Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="阿黄的博客">
-<meta name="twitter:description" content="EveryDay is the day">
+<meta name="twitter:title" content="构造函数和析构函数能否为虚函数">
+<meta name="twitter:description" content="C++:构造函数和析构函数能否为虚函数？
+简单结论： 构造函数不能为虚函数，而析构函数可以且有时必须声明为虚函数
+
+
+构造函数不能为虚函数
+C++之父 Bjarne Stroustrup 在《The C++ Programming Language》里是怎么说的：
+123To construct an object, a constructor needs the exact type of th">
   
     <link rel="alternative" href="/atom.xml" title="阿黄的博客" type="application/atom+xml">
   
@@ -220,57 +239,149 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-构造函数和析构函数能否为虚函数" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/02/15/Epoll/" class="archive-article-date">
-  	<time datetime="2019-02-15T08:16:21.000Z" itemprop="datePublished">Feb 15</time>
+    <div class="article-meta">
+      <a href="/2019/02/15/构造函数和析构函数能否为虚函数/" class="article-date">
+  	<time datetime="2019-02-15T08:16:21.000Z" itemprop="datePublished">2019-02-15</time>
 </a>
-        </div>
-    	 
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/02/15/Epoll/">epoll</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      构造函数和析构函数能否为虚函数
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，linux/">技术，linux</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-c/">技术， c++</a></li></ul>
 	</div>
 
-          
+        
 	<div class="article-category tagcloud">
 	<a class="article-category-link" href="/categories/it/">it</a>
 	</div>
 
 
-        </div>
         <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
+      </div>
+      
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="C-构造函数和析构函数能否为虚函数？"><a href="#C-构造函数和析构函数能否为虚函数？" class="headerlink" title="C++:构造函数和析构函数能否为虚函数？"></a>C++:构造函数和析构函数能否为虚函数？</h4><ul>
+<li>简单结论： <strong>构造函数不能为虚函数，而析构函数可以且有时必须声明为虚函数</strong></li>
+</ul>
+<ol>
+<li><p>构造函数不能为虚函数</p>
+<p>C++之父 Bjarne Stroustrup 在《The C++ Programming Language》里是怎么说的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">To construct an object, a constructor needs the exact type of the object it is to create. Consequently, a constructor cannot be virtual. Furthermore, a constructor is not quite an ordinary function, In particular, it interacts with memory management in ways ordinary member functions don&apos;t. Consequently, you cannot have a pointer to a constructor.</div><div class="line"></div><div class="line">--- From 《The C++ Progamming Language》15.6.2</div></pre></td></tr></table></figure>
+<p>翻译如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">要构造一个对象，构造函数需要它要创建的对象的确切类型。因此，构造函数不能是虚的。此外，构造函数并不完全是一个普通函数，特别是，它与内存管理的交互方式与普通成员函数不同。因此，您不能有指向构造函数的指针。</div></pre></td></tr></table></figure>
+<ul>
+<li>如果构造函数为虚函数，那么就需要通过vtable来调用，但vtable是在构造函数中才初始化的，而不是在之前。因此，构造函数不能为虚函数。</li>
+</ul>
+</li>
+<li><p>析构函数可以是虚函数 且有时必须是虚函数</p>
+<ul>
+<li>这就好理解了。因为此时vtable已经初始化了；而且我们通常通过基类的指针来销毁对象，如果析构函数不为虚函数的话，就不能正确识别对象类型，从而不能正确销毁对象。</li>
+<li><strong>在用基类指针指向派生类时</strong><ul>
+<li>基类指析构函数为virtual的时候,delete基类指针，会有限调用派生类的析构函数，再调用基类的析构函数。</li>
+<li>基类指析构函数为不为virtual的时候，delete基类指针，只会调用基类的析构函数，而不会调用派生类的析构函数，这样会造成销毁对象的不安全。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>应该为多态基类声明虚析构函数。一旦一个雷包含虚函数，他就应该包含虚析构函数，因为多态性，必定会有基类调用派生类</li>
+<li>如果一个类不做基类或者不需要具有多态性，便不应该为它声明虚析构函数。</li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/02/15/红黑树/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          红黑树
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/31/Family/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Family</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="构造函数和析构函数能否为虚函数" data-title="构造函数和析构函数能否为虚函数" data-url="https://ahuang007.github.io/2019/02/15/构造函数和析构函数能否为虚函数/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ahuang007"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
 
 </div>
       <footer id="footer">
@@ -296,9 +407,9 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		root: /
