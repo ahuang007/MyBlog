@@ -128,7 +128,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/article/" style="font-size: 10px;">article</a> <a href="/tags/it/" style="font-size: 20px;">it</a> <a href="/tags/life/" style="font-size: 13.33px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/lua/" style="font-size: 13.33px;">lua</a> <a href="/tags/技术/" style="font-size: 16.67px;">技术</a> <a href="/tags/技术，-c/" style="font-size: 10px;">技术， c++</a> <a href="/tags/技术，-数据结构/" style="font-size: 13.33px;">技术， 数据结构</a> <a href="/tags/技术，linux/" style="font-size: 10px;">技术，linux</a>
+						<a href="/tags/article/" style="font-size: 10px;">article</a> <a href="/tags/it/" style="font-size: 20px;">it</a> <a href="/tags/life/" style="font-size: 13.33px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/lua/" style="font-size: 13.33px;">lua</a> <a href="/tags/技术/" style="font-size: 16.67px;">技术</a> <a href="/tags/技术，-c/" style="font-size: 10px;">技术， c++</a> <a href="/tags/技术，-数据结构/" style="font-size: 13.33px;">技术， 数据结构</a> <a href="/tags/技术，-算法/" style="font-size: 10px;">技术， 算法</a> <a href="/tags/技术，linux/" style="font-size: 10px;">技术，linux</a>
 					</div>
 				</section>
 				
@@ -221,6 +221,243 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-TopK" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/02/18/TopK/" class="article-date">
+  	<time datetime="2019-02-18T07:16:21.000Z" itemprop="datePublished">2019-02-18</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/18/TopK/">TopK</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="TopK问题描述"><a href="#TopK问题描述" class="headerlink" title="TopK问题描述"></a>TopK问题描述</h4><p>从arr[1,n]这n个数中，找出最大的k个数，这就是经典的TopK问题</p>
+<p>示例：从arr[1,12]={5,3,7,1,8,2,9,4,7,2,6,6} 这n=12个数中,找出最大的k=5个</p>
+<h5 id="（一）排序"><a href="#（一）排序" class="headerlink" title="（一）排序"></a>（一）排序</h5><p>​    思路：将n个数排序之后，取出最大的k个，即为所得。</p>
+<ul>
+<li><p>伪代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sort(arr,<span class="number">1</span>,n);</div><div class="line"><span class="keyword">return</span> arr[<span class="number">1</span>,k];</div></pre></td></tr></table></figure>
+</li>
+<li><p>时间复杂度： o(n*lg(n))  <code>nlgn为快排的时间复杂度</code></p>
+</li>
+<li><p>分析：明明只需要TopK，却将全局都排序了，这也是这个方法复杂度非常高的原因。</p>
+</li>
+<li><p>优化思路：那能不能不全局排序，而只局部排序呢？见方法（二）</p>
+</li>
+</ul>
+<h5 id="（二）局部排序"><a href="#（二）局部排序" class="headerlink" title="（二）局部排序"></a>（二）局部排序</h5><p>​    思路：不再全部排序，只对最大的k个排序.</p>
+<p>​    冒泡法，每冒一个泡，找出最大值，冒k个泡，就能得到TopK.</p>
+<ul>
+<li><p>伪代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(i=<span class="number">1</span> to k)&#123;</div><div class="line">    bubble_find_max(arr);</div><div class="line">&#125;</div><div class="line"><span class="keyword">return</span> arr[<span class="number">1</span>,k];</div></pre></td></tr></table></figure>
+</li>
+<li><p>时间复杂度o(n*k)</p>
+</li>
+<li><p>分析：冒泡，将全局排序优化为了部分排序，非TopK的元素是不需要排序的，节省了计算资源。</p>
+</li>
+<li><p>优化思路：这最大的K个是不是也不需要排序呢？见方法（三）</p>
+</li>
+</ul>
+<h5 id="（三）堆"><a href="#（三）堆" class="headerlink" title="（三）堆"></a>（三）堆</h5><p>​    思路:只找到TopK,不排序TopK</p>
+<p>​    先用前K个元素生成一个小顶堆，这个小顶堆用于存储当前最大的k个元素。</p>
+<p>​    接着，从第k+1个元素开始扫描，和堆顶（堆中最小的元素）比较，如果被扫描的元素大于堆顶，则替换堆顶的元素，并调整堆，以保证堆内的k个元素总是当前最大的k个元素。</p>
+<p>​    直到扫描完所有n-k个元素。最终堆中的k个元素，就是TopK.</p>
+<ul>
+<li><p>伪代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">heap[k] = make_heap(arr[<span class="number">1</span>,k])</div><div class="line"><span class="keyword">for</span>(i=k+<span class="number">1</span> to n)&#123;</div><div class="line">    adjust_heap(heap[k], arr[i]);</div><div class="line">&#125;</div><div class="line"><span class="keyword">return</span> heap[k];</div></pre></td></tr></table></figure>
+</li>
+<li><p>时间复杂度：o(n*lg(k))</p>
+</li>
+<li><p>分析：堆，将冒泡的TopK排序优化为了TopK不排序，节省了计算资源。</p>
+</li>
+<li><p>优化思路： 有没有更快的呢？ 见方法（四）</p>
+</li>
+</ul>
+<h5 id="（四）随机选择"><a href="#（四）随机选择" class="headerlink" title="（四）随机选择"></a>（四）随机选择</h5><ul>
+<li><p>时间复杂度o(n)</p>
+</li>
+<li><p>快速排序</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">quick_sort</span><span class="params">(<span class="keyword">int</span>[]arr, <span class="keyword">int</span> low, <span class="keyword">int</span> high)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(low == high) <span class="keyword">return</span>;</div><div class="line">    <span class="keyword">int</span> i = partition(arr, low, high);</div><div class="line">    quit_sort(arr, low, i<span class="number">-1</span>);</div><div class="line">    quick_sort(arr, i+<span class="number">1</span>, high);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>算法核心思想：分治法.</li>
+<li>时间复杂度：o(n*lg(n))</li>
+</ul>
+</li>
+<li><p>分治法（Divide&amp;Conquer）：把一个大的问题，转化为若干个子问题，每个子问题<strong>“都”</strong>解决了，大的问题便随之解决了。<code>快排是分治法</code></p>
+<p>快速排序递归时，先通过partition把数组分隔为两个部分，两个部分“都”要再次递归。</p>
+</li>
+<li><p>减治法（Reduce&amp;Conquer）：把一个大的问题，转化为若干个子问题，这些子问题中<strong>“只”</strong>解决一个，大的问题便随之解决了。<code>二分查找是减治法</code></p>
+</li>
+<li><p>二分查找（binary_search）BS</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">BS</span><span class="params">(<span class="keyword">int</span>[]arr, <span class="keyword">int</span> low, <span class="keyword">int</span> high, <span class="keyword">int</span> target)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(low&gt;high) <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    mid=(low+high)/<span class="number">2</span>;</div><div class="line">    <span class="keyword">if</span>(arr[mid]==target) <span class="keyword">return</span> mid;</div><div class="line">    <span class="keyword">if</span>(arr[mid] &gt; target)</div><div class="line">    	<span class="keyword">return</span> BS(arr,low,mid<span class="number">-1</span>,target);</div><div class="line">    <span class="keyword">else</span> </div><div class="line">    	<span class="keyword">return</span> BS(arr,mid+<span class="number">1</span>,high,target);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>一个大的问题，可以用一个mid元素，分成左半区，右半区两个问题。而左右两个问题，只需要解决其中一个，递归一次，就能够解决二分查找全局的问题。</li>
+<li>时间复杂度：o(lg(n))</li>
+</ul>
+</li>
+<li><p>随机选择(randomized_select) RS</p>
+<ul>
+<li><p>思路： i = partition(arr,1,n): </p>
+<ul>
+<li>左半区比t大，右半区比t小，中间是t</li>
+<li>partition的事件复杂度：o(n)</li>
+</ul>
+<p>如果i&gt;k,则说明arr[i]左边的元素都大于k,于是只递归arr[1,i-1]里第k大的元素即可。</p>
+<p>如果i&lt;k，则说明第k大的元素在arr[i]的右边，于是只递归arr[i+1,n]里第k-i大的元素即可。</p>
+</li>
+<li><p>伪代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">RS</span><span class="params">(arr,low,high,k)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(low==high) <span class="keyword">return</span> arr[low];</div><div class="line">    i=parition(arr,low,high);</div><div class="line">    temp = i-low; <span class="comment">// 数组前半部分元素个数</span></div><div class="line">    <span class="keyword">if</span>(temp&gt;=k)</div><div class="line">        <span class="keyword">return</span> RS(arr,low,i<span class="number">-1</span>,k);<span class="comment">//求前半部分第k大</span></div><div class="line">    <span class="keyword">else</span></div><div class="line">        <span class="keyword">return</span> RS(arr,i+<span class="number">1</span>,high,k<span class="number">-1</span>);<span class="comment">//求后半部分第k-i大</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>TopK思路优化过程：</p>
+<ul>
+<li>全局排序,o(n*lg(n))</li>
+<li>局部排序，只排TopK个数。o(n*k)</li>
+<li>堆，Topk个数也不用排序了。o(n*lg(k))</li>
+<li>分治法,每个分支“都要”递归，如：快速排序，o(n*lg(n))</li>
+<li>减治法,“只要”递归一个分支，如：二分查找，o(lg(n))</li>
+<li>随机选择+partition,o(n)</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-算法/">技术， 算法</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/it/">it</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-构造函数和析构函数能否为虚函数" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/02/18/构造函数和析构函数能否为虚函数/" class="article-date">
+  	<time datetime="2019-02-18T04:06:21.000Z" itemprop="datePublished">2019-02-18</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/18/构造函数和析构函数能否为虚函数/">构造函数和析构函数能否为虚函数</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="C-构造函数和析构函数能否为虚函数？"><a href="#C-构造函数和析构函数能否为虚函数？" class="headerlink" title="C++:构造函数和析构函数能否为虚函数？"></a>C++:构造函数和析构函数能否为虚函数？</h4><ul>
+<li>简单结论： <strong>构造函数不能为虚函数，而析构函数可以且有时必须声明为虚函数</strong></li>
+</ul>
+<ol>
+<li><p>构造函数不能为虚函数</p>
+<p>C++之父 Bjarne Stroustrup 在《The C++ Programming Language》里是怎么说的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">To construct an object, a constructor needs the exact type of the object it is to create. Consequently, a constructor cannot be virtual. </div><div class="line">Furthermore, a constructor is not quite an ordinary function, In particular, it interacts with memory management in ways ordinary member functions don&apos;t. </div><div class="line">Consequently, you cannot have a pointer to a constructor.</div><div class="line"></div><div class="line">--- From 《The C++ Progamming Language》15.6.2</div></pre></td></tr></table></figure>
+<p>翻译如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">要构造一个对象，构造函数需要它要创建的对象的确切类型。因此，构造函数不能是虚的。</div><div class="line">此外，构造函数并不完全是一个普通函数，特别是，它与内存管理的交互方式与普通成员函数不同。</div><div class="line">因此，您不能有指向构造函数的指针。</div></pre></td></tr></table></figure>
+<ul>
+<li>如果构造函数为虚函数，那么就需要通过vtable来调用，但vtable是在构造函数中才初始化的，而不是在之前。因此，构造函数不能为虚函数。</li>
+</ul>
+</li>
+<li><p>析构函数可以是虚函数 且有时必须是虚函数</p>
+<ul>
+<li>这就好理解了。因为此时vtable已经初始化了；而且我们通常通过基类的指针来销毁对象，如果析构函数不为虚函数的话，就不能正确识别对象类型，从而不能正确销毁对象。</li>
+<li><strong>在用基类指针指向派生类时</strong><ul>
+<li>基类指析构函数为virtual的时候,delete基类指针，会有限调用派生类的析构函数，再调用基类的析构函数。</li>
+<li>基类指析构函数为不为virtual的时候，delete基类指针，只会调用基类的析构函数，而不会调用派生类的析构函数，这样会造成销毁对象的不安全。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>应该为多态基类声明虚析构函数。一旦一个类包含虚函数，他就应该包含虚析构函数，因为多态性，必定会有基类调用派生类</li>
+<li>如果一个类不做基类或者不需要具有多态性，便不应该为它声明虚析构函数。</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-c/">技术， c++</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/it/">it</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-HashMap" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -597,94 +834,6 @@
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-数据结构/">技术， 数据结构</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/it/">it</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-构造函数和析构函数能否为虚函数" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2019/02/15/构造函数和析构函数能否为虚函数/" class="article-date">
-  	<time datetime="2019-02-15T08:16:21.000Z" itemprop="datePublished">2019-02-15</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/15/构造函数和析构函数能否为虚函数/">构造函数和析构函数能否为虚函数</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="C-构造函数和析构函数能否为虚函数？"><a href="#C-构造函数和析构函数能否为虚函数？" class="headerlink" title="C++:构造函数和析构函数能否为虚函数？"></a>C++:构造函数和析构函数能否为虚函数？</h4><ul>
-<li>简单结论： <strong>构造函数不能为虚函数，而析构函数可以且有时必须声明为虚函数</strong></li>
-</ul>
-<ol>
-<li><p>构造函数不能为虚函数</p>
-<p>C++之父 Bjarne Stroustrup 在《The C++ Programming Language》里是怎么说的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">To construct an object, a constructor needs the exact type of the object it is to create. Consequently, a constructor cannot be virtual. Furthermore, a constructor is not quite an ordinary function, In particular, it interacts with memory management in ways ordinary member functions don&apos;t. Consequently, you cannot have a pointer to a constructor.</div><div class="line"></div><div class="line">--- From 《The C++ Progamming Language》15.6.2</div></pre></td></tr></table></figure>
-<p>翻译如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">要构造一个对象，构造函数需要它要创建的对象的确切类型。因此，构造函数不能是虚的。此外，构造函数并不完全是一个普通函数，特别是，它与内存管理的交互方式与普通成员函数不同。因此，您不能有指向构造函数的指针。</div></pre></td></tr></table></figure>
-<ul>
-<li>如果构造函数为虚函数，那么就需要通过vtable来调用，但vtable是在构造函数中才初始化的，而不是在之前。因此，构造函数不能为虚函数。</li>
-</ul>
-</li>
-<li><p>析构函数可以是虚函数 且有时必须是虚函数</p>
-<ul>
-<li>这就好理解了。因为此时vtable已经初始化了；而且我们通常通过基类的指针来销毁对象，如果析构函数不为虚函数的话，就不能正确识别对象类型，从而不能正确销毁对象。</li>
-<li><strong>在用基类指针指向派生类时</strong><ul>
-<li>基类指析构函数为virtual的时候,delete基类指针，会有限调用派生类的析构函数，再调用基类的析构函数。</li>
-<li>基类指析构函数为不为virtual的时候，delete基类指针，只会调用基类的析构函数，而不会调用派生类的析构函数，这样会造成销毁对象的不安全。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
-<li>应该为多态基类声明虚析构函数。一旦一个雷包含虚函数，他就应该包含虚析构函数，因为多态性，必定会有基类调用派生类</li>
-<li>如果一个类不做基类或者不需要具有多态性，便不应该为它声明虚析构函数。</li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-c/">技术， c++</a></li></ul>
 	</div>
 
       
@@ -1090,164 +1239,6 @@
 </ul>
 <p>4.nginx配置</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">  worker_processes auto;</div><div class="line"></div><div class="line">  error_log /var/log/nginx/error.log info;</div><div class="line"></div><div class="line">  events &#123;</div><div class="line">    use epoll;</div><div class="line">    worker_connections  65535;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  http&#123;</div><div class="line">    server_tokens off;</div><div class="line">    include       mime.types;</div><div class="line">    default_type  application/octet-stream;</div><div class="line">    charset       utf-8;</div><div class="line">    gzip              on;</div><div class="line">    gzip_min_length   1k;</div><div class="line">    gzip_buffers      4 16k;</div><div class="line">    gzip_comp_level   8;</div><div class="line">    gzip_http_version 1.0;</div><div class="line">    gzip_types        application/json text/javascript  text/plain 		     application/x-javascript text/css application/xml text/xml;</div><div class="line">    </div><div class="line">    client_max_body_size       50M;</div><div class="line">    client_body_buffer_size    256k;</div><div class="line">    proxy_connect_timeout      60;</div><div class="line">    proxy_send_timeout         60;</div><div class="line">    proxy_read_timeout         60;</div><div class="line">    proxy_buffers              4 256k;</div><div class="line">    proxy_buffer_size          256k;</div><div class="line">    proxy_busy_buffers_size    256k;</div><div class="line">    proxy_temp_file_write_size 256k;</div><div class="line">    proxy_intercept_errors on;</div><div class="line"></div><div class="line">	stream &#123;</div><div class="line">		upstream backend &#123; # 如果只有一个就去掉一个</div><div class="line">	    hash $remote_addr consistent;</div><div class="line">	    server 192.168.0.10:8002       max_fails=3 fail_timeout=30s;</div><div class="line">		server 192.168.0.20:8003       max_fails=3 fail_timeout=30s;       </div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	server &#123;</div><div class="line">	    listen 8001;</div><div class="line">	    proxy_connect_timeout 1s;</div><div class="line">	    proxy_timeout 3s;</div><div class="line">	    proxy_pass backend;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/it/">it</a></li></ul>
-	</div>
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-棋牌开发日记(酒城小五张)" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/07/20/棋牌开发日记(酒城小五张)/" class="article-date">
-  	<time datetime="2017-07-20T10:27:00.000Z" itemprop="datePublished">2017-07-20</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/20/棋牌开发日记(酒城小五张)/">一个棋牌游戏的开发日记</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="项目：-酒城小五张"><a href="#项目：-酒城小五张" class="headerlink" title="项目： 酒城小五张"></a>项目： 酒城小五张</h3><h4 id="2017-7-11"><a href="#2017-7-11" class="headerlink" title="2017.7.11"></a>2017.7.11</h4><ol>
-<li><del>熟悉游戏规则</del></li>
-<li><del>初步整理代码和proto</del></li>
-</ol>
-<h4 id="2017-7-12"><a href="#2017-7-12" class="headerlink" title="2017.7.12"></a>2017.7.12</h4><ol>
-<li><del>基础逻辑实现</del><ul>
-<li><del>洗牌</del></li>
-<li><del>发牌</del></li>
-<li><del>摸牌</del></li>
-<li><del>打牌</del></li>
-</ul>
-</li>
-<li><del>网络情况出相同的牌 不再报错 只打log</del></li>
-</ol>
-<h4 id="20170713"><a href="#20170713" class="headerlink" title="20170713"></a>20170713</h4><ol>
-<li><del>操作实现</del><ul>
-<li><del>碰</del></li>
-<li><del>招</del></li>
-<li><del>垅</del></li>
-</ul>
-</li>
-<li><del>胡牌判断初步实现</del></li>
-</ol>
-<h3 id="20170714"><a href="#20170714" class="headerlink" title="20170714"></a>20170714</h3><ol>
-<li><del>血战模式实现</del><ul>
-<li>玩家增加胡牌状态 </li>
-<li><del>下一家的判断修改</del></li>
-<li><del>计分的修改 （自摸只扣剩余未胡玩家的钱）</del></li>
-</ul>
-</li>
-</ol>
-<p>####20170715</p>
-<ol>
-<li><del>玩家中途进入房间准备</del><ul>
-<li><del>积分只记本局参与的玩家</del></li>
-<li><del>进入同步牌消息 发牌要通知这些旁观的玩家</del></li>
-</ul>
-</li>
-<li><p><del>解散房间相关逻辑</del></p>
-<ul>
-<li><p><del>投票解散 只给本局参与的玩家</del></p>
-</li>
-<li><p><del>本局已经胡的需要结算且要有回放</del></p>
-</li>
-</ul>
-</li>
-</ol>
-<p>####20170717</p>
-<ol>
-<li><del>胡牌计分判断</del><ul>
-<li><del>胡牌牌组</del></li>
-<li><del>计算单个牌组胡息数</del></li>
-<li><del>计算总胡息数（手牌牌组+cardGroups）</del></li>
-<li><del>判断胡牌条件</del></li>
-<li><del>胡牌结算</del></li>
-</ul>
-</li>
-</ol>
-<h4 id="20170718"><a href="#20170718" class="headerlink" title="20170718"></a>20170718</h4><ol>
-<li><del>胡牌结算联调</del></li>
-<li><del>胡牌计分验证</del><ul>
-<li><del>碰胡 坎牌 计分错误</del></li>
-</ul>
-</li>
-</ol>
-<h4 id="20170719"><a href="#20170719" class="headerlink" title="20170719"></a>20170719</h4><ol>
-<li><del>庄家规则</del><ul>
-<li>第一个胡牌的人 </li>
-<li><del>一炮多响 则放炮玩家做庄</del><ul>
-<li><del>一炮多响规则实现</del></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>选项</p>
-<ul>
-<li><del>一胡起胡</del></li>
-<li><del>三胡起胡</del></li>
-<li><del>自摸翻倍</del></li>
-<li><del>查叫</del><ul>
-<li><del>特殊情况的胡牌查叫(招胡)</del><ul>
-<li><del>aaa + bb + a(招)</del></li>
-<li><del>aaaa + b + b(垅)</del></li>
-<li><del>aaaa 招 + b + b（招）</del></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h4 id="20170720"><a href="#20170720" class="headerlink" title="20170720"></a>20170720</h4><ol>
-<li><del>checkCardGroups 代码优化</del></li>
-<li><del>过张</del></li>
-<li><del>重连玩家状态同步（准备）</del></li>
-<li><del>所有原来用playersById或者playersByChair都要检查一下是否正确</del></li>
-<li><del>reason 修改 有单局结算和没有单局结算</del></li>
-</ol>
-<h4 id="20170721"><a href="#20170721" class="headerlink" title="20170721"></a>20170721</h4><ol>
-<li>测试以及bug修复</li>
-<li>代码整理与优化</li>
-</ol>
 
       
     </div>
