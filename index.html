@@ -128,7 +128,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/article/" style="font-size: 10px;">article</a> <a href="/tags/it/" style="font-size: 20px;">it</a> <a href="/tags/life/" style="font-size: 13.33px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/lua/" style="font-size: 13.33px;">lua</a> <a href="/tags/技术/" style="font-size: 16.67px;">技术</a> <a href="/tags/技术，-c/" style="font-size: 10px;">技术， c++</a> <a href="/tags/技术，-数据结构/" style="font-size: 13.33px;">技术， 数据结构</a> <a href="/tags/技术，-算法/" style="font-size: 10px;">技术， 算法</a> <a href="/tags/技术，linux/" style="font-size: 10px;">技术，linux</a>
+						<a href="/tags/article/" style="font-size: 10px;">article</a> <a href="/tags/it/" style="font-size: 20px;">it</a> <a href="/tags/life/" style="font-size: 13.33px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/lua/" style="font-size: 13.33px;">lua</a> <a href="/tags/技术/" style="font-size: 16.67px;">技术</a> <a href="/tags/技术，-c/" style="font-size: 10px;">技术， c++</a> <a href="/tags/技术，-数据库/" style="font-size: 10px;">技术， 数据库</a> <a href="/tags/技术，-数据结构/" style="font-size: 13.33px;">技术， 数据结构</a> <a href="/tags/技术，-算法/" style="font-size: 10px;">技术， 算法</a> <a href="/tags/技术，linux/" style="font-size: 10px;">技术，linux</a>
 					</div>
 				</section>
 				
@@ -221,6 +221,180 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-Mysql优化" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/02/19/Mysql优化/" class="article-date">
+  	<time datetime="2019-02-19T07:48:21.000Z" itemprop="datePublished">2019-02-19</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/19/Mysql优化/">mysql优化方案总结</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Mysql数据库优化技术"><a href="#Mysql数据库优化技术" class="headerlink" title="Mysql数据库优化技术"></a>Mysql数据库优化技术</h4><ol>
+<li><p>表的设计合理化【符合3NF】</p>
+</li>
+<li><p>添加适当索引（index)【四种：普通索引，主键索引，唯一索引unique,全文索引】</p>
+</li>
+<li><p>分表技术【水平分割，垂直分割】</p>
+<ul>
+<li><p>水平分割：一张表不宜过多字段.比如玩家表 拆分成 玩家基本数据表 玩家vip数据表 玩家货币数据表 等</p>
+</li>
+<li><p>垂直分割：一张表的容量不宜过大.比如物品表，拆分成 材料表，装备表，卡牌表等</p>
+</li>
+</ul>
+</li>
+<li><p>读写分离【update/delete/add】</p>
+<ul>
+<li>主从（主表游戏用，有所有权限；从表给运用后台使用，只有查询权限）</li>
+</ul>
+</li>
+<li><p>存储过程【模块化编程，可以提高速度】</p>
+</li>
+<li><p>对mysql配置优化【配置最大并发数my.ini,调整缓存大小】</p>
+</li>
+<li><p>mysql服务器硬件升级</p>
+</li>
+<li><p>定时去清除不需要的数据</p>
+<ul>
+<li>比如一年以上不活跃的玩家 或者超过1个月以上的回放记录</li>
+</ul>
+</li>
+<li><p>定时进行碎片整理(MyISAM)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">optimize</span> <span class="keyword">table</span> <span class="keyword">test</span>; //对myisam进行整理</div><div class="line">mysql_query("<span class="keyword">optimize</span> <span class="keyword">tables</span> <span class="keyword">test</span><span class="string">");</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>优化sql语句：【1 尽量使用简单sql语句，用程序处理代替联合查询 2 定位慢查询 优化语句】</p>
+<ul>
+<li>定位慢查询   </li>
+</ul>
+<p><code>explain sql语句</code></p>
+<p>explain可以帮助我们在不真正实现某个sql语句时，就知道mysql怎样执行sql语句的，这样利于我们去分析sql语句。</p>
+</li>
+</ol>
+<h4 id="如何选择mysql的存储引擎"><a href="#如何选择mysql的存储引擎" class="headerlink" title="如何选择mysql的存储引擎"></a>如何选择mysql的存储引擎</h4><ul>
+<li>在开发中,我们经常使用的存储引擎 myisam/innodb/memory<ul>
+<li>myisam存储引擎：如果表对事务·要求不高，同时是以查询和添加为主的，考虑使用myisam存储引擎。比如bbs中的发帖表，回复表。</li>
+<li>innodb存储引擎：对事务要求高，保存的数据都是重要数据，建议使用innodb。比如订单表，账号表。</li>
+<li>memory存储引擎：比如数据变化频繁。不需要入库，同时又频繁的查询和修改，我们考虑使用memory，速度极快。</li>
+</ul>
+</li>
+<li>myisam和innodb的区别：<ul>
+<li>事务安全</li>
+<li>查询和添加速度</li>
+<li>支持全文索引</li>
+<li>锁机制</li>
+<li>外键：myisam不支持外键，innodb支持</li>
+</ul>
+</li>
+</ul>
+<p>####什么样的表才是符合3NF(范式)</p>
+<ul>
+<li><p>表的范式，是首先符合1NF,才能满足2NF,进一步满足3NF</p>
+<ul>
+<li>1NF：即表的列具有原子性，不可再分解，即列的信息不能分解，只有数据库是关系型数据库就自动的满足1NF.</li>
+<li>2NF：表中的记录是唯一的，也就满足2NF,通常设计一个主键来实现</li>
+<li>3NF：即表中不要有冗余的数据，就是说，表的信息，如果能够被推导出来，就不应该单独的设计一个字段来存放。</li>
+<li>反3NF：但是没有冗余的数据库未必是最好的数据库，有时为了提高运行效率，就必须降低范式标准，适当保留冗余数据。降低范式就是增加字段，允许冗余。</li>
+</ul>
+</li>
+</ul>
+<h4 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h4><ul>
+<li><p>主键添加索引：当一张表，把某个列设为主键的时候，则该列就是主键索引</p>
+<p><code>alter table test add primary key (id);</code></p>
+</li>
+<li><p>普通索引：先创建表，然后在表上创建普通索引</p>
+<p><code>create index 索引名 on 表 (列1,列名2);</code></p>
+</li>
+<li><p>全文索引：主要针对文件，文本的索引，比如文章，全文索引对MyISAM有用</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//创建</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> articles (</div><div class="line">       <span class="keyword">id</span> <span class="built_in">INT</span> AUTO_INCREMENT <span class="keyword">NOT</span> <span class="literal">NULL</span> PRIMARY <span class="keyword">KEY</span>,</div><div class="line">       title <span class="built_in">VARCHAR</span>(<span class="number">200</span>),</div><div class="line">       <span class="keyword">body</span> <span class="built_in">TEXT</span>,</div><div class="line">       FULLTEXT (title,<span class="keyword">body</span>) // 全文索引</div><div class="line">     )<span class="keyword">engine</span>=myisam <span class="keyword">charset</span> utf8;</div><div class="line">//使用全文索引</div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> articles <span class="keyword">where</span> <span class="keyword">match</span>(title,<span class="keyword">body</span>) against(<span class="string">'database'</span>);</div></pre></td></tr></table></figure>
+</li>
+<li><p>唯一索引：当表的某列被指定为unique约束时，这列就是一个唯一的索引</p>
+<p><code>create unique index 索引名  on 表名 (列表..);</code></p>
+<p>这时，name列就是一个唯一索引。</p>
+<p>unique字段可以为NULL,并可以有多个NULL，但是如果是具体内容，则不能重复。</p>
+<p>主键字段，不能为NULL,也不能重复</p>
+</li>
+</ul>
+<p>#####基本操作</p>
+<ul>
+<li><p>查询索引</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">desc 表名 【该方法的缺点是：　不能够显示索引名.】</div><div class="line"><span class="keyword">show</span> <span class="keyword">index</span>(es) <span class="keyword">from</span> 表名</div><div class="line"><span class="keyword">show</span> <span class="keyword">keys</span> <span class="keyword">from</span> 表名</div></pre></td></tr></table></figure>
+</li>
+<li><p>删除索引</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">drop</span> <span class="keyword">index</span> 索引名;</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改索引：先删除，再重新创建</p>
+</li>
+</ul>
+<h5 id="索引的代价："><a href="#索引的代价：" class="headerlink" title="索引的代价："></a>索引的代价：</h5><ul>
+<li>占用磁盘空间</li>
+<li>对数据库操作有影响，变慢<h5 id="总结：满足以下条件的字段，才应该创建索引："><a href="#总结：满足以下条件的字段，才应该创建索引：" class="headerlink" title="总结：满足以下条件的字段，才应该创建索引："></a>总结：满足以下条件的字段，才应该创建索引：</h5></li>
+<li>肯定在where条件中经常使用</li>
+<li>该字段的内容不是唯一的几个值（如sex就不宜加索引）</li>
+<li>字段内容不是频繁变化的</li>
+</ul>
+<h5 id="使用索引注意事项"><a href="#使用索引注意事项" class="headerlink" title="使用索引注意事项"></a>使用索引注意事项</h5><ol>
+<li><p>对于创建的多列索引，只要查询条件使用了最左边的列，则索引一般就会被使用,反之就不会使用到索引</p>
+</li>
+<li><p>对于使用like的查询，不会使用到索引</p>
+</li>
+<li><p>如果条件中有or，即使其中有条件待索引也不会使用。</p>
+</li>
+<li><p>如果列类型是字符串，那一定要在条件中奖数据使用引号引用起来，否则不使用索引</p>
+</li>
+<li><p>如果mysql估计使用全表扫描要比使用引用快，则不使用索引。</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-数据库/">技术， 数据库</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/it/">it</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-TopK" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -567,110 +741,6 @@
 
 
   
-    <article id="post-红黑树" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2019/02/15/红黑树/" class="article-date">
-  	<time datetime="2019-02-15T08:16:21.000Z" itemprop="datePublished">2019-02-15</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/15/红黑树/">红黑树</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="红黑树特点："><a href="#红黑树特点：" class="headerlink" title="红黑树特点："></a>红黑树特点：</h4><ol>
-<li><p>每个节点或者是黑色，或者是红色</p>
-</li>
-<li><p>跟节点是黑色</p>
-</li>
-<li><p>每个叶子节点（NIL）是黑色</p>
-</li>
-<li><p>如果一个节点是红色的，则它的子节点必须是黑色的</p>
-</li>
-<li><p>从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">注意</div><div class="line">特性（3）中的叶子节点，是职位空（NIL或者NULL）的节点</div><div class="line">特性（5）确保没有一条路径会比其他路径长出2倍。因而，红黑树是相对接近平衡的二叉树</div></pre></td></tr></table></figure>
-<ul>
-<li><p>红黑树的时间复杂度为：o(lgn)</p>
-</li>
-<li><p>定理：一个含有n个节点的红黑树的高度至多为2log(n+1)</p>
-</li>
-</ul>
-<h4 id="红黑树的操作："><a href="#红黑树的操作：" class="headerlink" title="红黑树的操作："></a>红黑树的操作：</h4><ol>
-<li>左旋和右旋<ul>
-<li>旋转的目的是让树保持红黑树的特性。</li>
-</ul>
-</li>
-<li>添加<ul>
-<li>第一步：将红黑树当做一颗二叉查找树，将节点插入</li>
-<li>第二步：将插入的节点着色为“红色”</li>
-<li>第三步：通过一系列的旋转和着色等操作，使之重新成为一颗红黑树</li>
-</ul>
-</li>
-<li>删除<ul>
-<li>第一步：将红黑树当做一颗二叉查找树，将节点删除</li>
-<li>第二步：通过“旋转和重新着色”等一系列操作来修正该树，使之重新成为一颗红黑树</li>
-</ul>
-</li>
-</ol>
-<h4 id="红黑树应用："><a href="#红黑树应用：" class="headerlink" title="红黑树应用："></a>红黑树应用：</h4><p><code>主要用它来存储有序的数据 它查询时间复杂度为o(lgn)非常高效</code></p>
-<ul>
-<li>C++的STL中 map和set都是用红黑树实现的</li>
-<li>linux进程调度(Completely Fair Scheduler) 用红黑树管理进程控制块</li>
-<li>epoll在内核中的实现，用红黑树管理事件块</li>
-<li>nginx中，用红黑树管理timer等</li>
-<li>java的TreeSet和TreeMap实现</li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-数据结构/">技术， 数据结构</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/it/">it</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-Epoll" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -834,6 +904,110 @@
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，linux/">技术，linux</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/it/">it</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-红黑树" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/02/15/红黑树/" class="article-date">
+  	<time datetime="2019-02-15T08:16:21.000Z" itemprop="datePublished">2019-02-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/15/红黑树/">红黑树</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="红黑树特点："><a href="#红黑树特点：" class="headerlink" title="红黑树特点："></a>红黑树特点：</h4><ol>
+<li><p>每个节点或者是黑色，或者是红色</p>
+</li>
+<li><p>跟节点是黑色</p>
+</li>
+<li><p>每个叶子节点（NIL）是黑色</p>
+</li>
+<li><p>如果一个节点是红色的，则它的子节点必须是黑色的</p>
+</li>
+<li><p>从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">注意</div><div class="line">特性（3）中的叶子节点，是职位空（NIL或者NULL）的节点</div><div class="line">特性（5）确保没有一条路径会比其他路径长出2倍。因而，红黑树是相对接近平衡的二叉树</div></pre></td></tr></table></figure>
+<ul>
+<li><p>红黑树的时间复杂度为：o(lgn)</p>
+</li>
+<li><p>定理：一个含有n个节点的红黑树的高度至多为2log(n+1)</p>
+</li>
+</ul>
+<h4 id="红黑树的操作："><a href="#红黑树的操作：" class="headerlink" title="红黑树的操作："></a>红黑树的操作：</h4><ol>
+<li>左旋和右旋<ul>
+<li>旋转的目的是让树保持红黑树的特性。</li>
+</ul>
+</li>
+<li>添加<ul>
+<li>第一步：将红黑树当做一颗二叉查找树，将节点插入</li>
+<li>第二步：将插入的节点着色为“红色”</li>
+<li>第三步：通过一系列的旋转和着色等操作，使之重新成为一颗红黑树</li>
+</ul>
+</li>
+<li>删除<ul>
+<li>第一步：将红黑树当做一颗二叉查找树，将节点删除</li>
+<li>第二步：通过“旋转和重新着色”等一系列操作来修正该树，使之重新成为一颗红黑树</li>
+</ul>
+</li>
+</ol>
+<h4 id="红黑树应用："><a href="#红黑树应用：" class="headerlink" title="红黑树应用："></a>红黑树应用：</h4><p><code>主要用它来存储有序的数据 它查询时间复杂度为o(lgn)非常高效</code></p>
+<ul>
+<li>C++的STL中 map和set都是用红黑树实现的</li>
+<li>linux进程调度(Completely Fair Scheduler) 用红黑树管理进程控制块</li>
+<li>epoll在内核中的实现，用红黑树管理事件块</li>
+<li>nginx中，用红黑树管理timer等</li>
+<li>java的TreeSet和TreeMap实现</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-数据结构/">技术， 数据结构</a></li></ul>
 	</div>
 
       
@@ -1164,81 +1338,6 @@
 <ol>
 <li>未完待续。。。</li>
 </ol>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/it/">it</a></li></ul>
-	</div>
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Nginx环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/08/18/Nginx环境搭建/" class="article-date">
-  	<time datetime="2017-08-18T12:42:07.000Z" itemprop="datePublished">2017-08-18</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/18/Nginx环境搭建/">nginx环境搭建</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="nginx-centos安装教程"><a href="#nginx-centos安装教程" class="headerlink" title="nginx centos安装教程"></a>nginx centos安装教程</h4><p>1.下载lnmp 安装nginx</p>
-<ul>
-<li>wget <a href="http://mirrors.linuxeye.com/lnmp-full.tar.gz" target="_blank" rel="external">http://mirrors.linuxeye.com/lnmp-full.tar.gz</a> # 包含源码，国内外均可下载</li>
-<li>tar xzf lnmp-full.tar.gz</li>
-<li>cd lnmp # 如果需要修改目录(安装、数据存储、Nginx日志)，请修改options.conf文件</li>
-<li>./install.sh # 请勿sh install.sh或者bash install.sh这样执行</li>
-</ul>
-<p>2.选择安装nginx 其他看需求安装</p>
-<p>3.nginx 源码安装  </p>
-<ul>
-<li>在lnmp解压后的目录下有个src目录有个nginx的源码包nginx-1.12.1.tar.gz</li>
-<li>tar xzf nginx-1.12.1.tar.gz </li>
-<li>cd nginx-1.12.1</li>
-<li>configure</li>
-<li>./configure –prefix=/usr/local/nginx –user=www –group=www –with-http_stub_status_module –with-stream –with-http_v2_module –with-http_ssl_module –with-http_gzip_static_module –with-http_realip_module –with-http_flv_module –with-http_mp4_module –with-openssl=../openssl-1.0.2l –with-pcre=../pcre-8.41 –with-pcre-jit –with-ld-opt=-ljemalloc</li>
-<li>make &amp;&amp; make install</li>
-</ul>
-<p>4.nginx配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">  worker_processes auto;</div><div class="line"></div><div class="line">  error_log /var/log/nginx/error.log info;</div><div class="line"></div><div class="line">  events &#123;</div><div class="line">    use epoll;</div><div class="line">    worker_connections  65535;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  http&#123;</div><div class="line">    server_tokens off;</div><div class="line">    include       mime.types;</div><div class="line">    default_type  application/octet-stream;</div><div class="line">    charset       utf-8;</div><div class="line">    gzip              on;</div><div class="line">    gzip_min_length   1k;</div><div class="line">    gzip_buffers      4 16k;</div><div class="line">    gzip_comp_level   8;</div><div class="line">    gzip_http_version 1.0;</div><div class="line">    gzip_types        application/json text/javascript  text/plain 		     application/x-javascript text/css application/xml text/xml;</div><div class="line">    </div><div class="line">    client_max_body_size       50M;</div><div class="line">    client_body_buffer_size    256k;</div><div class="line">    proxy_connect_timeout      60;</div><div class="line">    proxy_send_timeout         60;</div><div class="line">    proxy_read_timeout         60;</div><div class="line">    proxy_buffers              4 256k;</div><div class="line">    proxy_buffer_size          256k;</div><div class="line">    proxy_busy_buffers_size    256k;</div><div class="line">    proxy_temp_file_write_size 256k;</div><div class="line">    proxy_intercept_errors on;</div><div class="line"></div><div class="line">	stream &#123;</div><div class="line">		upstream backend &#123; # 如果只有一个就去掉一个</div><div class="line">	    hash $remote_addr consistent;</div><div class="line">	    server 192.168.0.10:8002       max_fails=3 fail_timeout=30s;</div><div class="line">		server 192.168.0.20:8003       max_fails=3 fail_timeout=30s;       </div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	server &#123;</div><div class="line">	    listen 8001;</div><div class="line">	    proxy_connect_timeout 1s;</div><div class="line">	    proxy_timeout 3s;</div><div class="line">	    proxy_pass backend;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>mysql优化方案总结 | 阿黄的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Mysql数据库优化技术
+表的设计合理化【符合3NF】
+
+添加适当索引（index)【四种：普通索引，主键索引，唯一索引unique,全文索引】
+
+分表技术【水平分割，垂直分割】
+
+水平分割：一张表不宜过多字段.比如玩家表 拆分成 玩家基本数据表 玩家vip数据表 玩家货币数据表 等
+
+垂直分割：一张表的容量不宜过大.比如物品表，拆分成 材料表，装备表，卡牌表等
+
+
+
+读写分离【update/de">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql优化方案总结">
+<meta property="og:url" content="https://ahuang007.github.io/2019/02/19/Mysql优化/index.html">
+<meta property="og:site_name" content="阿黄的博客">
+<meta property="og:description" content="Mysql数据库优化技术
+表的设计合理化【符合3NF】
+
+添加适当索引（index)【四种：普通索引，主键索引，唯一索引unique,全文索引】
+
+分表技术【水平分割，垂直分割】
+
+水平分割：一张表不宜过多字段.比如玩家表 拆分成 玩家基本数据表 玩家vip数据表 玩家货币数据表 等
+
+垂直分割：一张表的容量不宜过大.比如物品表，拆分成 材料表，装备表，卡牌表等
+
+
+
+读写分离【update/de">
+<meta property="og:updated_time" content="2019-02-19T07:48:15.082Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql优化方案总结">
+<meta name="twitter:description" content="Mysql数据库优化技术
+表的设计合理化【符合3NF】
+
+添加适当索引（index)【四种：普通索引，主键索引，唯一索引unique,全文索引】
+
+分表技术【水平分割，垂直分割】
+
+水平分割：一张表不宜过多字段.比如玩家表 拆分成 玩家基本数据表 玩家vip数据表 玩家货币数据表 等
+
+垂直分割：一张表的容量不宜过大.比如物品表，拆分成 材料表，装备表，卡牌表等
+
+
+
+读写分离【update/de">
+  
+    <link rel="alternative" href="/atom.xml" title="阿黄的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.jpg">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/me.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">ahuang</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">岁月无声</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/photo">相册</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="http://github.com/ahuang007" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/ahuang007" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="http://blog.sina.com.cn/u/2137822390" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/huang-li-jun-7" title="zhihu">zhihu</a>
+					        
+								<a class="mail" target="_blank" href="https://mail.qq.com/" title="mail">mail</a>
+					        
+								<a class="facebook" target="_blank" href="/419637330@qq.com" title="facebook">facebook</a>
+					        
+								<a class="google" target="_blank" href="/419637330@qq.com" title="google">google</a>
+					        
+								<a class="twitter" target="_blank" href="/ahuang27374018" title="twitter">twitter</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/article/" style="font-size: 10px;">article</a> <a href="/tags/it/" style="font-size: 20px;">it</a> <a href="/tags/life/" style="font-size: 13.33px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/lua/" style="font-size: 13.33px;">lua</a> <a href="/tags/技术/" style="font-size: 16.67px;">技术</a> <a href="/tags/技术，-c/" style="font-size: 10px;">技术， c++</a> <a href="/tags/技术，-数据库/" style="font-size: 10px;">技术， 数据库</a> <a href="/tags/技术，-数据结构/" style="font-size: 13.33px;">技术， 数据结构</a> <a href="/tags/技术，-算法/" style="font-size: 10px;">技术， 算法</a> <a href="/tags/技术，linux/" style="font-size: 10px;">技术，linux</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://luucio.com/">晓晓的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.hawkk.cn/">科长的的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.codingnow.com/">云风的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://tofindme.github.io">易斌的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我就是我，是颜色不一样的烟火…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">ahuang</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img lazy-src="/img/me.jpg" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">ahuang</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">岁月无声</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/photo">相册</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="http://github.com/ahuang007" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/ahuang007" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="http://blog.sina.com.cn/u/2137822390" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/huang-li-jun-7" title="zhihu">zhihu</a>
+			        
+						<a class="mail" target="_blank" href="https://mail.qq.com/" title="mail">mail</a>
+			        
+						<a class="facebook" target="_blank" href="/419637330@qq.com" title="facebook">facebook</a>
+			        
+						<a class="google" target="_blank" href="/419637330@qq.com" title="google">google</a>
+			        
+						<a class="twitter" target="_blank" href="/ahuang27374018" title="twitter">twitter</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-Mysql优化" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/02/19/Mysql优化/" class="article-date">
+  	<time datetime="2019-02-19T07:48:21.000Z" itemprop="datePublished">2019-02-19</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      mysql优化方案总结
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-数据库/">技术， 数据库</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/it/">it</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Mysql数据库优化技术"><a href="#Mysql数据库优化技术" class="headerlink" title="Mysql数据库优化技术"></a>Mysql数据库优化技术</h4><ol>
+<li><p>表的设计合理化【符合3NF】</p>
+</li>
+<li><p>添加适当索引（index)【四种：普通索引，主键索引，唯一索引unique,全文索引】</p>
+</li>
+<li><p>分表技术【水平分割，垂直分割】</p>
+<ul>
+<li><p>水平分割：一张表不宜过多字段.比如玩家表 拆分成 玩家基本数据表 玩家vip数据表 玩家货币数据表 等</p>
+</li>
+<li><p>垂直分割：一张表的容量不宜过大.比如物品表，拆分成 材料表，装备表，卡牌表等</p>
+</li>
+</ul>
+</li>
+<li><p>读写分离【update/delete/add】</p>
+<ul>
+<li>主从（主表游戏用，有所有权限；从表给运用后台使用，只有查询权限）</li>
+</ul>
+</li>
+<li><p>存储过程【模块化编程，可以提高速度】</p>
+</li>
+<li><p>对mysql配置优化【配置最大并发数my.ini,调整缓存大小】</p>
+</li>
+<li><p>mysql服务器硬件升级</p>
+</li>
+<li><p>定时去清除不需要的数据</p>
+<ul>
+<li>比如一年以上不活跃的玩家 或者超过1个月以上的回放记录</li>
+</ul>
+</li>
+<li><p>定时进行碎片整理(MyISAM)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">optimize</span> <span class="keyword">table</span> <span class="keyword">test</span>; //对myisam进行整理</div><div class="line">mysql_query("<span class="keyword">optimize</span> <span class="keyword">tables</span> <span class="keyword">test</span><span class="string">");</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>优化sql语句：【1 尽量使用简单sql语句，用程序处理代替联合查询 2 定位慢查询 优化语句】</p>
+<ul>
+<li>定位慢查询   </li>
+</ul>
+<p><code>explain sql语句</code></p>
+<p>explain可以帮助我们在不真正实现某个sql语句时，就知道mysql怎样执行sql语句的，这样利于我们去分析sql语句。</p>
+</li>
+</ol>
+<h4 id="如何选择mysql的存储引擎"><a href="#如何选择mysql的存储引擎" class="headerlink" title="如何选择mysql的存储引擎"></a>如何选择mysql的存储引擎</h4><ul>
+<li>在开发中,我们经常使用的存储引擎 myisam/innodb/memory<ul>
+<li>myisam存储引擎：如果表对事务·要求不高，同时是以查询和添加为主的，考虑使用myisam存储引擎。比如bbs中的发帖表，回复表。</li>
+<li>innodb存储引擎：对事务要求高，保存的数据都是重要数据，建议使用innodb。比如订单表，账号表。</li>
+<li>memory存储引擎：比如数据变化频繁。不需要入库，同时又频繁的查询和修改，我们考虑使用memory，速度极快。</li>
+</ul>
+</li>
+<li>myisam和innodb的区别：<ul>
+<li>事务安全</li>
+<li>查询和添加速度</li>
+<li>支持全文索引</li>
+<li>锁机制</li>
+<li>外键：myisam不支持外键，innodb支持</li>
+</ul>
+</li>
+</ul>
+<p>####什么样的表才是符合3NF(范式)</p>
+<ul>
+<li><p>表的范式，是首先符合1NF,才能满足2NF,进一步满足3NF</p>
+<ul>
+<li>1NF：即表的列具有原子性，不可再分解，即列的信息不能分解，只有数据库是关系型数据库就自动的满足1NF.</li>
+<li>2NF：表中的记录是唯一的，也就满足2NF,通常设计一个主键来实现</li>
+<li>3NF：即表中不要有冗余的数据，就是说，表的信息，如果能够被推导出来，就不应该单独的设计一个字段来存放。</li>
+<li>反3NF：但是没有冗余的数据库未必是最好的数据库，有时为了提高运行效率，就必须降低范式标准，适当保留冗余数据。降低范式就是增加字段，允许冗余。</li>
+</ul>
+</li>
+</ul>
+<h4 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h4><ul>
+<li><p>主键添加索引：当一张表，把某个列设为主键的时候，则该列就是主键索引</p>
+<p><code>alter table test add primary key (id);</code></p>
+</li>
+<li><p>普通索引：先创建表，然后在表上创建普通索引</p>
+<p><code>create index 索引名 on 表 (列1,列名2);</code></p>
+</li>
+<li><p>全文索引：主要针对文件，文本的索引，比如文章，全文索引对MyISAM有用</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//创建</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> articles (</div><div class="line">       <span class="keyword">id</span> <span class="built_in">INT</span> AUTO_INCREMENT <span class="keyword">NOT</span> <span class="literal">NULL</span> PRIMARY <span class="keyword">KEY</span>,</div><div class="line">       title <span class="built_in">VARCHAR</span>(<span class="number">200</span>),</div><div class="line">       <span class="keyword">body</span> <span class="built_in">TEXT</span>,</div><div class="line">       FULLTEXT (title,<span class="keyword">body</span>) // 全文索引</div><div class="line">     )<span class="keyword">engine</span>=myisam <span class="keyword">charset</span> utf8;</div><div class="line">//使用全文索引</div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> articles <span class="keyword">where</span> <span class="keyword">match</span>(title,<span class="keyword">body</span>) against(<span class="string">'database'</span>);</div></pre></td></tr></table></figure>
+</li>
+<li><p>唯一索引：当表的某列被指定为unique约束时，这列就是一个唯一的索引</p>
+<p><code>create unique index 索引名  on 表名 (列表..);</code></p>
+<p>这时，name列就是一个唯一索引。</p>
+<p>unique字段可以为NULL,并可以有多个NULL，但是如果是具体内容，则不能重复。</p>
+<p>主键字段，不能为NULL,也不能重复</p>
+</li>
+</ul>
+<p>#####基本操作</p>
+<ul>
+<li><p>查询索引</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">desc 表名 【该方法的缺点是：　不能够显示索引名.】</div><div class="line"><span class="keyword">show</span> <span class="keyword">index</span>(es) <span class="keyword">from</span> 表名</div><div class="line"><span class="keyword">show</span> <span class="keyword">keys</span> <span class="keyword">from</span> 表名</div></pre></td></tr></table></figure>
+</li>
+<li><p>删除索引</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">drop</span> <span class="keyword">index</span> 索引名;</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改索引：先删除，再重新创建</p>
+</li>
+</ul>
+<h5 id="索引的代价："><a href="#索引的代价：" class="headerlink" title="索引的代价："></a>索引的代价：</h5><ul>
+<li>占用磁盘空间</li>
+<li>对数据库操作有影响，变慢<h5 id="总结：满足以下条件的字段，才应该创建索引："><a href="#总结：满足以下条件的字段，才应该创建索引：" class="headerlink" title="总结：满足以下条件的字段，才应该创建索引："></a>总结：满足以下条件的字段，才应该创建索引：</h5></li>
+<li>肯定在where条件中经常使用</li>
+<li>该字段的内容不是唯一的几个值（如sex就不宜加索引）</li>
+<li>字段内容不是频繁变化的</li>
+</ul>
+<h5 id="使用索引注意事项"><a href="#使用索引注意事项" class="headerlink" title="使用索引注意事项"></a>使用索引注意事项</h5><ol>
+<li><p>对于创建的多列索引，只要查询条件使用了最左边的列，则索引一般就会被使用,反之就不会使用到索引</p>
+</li>
+<li><p>对于使用like的查询，不会使用到索引</p>
+</li>
+<li><p>如果条件中有or，即使其中有条件待索引也不会使用。</p>
+</li>
+<li><p>如果列类型是字符串，那一定要在条件中奖数据使用引号引用起来，否则不使用索引</p>
+</li>
+<li><p>如果mysql估计使用全表扫描要比使用引用快，则不使用索引。</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/02/18/TopK/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">TopK</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Mysql优化" data-title="mysql优化方案总结" data-url="https://ahuang007.github.io/2019/02/19/Mysql优化/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ahuang007"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 ahuang
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: /
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
