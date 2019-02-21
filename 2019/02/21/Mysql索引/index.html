@@ -4,21 +4,48 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>多挂一个铃铛 | 阿黄的博客</title>
+  <title>Mysql索引 | 阿黄的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="有一家客栈，虽然环境温馨，服务不错，收费也很公道，但不知为何，还是一直入不敷出。无奈之下，店老板只好找专家求助。
-专家说：“你必须改改店名，叫它‘五个铃铛’，然后在门口多挂一个铃铛，也就是挂上六个铃铛。”店老板虽然觉得这个建议很荒谬，但还是决定尝试一下，就照做了。结果，不少路过客栈的游客，会走进店里，指出这个错误或询问原因。一旦他们走进客栈，往往就会被店里的环境所吸引，店里的生意也就逐渐红火起来。">
+  <meta name="description" content="问题1，数据库为什么要设计索引？
+数据库存储了1000w条数据，要从中找到 name=”C++Primier”的记录，一条条遍历，要查到什么时候？
+于是，要有索引，用于提升数据库的查找速度。
+
+
+
+问题2， 哈希（hash）比树（tree)更快，索引结构为什么要设计成树型？
+加速查找速度的数据结构，常见的有两类：
+
+哈希，如HashMap, 查找/插入/修改/删除的平均时间复杂度都是o(1)
+树，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="多挂一个铃铛">
-<meta property="og:url" content="https://ahuang007.github.io/2016/09/06/多挂一个铃铛/index.html">
+<meta property="og:title" content="Mysql索引">
+<meta property="og:url" content="https://ahuang007.github.io/2019/02/21/Mysql索引/index.html">
 <meta property="og:site_name" content="阿黄的博客">
-<meta property="og:description" content="有一家客栈，虽然环境温馨，服务不错，收费也很公道，但不知为何，还是一直入不敷出。无奈之下，店老板只好找专家求助。
-专家说：“你必须改改店名，叫它‘五个铃铛’，然后在门口多挂一个铃铛，也就是挂上六个铃铛。”店老板虽然觉得这个建议很荒谬，但还是决定尝试一下，就照做了。结果，不少路过客栈的游客，会走进店里，指出这个错误或询问原因。一旦他们走进客栈，往往就会被店里的环境所吸引，店里的生意也就逐渐红火起来。">
-<meta property="og:updated_time" content="2018-06-06T06:54:04.221Z">
+<meta property="og:description" content="问题1，数据库为什么要设计索引？
+数据库存储了1000w条数据，要从中找到 name=”C++Primier”的记录，一条条遍历，要查到什么时候？
+于是，要有索引，用于提升数据库的查找速度。
+
+
+
+问题2， 哈希（hash）比树（tree)更快，索引结构为什么要设计成树型？
+加速查找速度的数据结构，常见的有两类：
+
+哈希，如HashMap, 查找/插入/修改/删除的平均时间复杂度都是o(1)
+树，">
+<meta property="og:updated_time" content="2019-02-21T07:33:44.014Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="多挂一个铃铛">
-<meta name="twitter:description" content="有一家客栈，虽然环境温馨，服务不错，收费也很公道，但不知为何，还是一直入不敷出。无奈之下，店老板只好找专家求助。
-专家说：“你必须改改店名，叫它‘五个铃铛’，然后在门口多挂一个铃铛，也就是挂上六个铃铛。”店老板虽然觉得这个建议很荒谬，但还是决定尝试一下，就照做了。结果，不少路过客栈的游客，会走进店里，指出这个错误或询问原因。一旦他们走进客栈，往往就会被店里的环境所吸引，店里的生意也就逐渐红火起来。">
+<meta name="twitter:title" content="Mysql索引">
+<meta name="twitter:description" content="问题1，数据库为什么要设计索引？
+数据库存储了1000w条数据，要从中找到 name=”C++Primier”的记录，一条条遍历，要查到什么时候？
+于是，要有索引，用于提升数据库的查找速度。
+
+
+
+问题2， 哈希（hash）比树（tree)更快，索引结构为什么要设计成树型？
+加速查找速度的数据结构，常见的有两类：
+
+哈希，如HashMap, 查找/插入/修改/删除的平均时间复杂度都是o(1)
+树，">
   
     <link rel="alternative" href="/atom.xml" title="阿黄的博客" type="application/atom+xml">
   
@@ -224,11 +251,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-多挂一个铃铛" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Mysql索引" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/09/06/多挂一个铃铛/" class="article-date">
-  	<time datetime="2016-09-06T13:30:23.000Z" itemprop="datePublished">2016-09-06</time>
+      <a href="/2019/02/21/Mysql索引/" class="article-date">
+  	<time datetime="2019-02-21T07:33:21.000Z" itemprop="datePublished">2019-02-21</time>
 </a>
     </div>
   
@@ -241,7 +268,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      多挂一个铃铛
+      Mysql索引
     </h1>
   
 
@@ -250,10 +277,14 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/article/">article</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-数据结构/">技术， 数据结构</a></li></ul>
 	</div>
 
         
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/it/">it</a>
+	</div>
+
 
         <div class="clearfix"></div>
       </div>
@@ -261,9 +292,111 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><em>有一家客栈，虽然环境温馨，服务不错，收费也很公道，但不知为何，还是一直入不敷出。无奈之下，店老板只好找专家求助。
-</em>专家说：“你必须改改店名，叫它‘五个铃铛’，然后在门口多挂一个铃铛，也就是挂上六个铃铛。”店老板虽然觉得这个建议很荒谬，但还是决定尝试一下，就照做了。<br><em>结果，不少路过客栈的游客，会走进店里，指出这个错误或询问原因。一旦他们走进客栈，往往就会被店里的环境所吸引，店里的生意也就逐渐红火起来。
-</em>也许，没有几件事，会比纠正别人的错误，更让人乐意去做。</p>
+        <h4 id="问题1，数据库为什么要设计索引？"><a href="#问题1，数据库为什么要设计索引？" class="headerlink" title="问题1，数据库为什么要设计索引？"></a>问题1，数据库为什么要设计索引？</h4><ul>
+<li>数据库存储了1000w条数据，要从中找到 name=”C++Primier”的记录，一条条遍历，要查到什么时候？<ul>
+<li>于是，要有索引，用于提升数据库的查找速度。</li>
+</ul>
+</li>
+</ul>
+<h4 id="问题2，-哈希（hash）比树（tree-更快，索引结构为什么要设计成树型？"><a href="#问题2，-哈希（hash）比树（tree-更快，索引结构为什么要设计成树型？" class="headerlink" title="问题2， 哈希（hash）比树（tree)更快，索引结构为什么要设计成树型？"></a>问题2， 哈希（hash）比树（tree)更快，索引结构为什么要设计成树型？</h4><ul>
+<li><p>加速查找速度的数据结构，常见的有两类：</p>
+<ul>
+<li>哈希，如HashMap, 查找/插入/修改/删除的平均时间复杂度都是o(1)</li>
+<li>树，如平衡二叉搜索树，查询/插入/修改/删除的平均时间复杂度都是o(nlg(n))</li>
+</ul>
+</li>
+<li><p>可以看到，不管是读请求，还是写请求，哈希类型的索引，都要比树型索引更快一些，那为什么索引结构要设计成树型呢？</p>
+<ul>
+<li><p>索引设计成树型，和sql的需求相关。<code>任何脱离需求的设计都是耍流氓</code></p>
+<ul>
+<li>对于这样一个单行查询的sql需求</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select * from t_book where name = &quot;C++Primier&quot;;</div></pre></td></tr></table></figure>
+<pre><code>确实是哈希索引更快，因为每次都只查询一条记录
+</code></pre><ul>
+<li><p>但是对于排序查询的sql需求：</p>
+<ul>
+<li>分组：group by </li>
+<li>排序：order by </li>
+<li>比较：&lt; , &gt;</li>
+<li>…</li>
+</ul>
+<p>哈希型的索引，时间复杂度会退出为o(n).而树型的“有序”特性，依然能够保持o(log(n))的高效率。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>####问题3， 数据库索引为什么使用B+树？</p>
+<ul>
+<li><p>第一种：二叉搜索树 <code>此处缺图</code></p>
+<p>它为什么不适合用做数据库索引？</p>
+<p>(1)当数据量大的时候，树的高度会比较高，数据量大的时候，查询会比较慢。</p>
+<p>(2)每个节点只存储一个记录，可能导致一次查询有很多次磁盘io;</p>
+</li>
+<li><p>第二种：B树 <code>此处缺图</code></p>
+<p>B树的特点：</p>
+<p>（1）不再是二叉搜索，而是m查搜索；</p>
+<p>（2）叶子节点，非叶子节点，都存储数据；</p>
+<p>（3）中序遍历可以获得所有节点；</p>
+<p>非根节点包含的关键字key个数j满足 (m/2)-1 &lt;=j &lt;= m-1, 节点分裂时要满足这个条件。</p>
+<p>B树被作为实现索引的数据结构被创造出来，是因为它能够完美的利用<strong>“局部性原理”</strong></p>
+</li>
+<li><p>什么是局部性原理？</p>
+<ul>
+<li>局部性原理的逻辑是这样：</li>
+</ul>
+<p>（1）内存读写快，磁盘读写慢，而且慢很多；</p>
+<p>（2）<strong>磁盘预读：磁盘读写并不是按需读取，而是按页预读</strong>，一次会度一页的数据，每次加载更多的数据，如果未来要读取的数据就在这一页中，可避免未来的磁盘io，提高效率。<code>通常一页数据是4k</code></p>
+<p>（3）<strong>局部性原理</strong>：软件设计要尽量遵循<strong>“数据读取集中”</strong>与<strong>“使用一个数据，大概率会使用其附近的数据”</strong>，这样磁盘预读能充分提高磁盘io;</p>
+</li>
+<li><p>B树为何适合做索引？</p>
+<p>（1）由于是m分叉的，高度能够大大降低；</p>
+<p>（2）每个节点可以存储j个记录，如果将节点大小设置为页大小，如4k,能够充分的利用预读的特性，极大减少磁盘io;</p>
+</li>
+<li><p>第三种：B+树 <code>此处缺图</code></p>
+<p>B+树，仍是m叉搜索树，在B树的基础上，做了一些改进：</p>
+<p>（1）非叶子节点不再存储数据，数据只存储在同一层的叶子节点上；</p>
+<p>​    B+树中跟到每一个节点的路径长度一样，而B树不是这样。</p>
+<p>（2）叶子之间，增加了链表，获取所有节点，不再需要中序遍历；</p>
+<p>这些改进 让B+树比B树有更优的特性：</p>
+<p>（1）范围查找，定位min与max之后，中间叶子节点，就是结果集，不用中序回溯；</p>
+<p>​    而范围查询在sql中用得很多，这是B+树比B树最大的优势。</p>
+<p>（2）叶子节点存储实际记录行，记录行相对比较紧密的存储，适合大数据量磁盘存储；</p>
+<p>​    非叶子节点存储记录的PK，用于查询加速，适合内存存储；</p>
+<p>（3） 非叶子节点，不存储实际记录，而只存储记录的key的话，那么在相同内存的情况下，B+树能够存储更多索引；</p>
+</li>
+<li><p>最后，量化说下，为什么m叉的B+树比二叉搜索树的高度大大大大降低？</p>
+<p>大概计算下：</p>
+<p>（1）局部性原理，将一个节点的大小设为一页,一页4k,假设一个key有8个字节，一个节点可以存储500个key,即j=500</p>
+<p>（2）m叉树，大概 m/2 &lt;=j &lt;=m,即可以差不多是1000叉树</p>
+<p>（3）那么：</p>
+<p>​    一层树：1个节点， 1X500个key，大小4k</p>
+<p>​    二层树：1000个节点，1000X500 = 500w个key,大小1000X4k = 4M</p>
+<p>​    三层树：1000X1000个节点，1000X1000X500 = 5亿个key,大小1000X1000*4k=4G</p>
+<p>​    可以看到，存储大量的数据(5亿)，并不需要太高树的深度（高度3），而索引也不太占内存（4G）</p>
+</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li><p>数据库索引用于加速查询</p>
+</li>
+<li><p>虽然哈希索引是o(1),树索引是o(log(n)),但sql有很多“有序”的需求，故数据库使用树型索引</p>
+</li>
+<li><p>InnoDB不支持哈希索引</p>
+</li>
+<li><p>数据预读的思路：磁盘读写并不是按需读取，而是按页预读，一次会读一页的数据，每次加载更多的数据，以便未来减少磁盘io</p>
+</li>
+<li><p>局部性原理：软件设计要尽量遵循“数据读取集中”与“使用到一个数据，大概率会使用其附近的数据”，这样磁盘预读能充分提高磁盘io</p>
+</li>
+<li><p>数据库的索引最常用B+树：</p>
+<p>（1）很适合磁盘存储，能够充分利用局部性原理，磁盘预读；</p>
+<p>（2）很低的树高度，能够存储大量数据；</p>
+<p>（3）索引本身占用的内存很小；</p>
+<p>（4）能够很好的支持单点查询，范围查询，有序查询；</p>
+</li>
+</ul>
+<p>​    </p>
 
       
     </div>
@@ -273,18 +406,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/09/22/Lua中的基本函数库/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          Lua基本函数库
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/08/31/Lua弱表/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Lua中的weak表——weak table</div>
+    <a href="/2019/02/20/求一个正整数二进制表示有多少个1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">数1</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -319,7 +443,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="多挂一个铃铛" data-title="多挂一个铃铛" data-url="https://ahuang007.github.io/2016/09/06/多挂一个铃铛/"></div>
+	<div class="ds-thread" data-thread-key="Mysql索引" data-title="Mysql索引" data-url="https://ahuang007.github.io/2019/02/21/Mysql索引/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
