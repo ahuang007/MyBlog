@@ -128,7 +128,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/article/" style="font-size: 10px;">article</a> <a href="/tags/it/" style="font-size: 20px;">it</a> <a href="/tags/life/" style="font-size: 13.33px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/lua/" style="font-size: 13.33px;">lua</a> <a href="/tags/技术/" style="font-size: 16.67px;">技术</a> <a href="/tags/技术，-c/" style="font-size: 10px;">技术， c++</a> <a href="/tags/技术，-数据库/" style="font-size: 10px;">技术， 数据库</a> <a href="/tags/技术，-数据结构/" style="font-size: 16.67px;">技术， 数据结构</a> <a href="/tags/技术，-算法/" style="font-size: 10px;">技术， 算法</a> <a href="/tags/技术，linux/" style="font-size: 10px;">技术，linux</a> <a href="/tags/技术，算法/" style="font-size: 10px;">技术，算法</a>
+						<a href="/tags/article/" style="font-size: 10px;">article</a> <a href="/tags/it/" style="font-size: 20px;">it</a> <a href="/tags/life/" style="font-size: 13.33px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/lua/" style="font-size: 13.33px;">lua</a> <a href="/tags/技术/" style="font-size: 16.67px;">技术</a> <a href="/tags/技术，-c/" style="font-size: 10px;">技术， c++</a> <a href="/tags/技术，-数据库/" style="font-size: 10px;">技术， 数据库</a> <a href="/tags/技术，-数据结构/" style="font-size: 16.67px;">技术， 数据结构</a> <a href="/tags/技术，-算法/" style="font-size: 10px;">技术， 算法</a> <a href="/tags/技术，linux/" style="font-size: 10px;">技术，linux</a> <a href="/tags/技术，算法/" style="font-size: 10px;">技术，算法</a> <a href="/tags/技术，网络/" style="font-size: 10px;">技术，网络</a>
 					</div>
 				</section>
 				
@@ -221,6 +221,95 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-大端小端与网络字节序" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/02/22/大端小端与网络字节序/" class="article-date">
+  	<time datetime="2019-02-22T10:49:21.000Z" itemprop="datePublished">2019-02-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/22/大端小端与网络字节序/">大端小端与网络字节序</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="一-什么是字节序"><a href="#一-什么是字节序" class="headerlink" title="一 什么是字节序"></a>一 什么是字节序</h4><ul>
+<li><p>字节序：字节的顺序，大于一个字节类型的数据在内存中存放顺序。在跨平台以及网络程序中才考虑这个问题</p>
+</li>
+<li><p>字节数分类：Big-Endian和Little-Endian</p>
+<p>a)Little-Endian就是低位字节排放在内存的低地址端，高位字节排放在内存的高地址端</p>
+<p>b)Big-Endian就是高位字节排放在内存的低地址端，低位字节排放在内存的高地址端</p>
+<p>c)网络字节序：TCP/IP各层协议将字节序定义为Big-Endian,因此TCP/IP协议中使用的字节序通常称之为网络字节序。</p>
+<p>d)主机字节序：不同的主机有不同的字节序，如x86为小端字节序，ARM字节序是可配置的，Sun的SPARC为大端序。</p>
+</li>
+</ul>
+<h4 id="二-怎么写程序判断系统是大端还是小端"><a href="#二-怎么写程序判断系统是大端还是小端" class="headerlink" title="二 怎么写程序判断系统是大端还是小端"></a>二 怎么写程序判断系统是大端还是小端</h4><ul>
+<li><p>int-&gt;char的强制类型转换，是将低地址的数值阶段赋值给char,利用这个准则可以判断系统是大端还是小端序</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> a = <span class="number">0x1234</span>;</div><div class="line">    <span class="keyword">char</span> c = <span class="keyword">static_cast</span>&lt;<span class="keyword">char</span>&gt;(a); <span class="comment">// *(char*)(&amp;a);</span></div><div class="line">    <span class="keyword">if</span>(c == <span class="number">0x12</span>)</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"big endian"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(c == <span class="number">0x34</span>)</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"little endian"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>利用union同理也可以做出判断</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="keyword">union</span> endian&#123;</div><div class="line">    <span class="keyword">int</span> a;</div><div class="line">    <span class="keyword">char</span> ch;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">    endian value;</div><div class="line">    value.a = <span class="number">0x1234</span>;</div><div class="line">    <span class="keyword">if</span>(value.ch == <span class="number">0x12</span>)</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"big endian"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(value.ch == <span class="number">0x34</span>)</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"little endian"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>endian中的ch对应整个endian的低地址段，若这一段内容等于0x34,即等于0x1234中的低位字节，说明低位字节先存储，说明是小端序。反之若ch=0x12说明高位字节先存储，说明是大端序。</li>
+</ul>
+</li>
+</ul>
+<h4 id="三-Big-Endian和Little-Endian转换"><a href="#三-Big-Endian和Little-Endian转换" class="headerlink" title="三 Big-Endian和Little-Endian转换"></a>三 Big-Endian和Little-Endian转换</h4><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">#include&lt;arpa/inet.h&gt;</div><div class="line">uint32_t htonl(uint32_t hostlong);</div><div class="line">uint16_t htons(uint16_t hostshort);</div><div class="line">uint32_t ntohl(uint32_t netlong);</div><div class="line">uint16_t ntohs(uint16_t netshort);</div><div class="line">// h 主机host; n 网络net; l 长整型long; s 短整型short </div><div class="line"></div><div class="line">//通过c语言的位移操作实现上面的函数</div><div class="line">#if defined(BIG_ENDIAN) &amp;&amp; !defined(LITTLE_ENDIAN)</div><div class="line"></div><div class="line">#define htons(A)   (A)</div><div class="line">#define htonl(A)     (A)</div><div class="line">#define ntohs(A)   (A)</div><div class="line">#define ntohl(A)    (A)</div><div class="line"></div><div class="line">#elif defined(LITTLE_ENDIAN) &amp;&amp; !defined(BIG_ENDIAN)</div><div class="line"></div><div class="line">#define htons(A)     ((((uint16)(A) &amp; 0xff00) &gt;&gt; 8) | \(((uint16)(A) &amp; 0x00ff) &lt;&lt; 8))</div><div class="line">#define htonl(A)     ((((uint32)(A) &amp; 0xff000000) &gt;&gt; 24) | \</div><div class="line">(((uint32)(A) &amp; 0x00ff0000) &gt;&gt; 8) | \</div><div class="line">(((uint32)(A) &amp; 0x0000ff00) &lt;&lt; 8) | \</div><div class="line">(((uint32)(A) &amp; 0x000000ff) &lt;&lt; 24))</div><div class="line">#define ntohs htons</div><div class="line">#define ntohl htohl</div><div class="line"></div><div class="line">#else</div><div class="line"></div><div class="line">#error "Either BIG_ENDIAN or LITTLE_ENDIAN must be #defined, but not both."</div></pre></td></tr></table></figure>
+<h4 id="四-Big-Endian和Little-Endian的优缺点"><a href="#四-Big-Endian和Little-Endian的优缺点" class="headerlink" title="四 Big-Endian和Little-Endian的优缺点"></a>四 Big-Endian和Little-Endian的优缺点</h4><ul>
+<li><strong>Big-Endian优点</strong>： 靠守卫提取高位字节，你总是可以由看看在偏移位置为0的字节来确定这个数字是正数还是负数。你不必知道这个数值有多长，或者你也不必过一些字节来看这个数值是否含有符号位。这个数值是以它们被打印出来的顺序存放的，所以从二进制到十进制的函数特别有效。因而，对于不同要求的机器，在设计存取方式时就会不同</li>
+<li><strong>Little-Endian优点</strong>：提取一个，两个，四个或者更长字节数据的汇编指令以与其他所有格式相同的方式进行：首先在偏移地址为0的地方提取最低位的字节，因为地址偏移和字节数是一对一的关系，多重精度的数学函数就相对容易写了。</li>
+<li>如果增加数字的值，可能在左边增加数字（高位非指数函数需要更多的数字）。因此。经常需要增加两位数字并移动存储器里所有Big-Endian书序的数字，把所有数向右移，这会增加计算机的工作量。不过，使用Little-Endian的存储器中不重要的字节可以存在它原来的位置，新的数可以存在它的右边的高位 地址里，这就意味着计算机中的某些计算可以变得更加简单和快速。</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，网络/">技术，网络</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/it/">it</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Mysql索引" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -1065,6 +1154,110 @@
 
 
   
+    <article id="post-红黑树" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/02/15/红黑树/" class="article-date">
+  	<time datetime="2019-02-15T08:16:21.000Z" itemprop="datePublished">2019-02-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/15/红黑树/">红黑树</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="红黑树特点："><a href="#红黑树特点：" class="headerlink" title="红黑树特点："></a>红黑树特点：</h4><ol>
+<li><p>每个节点或者是黑色，或者是红色</p>
+</li>
+<li><p>跟节点是黑色</p>
+</li>
+<li><p>每个叶子节点（NIL）是黑色</p>
+</li>
+<li><p>如果一个节点是红色的，则它的子节点必须是黑色的</p>
+</li>
+<li><p>从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">注意</div><div class="line">特性（3）中的叶子节点，是职位空（NIL或者NULL）的节点</div><div class="line">特性（5）确保没有一条路径会比其他路径长出2倍。因而，红黑树是相对接近平衡的二叉树</div></pre></td></tr></table></figure>
+<ul>
+<li><p>红黑树的时间复杂度为：o(lgn)</p>
+</li>
+<li><p>定理：一个含有n个节点的红黑树的高度至多为2log(n+1)</p>
+</li>
+</ul>
+<h4 id="红黑树的操作："><a href="#红黑树的操作：" class="headerlink" title="红黑树的操作："></a>红黑树的操作：</h4><ol>
+<li>左旋和右旋<ul>
+<li>旋转的目的是让树保持红黑树的特性。</li>
+</ul>
+</li>
+<li>添加<ul>
+<li>第一步：将红黑树当做一颗二叉查找树，将节点插入</li>
+<li>第二步：将插入的节点着色为“红色”</li>
+<li>第三步：通过一系列的旋转和着色等操作，使之重新成为一颗红黑树</li>
+</ul>
+</li>
+<li>删除<ul>
+<li>第一步：将红黑树当做一颗二叉查找树，将节点删除</li>
+<li>第二步：通过“旋转和重新着色”等一系列操作来修正该树，使之重新成为一颗红黑树</li>
+</ul>
+</li>
+</ol>
+<h4 id="红黑树应用："><a href="#红黑树应用：" class="headerlink" title="红黑树应用："></a>红黑树应用：</h4><p><code>主要用它来存储有序的数据 它查询时间复杂度为o(lgn)非常高效</code></p>
+<ul>
+<li>C++的STL中 map和set都是用红黑树实现的</li>
+<li>linux进程调度(Completely Fair Scheduler) 用红黑树管理进程控制块</li>
+<li>epoll在内核中的实现，用红黑树管理事件块</li>
+<li>nginx中，用红黑树管理timer等</li>
+<li>java的TreeSet和TreeMap实现</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-数据结构/">技术， 数据结构</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/it/">it</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Epoll" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1253,110 +1446,6 @@
 
 
   
-    <article id="post-红黑树" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2019/02/15/红黑树/" class="article-date">
-  	<time datetime="2019-02-15T08:16:21.000Z" itemprop="datePublished">2019-02-15</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/15/红黑树/">红黑树</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="红黑树特点："><a href="#红黑树特点：" class="headerlink" title="红黑树特点："></a>红黑树特点：</h4><ol>
-<li><p>每个节点或者是黑色，或者是红色</p>
-</li>
-<li><p>跟节点是黑色</p>
-</li>
-<li><p>每个叶子节点（NIL）是黑色</p>
-</li>
-<li><p>如果一个节点是红色的，则它的子节点必须是黑色的</p>
-</li>
-<li><p>从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">注意</div><div class="line">特性（3）中的叶子节点，是职位空（NIL或者NULL）的节点</div><div class="line">特性（5）确保没有一条路径会比其他路径长出2倍。因而，红黑树是相对接近平衡的二叉树</div></pre></td></tr></table></figure>
-<ul>
-<li><p>红黑树的时间复杂度为：o(lgn)</p>
-</li>
-<li><p>定理：一个含有n个节点的红黑树的高度至多为2log(n+1)</p>
-</li>
-</ul>
-<h4 id="红黑树的操作："><a href="#红黑树的操作：" class="headerlink" title="红黑树的操作："></a>红黑树的操作：</h4><ol>
-<li>左旋和右旋<ul>
-<li>旋转的目的是让树保持红黑树的特性。</li>
-</ul>
-</li>
-<li>添加<ul>
-<li>第一步：将红黑树当做一颗二叉查找树，将节点插入</li>
-<li>第二步：将插入的节点着色为“红色”</li>
-<li>第三步：通过一系列的旋转和着色等操作，使之重新成为一颗红黑树</li>
-</ul>
-</li>
-<li>删除<ul>
-<li>第一步：将红黑树当做一颗二叉查找树，将节点删除</li>
-<li>第二步：通过“旋转和重新着色”等一系列操作来修正该树，使之重新成为一颗红黑树</li>
-</ul>
-</li>
-</ol>
-<h4 id="红黑树应用："><a href="#红黑树应用：" class="headerlink" title="红黑树应用："></a>红黑树应用：</h4><p><code>主要用它来存储有序的数据 它查询时间复杂度为o(lgn)非常高效</code></p>
-<ul>
-<li>C++的STL中 map和set都是用红黑树实现的</li>
-<li>linux进程调度(Completely Fair Scheduler) 用红黑树管理进程控制块</li>
-<li>epoll在内核中的实现，用红黑树管理事件块</li>
-<li>nginx中，用红黑树管理timer等</li>
-<li>java的TreeSet和TreeMap实现</li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-数据结构/">技术， 数据结构</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/it/">it</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-Travel" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1384,63 +1473,6 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><img src="/2018/12/12/Travel/宝安公园.jpg" alt="宝安公园"><br><img src="/2018/12/12/Travel/凤凰山.jpg" alt="凤凰山"><br><img src="/2018/12/12/Travel/莲花山.jpg" alt="莲花山"><br><img src="/2018/12/12/Travel/平峦山.jpg" alt="平峦山"><br><img src="/2018/12/12/Travel/铁仔山.jpg" alt="铁仔山"><br><img src="/2018/12/12/Travel/西湾红树林.jpg" alt="西湾红树林"></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/life/">life</a></li></ul>
-	</div>
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Family" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/09/30/Family/" class="article-date">
-  	<time datetime="2018-09-30T09:29:33.000Z" itemprop="datePublished">2018-09-30</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/30/Family/">Family</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/2018/09/30/Family/2019年饭.jpg" alt="2019年饭"><br><img src="/2018/09/30/Family/baby-3.jpg" alt="baby-3"><br><img src="/2018/09/30/Family/baby-2.jpg" alt="baby-2"><br><img src="/2018/09/30/Family/baby-1.jpg" alt="baby-1"><br><img src="/2018/09/30/Family/hainan.jpg" alt="hainan"><br><img src="/2018/09/30/Family/marry.jpg" alt="marry"></p>
 
       
     </div>
