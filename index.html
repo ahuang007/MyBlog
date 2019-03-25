@@ -1154,110 +1154,6 @@
 
 
   
-    <article id="post-红黑树" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2019/02/15/红黑树/" class="article-date">
-  	<time datetime="2019-02-15T08:16:21.000Z" itemprop="datePublished">2019-02-15</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/15/红黑树/">红黑树</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="红黑树特点："><a href="#红黑树特点：" class="headerlink" title="红黑树特点："></a>红黑树特点：</h4><ol>
-<li><p>每个节点或者是黑色，或者是红色</p>
-</li>
-<li><p>跟节点是黑色</p>
-</li>
-<li><p>每个叶子节点（NIL）是黑色</p>
-</li>
-<li><p>如果一个节点是红色的，则它的子节点必须是黑色的</p>
-</li>
-<li><p>从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">注意</div><div class="line">特性（3）中的叶子节点，是职位空（NIL或者NULL）的节点</div><div class="line">特性（5）确保没有一条路径会比其他路径长出2倍。因而，红黑树是相对接近平衡的二叉树</div></pre></td></tr></table></figure>
-<ul>
-<li><p>红黑树的时间复杂度为：o(lgn)</p>
-</li>
-<li><p>定理：一个含有n个节点的红黑树的高度至多为2log(n+1)</p>
-</li>
-</ul>
-<h4 id="红黑树的操作："><a href="#红黑树的操作：" class="headerlink" title="红黑树的操作："></a>红黑树的操作：</h4><ol>
-<li>左旋和右旋<ul>
-<li>旋转的目的是让树保持红黑树的特性。</li>
-</ul>
-</li>
-<li>添加<ul>
-<li>第一步：将红黑树当做一颗二叉查找树，将节点插入</li>
-<li>第二步：将插入的节点着色为“红色”</li>
-<li>第三步：通过一系列的旋转和着色等操作，使之重新成为一颗红黑树</li>
-</ul>
-</li>
-<li>删除<ul>
-<li>第一步：将红黑树当做一颗二叉查找树，将节点删除</li>
-<li>第二步：通过“旋转和重新着色”等一系列操作来修正该树，使之重新成为一颗红黑树</li>
-</ul>
-</li>
-</ol>
-<h4 id="红黑树应用："><a href="#红黑树应用：" class="headerlink" title="红黑树应用："></a>红黑树应用：</h4><p><code>主要用它来存储有序的数据 它查询时间复杂度为o(lgn)非常高效</code></p>
-<ul>
-<li>C++的STL中 map和set都是用红黑树实现的</li>
-<li>linux进程调度(Completely Fair Scheduler) 用红黑树管理进程控制块</li>
-<li>epoll在内核中的实现，用红黑树管理事件块</li>
-<li>nginx中，用红黑树管理timer等</li>
-<li>java的TreeSet和TreeMap实现</li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-数据结构/">技术， 数据结构</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/it/">it</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-Epoll" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1421,6 +1317,110 @@
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，linux/">技术，linux</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/it/">it</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-红黑树" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/02/15/红黑树/" class="article-date">
+  	<time datetime="2019-02-15T08:16:21.000Z" itemprop="datePublished">2019-02-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/15/红黑树/">红黑树</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="红黑树特点："><a href="#红黑树特点：" class="headerlink" title="红黑树特点："></a>红黑树特点：</h4><ol>
+<li><p>每个节点或者是黑色，或者是红色</p>
+</li>
+<li><p>跟节点是黑色</p>
+</li>
+<li><p>每个叶子节点（NIL）是黑色</p>
+</li>
+<li><p>如果一个节点是红色的，则它的子节点必须是黑色的</p>
+</li>
+<li><p>从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">注意</div><div class="line">特性（3）中的叶子节点，是职位空（NIL或者NULL）的节点</div><div class="line">特性（5）确保没有一条路径会比其他路径长出2倍。因而，红黑树是相对接近平衡的二叉树</div></pre></td></tr></table></figure>
+<ul>
+<li><p>红黑树的时间复杂度为：o(lgn)</p>
+</li>
+<li><p>定理：一个含有n个节点的红黑树的高度至多为2log(n+1)</p>
+</li>
+</ul>
+<h4 id="红黑树的操作："><a href="#红黑树的操作：" class="headerlink" title="红黑树的操作："></a>红黑树的操作：</h4><ol>
+<li>左旋和右旋<ul>
+<li>旋转的目的是让树保持红黑树的特性。</li>
+</ul>
+</li>
+<li>添加<ul>
+<li>第一步：将红黑树当做一颗二叉查找树，将节点插入</li>
+<li>第二步：将插入的节点着色为“红色”</li>
+<li>第三步：通过一系列的旋转和着色等操作，使之重新成为一颗红黑树</li>
+</ul>
+</li>
+<li>删除<ul>
+<li>第一步：将红黑树当做一颗二叉查找树，将节点删除</li>
+<li>第二步：通过“旋转和重新着色”等一系列操作来修正该树，使之重新成为一颗红黑树</li>
+</ul>
+</li>
+</ol>
+<h4 id="红黑树应用："><a href="#红黑树应用：" class="headerlink" title="红黑树应用："></a>红黑树应用：</h4><p><code>主要用它来存储有序的数据 它查询时间复杂度为o(lgn)非常高效</code></p>
+<ul>
+<li>C++的STL中 map和set都是用红黑树实现的</li>
+<li>linux进程调度(Completely Fair Scheduler) 用红黑树管理进程控制块</li>
+<li>epoll在内核中的实现，用红黑树管理事件块</li>
+<li>nginx中，用红黑树管理timer等</li>
+<li>java的TreeSet和TreeMap实现</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-数据结构/">技术， 数据结构</a></li></ul>
 	</div>
 
       
