@@ -248,7 +248,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="《文明之光》节选"><a href="#《文明之光》节选" class="headerlink" title="《文明之光》节选"></a>《文明之光》节选</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">欧洲人在瓷器制造上超越亚洲人，则是整体科技进步和工业化的成果。 </div><div class="line">欧洲人较早地掌握了现代的科学研究方法，擅长定量分析和比较试验， 因此完全弄清楚了瓷器的成分和烧制的原理。 </div><div class="line">在研制过程中，他们保留了全部的原始数据和实验报告， 这样，每取得一点进步，后人都可以直接收益。 </div><div class="line">这种科学研究的方法是欧洲人取得长足进步的基础。 </div><div class="line">相比之下，中国工匠更多的是具有对制瓷工艺的感性认识， 他们靠“师傅带徒弟”的方法将经验代代相传，而徒弟能够超越师傅，则完全靠悟性。 </div><div class="line">中间即使有一些发明和改进，却因为没有详细的过程记载， 或者是出于保密故意不记载，很多发明和改进都无法传世， 比如宋代五大名窑的制作工艺大多失传了。 </div><div class="line">这样，后世常常不得不重复前人的失败，使得瓷器制造技术进步缓慢。 </div><div class="line">这其实不是中国瓷器制造特有的问题，而是中国古代很多手工业普遍存在的现象。</div><div class="line"></div><div class="line"> - 节选自 吴军 《文明之光（第一册）》</div></pre></td></tr></table></figure>
+        <h4 id="《文明之光》节选"><a href="#《文明之光》节选" class="headerlink" title="《文明之光》节选"></a>《文明之光》节选</h4><p>欧洲人在瓷器制造上超越亚洲人，则是整体科技进步和工业化的成果。<br>欧洲人较早地掌握了现代的科学研究方法，擅长定量分析和比较试验， 因此完全弄清楚了瓷器的成分和烧制的原理。<br>在研制过程中，他们保留了全部的原始数据和实验报告， 这样，每取得一点进步，后人都可以直接收益。<br>这种科学研究的方法是欧洲人取得长足进步的基础。<br>相比之下，中国工匠更多的是具有对制瓷工艺的感性认识， 他们靠“师傅带徒弟”的方法将经验代代相传，而徒弟能够超越师傅，则完全靠悟性。<br>中间即使有一些发明和改进，却因为没有详细的过程记载， 或者是出于保密故意不记载，很多发明和改进都无法传世， 比如宋代五大名窑的制作工艺大多失传了。<br>这样，后世常常不得不重复前人的失败，使得瓷器制造技术进步缓慢。<br>这其实不是中国瓷器制造特有的问题，而是中国古代很多手工业普遍存在的现象。</p>
+<pre><code>- 节选自 吴军 《文明之光（第一册）》
+</code></pre>
       
     </div>
     
@@ -329,9 +331,8 @@
 </ul>
 <h4 id="三-Big-Endian和Little-Endian转换"><a href="#三-Big-Endian和Little-Endian转换" class="headerlink" title="三 Big-Endian和Little-Endian转换"></a>三 Big-Endian和Little-Endian转换</h4><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">#include&lt;arpa/inet.h&gt;</div><div class="line">uint32_t htonl(uint32_t hostlong);</div><div class="line">uint16_t htons(uint16_t hostshort);</div><div class="line">uint32_t ntohl(uint32_t netlong);</div><div class="line">uint16_t ntohs(uint16_t netshort);</div><div class="line">// h 主机host; n 网络net; l 长整型long; s 短整型short </div><div class="line"></div><div class="line">//通过c语言的位移操作实现上面的函数</div><div class="line">#if defined(BIG_ENDIAN) &amp;&amp; !defined(LITTLE_ENDIAN)</div><div class="line"></div><div class="line">#define htons(A)   (A)</div><div class="line">#define htonl(A)     (A)</div><div class="line">#define ntohs(A)   (A)</div><div class="line">#define ntohl(A)    (A)</div><div class="line"></div><div class="line">#elif defined(LITTLE_ENDIAN) &amp;&amp; !defined(BIG_ENDIAN)</div><div class="line"></div><div class="line">#define htons(A)     ((((uint16)(A) &amp; 0xff00) &gt;&gt; 8) | \(((uint16)(A) &amp; 0x00ff) &lt;&lt; 8))</div><div class="line">#define htonl(A)     ((((uint32)(A) &amp; 0xff000000) &gt;&gt; 24) | \</div><div class="line">(((uint32)(A) &amp; 0x00ff0000) &gt;&gt; 8) | \</div><div class="line">(((uint32)(A) &amp; 0x0000ff00) &lt;&lt; 8) | \</div><div class="line">(((uint32)(A) &amp; 0x000000ff) &lt;&lt; 24))</div><div class="line">#define ntohs htons</div><div class="line">#define ntohl htohl</div><div class="line"></div><div class="line">#else</div><div class="line"></div><div class="line">#error "Either BIG_ENDIAN or LITTLE_ENDIAN must be #defined, but not both."</div></pre></td></tr></table></figure>
 <h4 id="四-Big-Endian和Little-Endian的优缺点"><a href="#四-Big-Endian和Little-Endian的优缺点" class="headerlink" title="四 Big-Endian和Little-Endian的优缺点"></a>四 Big-Endian和Little-Endian的优缺点</h4><ul>
-<li><strong>Big-Endian优点</strong>： 靠守卫提取高位字节，你总是可以由看看在偏移位置为0的字节来确定这个数字是正数还是负数。你不必知道这个数值有多长，或者你也不必过一些字节来看这个数值是否含有符号位。这个数值是以它们被打印出来的顺序存放的，所以从二进制到十进制的函数特别有效。因而，对于不同要求的机器，在设计存取方式时就会不同</li>
-<li><strong>Little-Endian优点</strong>：提取一个，两个，四个或者更长字节数据的汇编指令以与其他所有格式相同的方式进行：首先在偏移地址为0的地方提取最低位的字节，因为地址偏移和字节数是一对一的关系，多重精度的数学函数就相对容易写了。</li>
-<li>如果增加数字的值，可能在左边增加数字（高位非指数函数需要更多的数字）。因此。经常需要增加两位数字并移动存储器里所有Big-Endian书序的数字，把所有数向右移，这会增加计算机的工作量。不过，使用Little-Endian的存储器中不重要的字节可以存在它原来的位置，新的数可以存在它的右边的高位 地址里，这就意味着计算机中的某些计算可以变得更加简单和快速。</li>
+<li><strong>Big-Endian优点</strong>：<br>靠首位提取高位字节，你总是可以由看看在偏移位置为0的字节来确定这个数字是正数还是负数。你不必知道这个数值有多长，或者你也不必过一些字节来看这个数值是否含有符号位。这个数值是以它们被打印出来的顺序存放的，所以从二进制到十进制的函数特别有效。因而，对于不同要求的机器，在设计存取方式时就会不同</li>
+<li><strong>Little-Endian优点</strong>：<br>提取一个，两个，四个或者更长字节数据的汇编指令以与其他所有格式相同的方式进行：首先在偏移地址为0的地方提取最低位的字节，因为地址偏移和字节数是一对一的关系，多重精度的数学函数就相对容易写了。 如果增加数字的值，可能在左边增加数字（高位非指数函数需要更多的数字）。因此。经常需要增加两位数字并移动存储器里所有Big-Endian书序的数字，把所有数向右移，这会增加计算机的工作量。不过，使用Little-Endian的存储器中不重要的字节可以存在它原来的位置，新的数可以存在它的右边的高位 地址里，这就意味着计算机中的某些计算可以变得更加简单和快速。</li>
 </ul>
 
       
@@ -532,10 +533,10 @@
 
 
   
-    <article id="post-求一个正整数二进制表示有多少个1" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-数1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/02/20/求一个正整数二进制表示有多少个1/" class="article-date">
+      <a href="/2019/02/20/数1/" class="article-date">
   	<time datetime="2019-02-20T07:31:21.000Z" itemprop="datePublished">2019-02-20</time>
 </a>
     </div>
@@ -549,7 +550,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/20/求一个正整数二进制表示有多少个1/">数1</a>
+      <a class="article-title" href="/2019/02/20/数1/">数1</a>
     </h1>
   
 
@@ -1210,6 +1211,110 @@
 
 
   
+    <article id="post-红黑树" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/02/15/红黑树/" class="article-date">
+  	<time datetime="2019-02-15T08:16:21.000Z" itemprop="datePublished">2019-02-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/15/红黑树/">红黑树</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="红黑树特点："><a href="#红黑树特点：" class="headerlink" title="红黑树特点："></a>红黑树特点：</h4><ol>
+<li><p>每个节点或者是黑色，或者是红色</p>
+</li>
+<li><p>跟节点是黑色</p>
+</li>
+<li><p>每个叶子节点（NIL）是黑色</p>
+</li>
+<li><p>如果一个节点是红色的，则它的子节点必须是黑色的</p>
+</li>
+<li><p>从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">注意</div><div class="line">特性（3）中的叶子节点，是职位空（NIL或者NULL）的节点</div><div class="line">特性（5）确保没有一条路径会比其他路径长出2倍。因而，红黑树是相对接近平衡的二叉树</div></pre></td></tr></table></figure>
+<ul>
+<li><p>红黑树的时间复杂度为：o(lgn)</p>
+</li>
+<li><p>定理：一个含有n个节点的红黑树的高度至多为2log(n+1)</p>
+</li>
+</ul>
+<h4 id="红黑树的操作："><a href="#红黑树的操作：" class="headerlink" title="红黑树的操作："></a>红黑树的操作：</h4><ol>
+<li>左旋和右旋<ul>
+<li>旋转的目的是让树保持红黑树的特性。</li>
+</ul>
+</li>
+<li>添加<ul>
+<li>第一步：将红黑树当做一颗二叉查找树，将节点插入</li>
+<li>第二步：将插入的节点着色为“红色”</li>
+<li>第三步：通过一系列的旋转和着色等操作，使之重新成为一颗红黑树</li>
+</ul>
+</li>
+<li>删除<ul>
+<li>第一步：将红黑树当做一颗二叉查找树，将节点删除</li>
+<li>第二步：通过“旋转和重新着色”等一系列操作来修正该树，使之重新成为一颗红黑树</li>
+</ul>
+</li>
+</ol>
+<h4 id="红黑树应用："><a href="#红黑树应用：" class="headerlink" title="红黑树应用："></a>红黑树应用：</h4><p><code>主要用它来存储有序的数据 它查询时间复杂度为o(lgn)非常高效</code></p>
+<ul>
+<li>C++的STL中 map和set都是用红黑树实现的</li>
+<li>linux进程调度(Completely Fair Scheduler) 用红黑树管理进程控制块</li>
+<li>epoll在内核中的实现，用红黑树管理事件块</li>
+<li>nginx中，用红黑树管理timer等</li>
+<li>java的TreeSet和TreeMap实现</li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-数据结构/">技术， 数据结构</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/it/">it</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-Epoll" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1373,110 +1478,6 @@
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，linux/">技术，linux</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/it/">it</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-红黑树" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2019/02/15/红黑树/" class="article-date">
-  	<time datetime="2019-02-15T08:16:21.000Z" itemprop="datePublished">2019-02-15</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/15/红黑树/">红黑树</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="红黑树特点："><a href="#红黑树特点：" class="headerlink" title="红黑树特点："></a>红黑树特点：</h4><ol>
-<li><p>每个节点或者是黑色，或者是红色</p>
-</li>
-<li><p>跟节点是黑色</p>
-</li>
-<li><p>每个叶子节点（NIL）是黑色</p>
-</li>
-<li><p>如果一个节点是红色的，则它的子节点必须是黑色的</p>
-</li>
-<li><p>从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点</p>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">注意</div><div class="line">特性（3）中的叶子节点，是职位空（NIL或者NULL）的节点</div><div class="line">特性（5）确保没有一条路径会比其他路径长出2倍。因而，红黑树是相对接近平衡的二叉树</div></pre></td></tr></table></figure>
-<ul>
-<li><p>红黑树的时间复杂度为：o(lgn)</p>
-</li>
-<li><p>定理：一个含有n个节点的红黑树的高度至多为2log(n+1)</p>
-</li>
-</ul>
-<h4 id="红黑树的操作："><a href="#红黑树的操作：" class="headerlink" title="红黑树的操作："></a>红黑树的操作：</h4><ol>
-<li>左旋和右旋<ul>
-<li>旋转的目的是让树保持红黑树的特性。</li>
-</ul>
-</li>
-<li>添加<ul>
-<li>第一步：将红黑树当做一颗二叉查找树，将节点插入</li>
-<li>第二步：将插入的节点着色为“红色”</li>
-<li>第三步：通过一系列的旋转和着色等操作，使之重新成为一颗红黑树</li>
-</ul>
-</li>
-<li>删除<ul>
-<li>第一步：将红黑树当做一颗二叉查找树，将节点删除</li>
-<li>第二步：通过“旋转和重新着色”等一系列操作来修正该树，使之重新成为一颗红黑树</li>
-</ul>
-</li>
-</ol>
-<h4 id="红黑树应用："><a href="#红黑树应用：" class="headerlink" title="红黑树应用："></a>红黑树应用：</h4><p><code>主要用它来存储有序的数据 它查询时间复杂度为o(lgn)非常高效</code></p>
-<ul>
-<li>C++的STL中 map和set都是用红黑树实现的</li>
-<li>linux进程调度(Completely Fair Scheduler) 用红黑树管理进程控制块</li>
-<li>epoll在内核中的实现，用红黑树管理事件块</li>
-<li>nginx中，用红黑树管理timer等</li>
-<li>java的TreeSet和TreeMap实现</li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术，-数据结构/">技术， 数据结构</a></li></ul>
 	</div>
 
       
